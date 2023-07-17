@@ -17,7 +17,7 @@ const variantStyle = ({ variant, theme: { colors, palettes, shadows } }) => {
         ${selector("color", { hover, active })}
       `;
 
-    case "hover":
+    case "text":
       return css`
         ${selector("backgroundColor", { hover: hexToRgba(base, 0.1) })}
 
