@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { Button, Input, Label, Textarea } from "components";
+import { Button, Input, Label } from "components";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
@@ -59,7 +59,7 @@ export const Home = () => {
   // (3) 그러니까 다시 데이터 무효화시키고 새로운 데이터로 갈아끼우기 위해 api 함수 실행
 
   return (
-    <div>
+    <div style={{ paddingBottom: "5000px" }}>
       <FlexCenter>
         <Button variant="text">버튼</Button>
         <Button variant="outline">회원가입</Button>
@@ -67,6 +67,7 @@ export const Home = () => {
         <Button disabled>버튼</Button>
         <Button size="large">버튼</Button>
       </FlexCenter>
+
       <FlexColumn>
         <form onSubmit={submitHandler}>
           <Label variant="text">아이디</Label>
@@ -98,16 +99,6 @@ export const Home = () => {
           </Button>
         </form>
       </FlexColumn>
-      <FlexColumn>
-        <Input placeholder="모임 이름" />
-        <Input placeholder="모임 날짜" />
-        <Input placeholder="모임 장소" />
-        <Input placeholder="모임 오픈톡방" />
-        <Input placeholder="참석 정원" />
-        <Textarea placeholder="모임 소개" />
-      </FlexColumn>
-
-      {/* <Icon name="place" /> */}
     </div>
   );
 };
