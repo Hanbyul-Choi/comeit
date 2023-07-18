@@ -1,19 +1,26 @@
-import { Button, Input, Label, Modal, Textarea } from "components";
+import { Button, Input, Label, Textarea, useModal } from "components";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 
 export const Home = () => {
-  return (
-    <div>
-      <FlexCenter>
-        <Button variant="text">버튼</Button>
-        <Button variant="outline">버튼</Button>
-        <Button size="small">버튼</Button>
-        <Button disabled>버튼</Button>
-        <Button size="large">버튼</Button>
+  const { mount, unmount } = useModal();
 
-        <Modal>
-          <input />
-        </Modal>
+  return (
+    <div style={{ paddingBottom: "5000px" }}>
+      <FlexCenter>
+        <Button
+          size="large"
+          onClick={() =>
+            mount(
+              "SAMPLE",
+              <div>
+                테스트 입니다.
+                <Button onClick={() => unmount("SAMPLE")}>닫기</Button>
+              </div>
+            )
+          }
+        >
+          버튼
+        </Button>
       </FlexCenter>
 
       <FlexColumn>
