@@ -3,7 +3,6 @@ import { size, typography } from "styles/mixins";
 
 const baseStyle = ({ size: _size = "small", theme: { colors, shadows, sizes } }) => {
   return css`
-    box-shadow: ${shadows.drop1};
     // 글씨 색상
     color: ${colors.gray3};
 
