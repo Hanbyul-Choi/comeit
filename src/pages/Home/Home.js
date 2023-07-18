@@ -1,11 +1,25 @@
-import { Button, Input, Label, Textarea, useModal } from "components";
+import { Button, Input, Label, Slider, Textarea, useModal } from "components";
 import { FlexCenter, FlexColumn } from "styles/mixins";
+import img1 from "../../assets/exampleImg/leaves-g2699eb18f_1920.jpg";
+import img2 from "../../assets/exampleImg/rose-g248783ca6_1920.jpg";
+import img3 from "../../assets/exampleImg/rose-g33c9b5bac_1920.jpg";
 
 export const Home = () => {
+  const imgArr = [
+    {
+      id: 1,
+      imgUrl: img1
+    },
+    { id: 2, imgUrl: img2 },
+    { id: 3, imgUrl: img3 },
+    { id: 4, imgUrl: img1 },
+    { id: 5, imgUrl: img2 },
+    { id: 6, imgUrl: img3 }
+  ];
   const { mount, unmount } = useModal();
 
   return (
-    <div style={{ paddingBottom: "5000px" }}>
+    <div style={{ paddingBottom: "50px" }}>
       <FlexCenter>
         <Button
           size="large"
@@ -41,7 +55,7 @@ export const Home = () => {
         <Input placeholder="참석 정원" />
         <Textarea placeholder="모임 소개" />
       </FlexColumn>
-
+      <Slider showContentNum={3} space={5} contents={imgArr} />
       {/* <Icon name="place" /> */}
     </div>
   );
