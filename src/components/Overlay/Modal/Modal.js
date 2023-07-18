@@ -1,4 +1,5 @@
 import { useLockBodyScroll } from "hooks/useLockBodyScroll";
+import { createPortal } from "react-dom";
 import { useOverlayContext } from "../Overlay.context";
 import * as Styled from "./Modal.styles";
 
@@ -15,9 +16,10 @@ export const Modal = ({ children, name }) => {
 
   useLockBodyScroll(true);
 
-  return (
+  return createPortal(
     <Styled.ModalOuter onClick={handleClose}>
       <Styled.ModalInner>{children}</Styled.ModalInner>
-    </Styled.ModalOuter>
+    </Styled.ModalOuter>,
+    document.getElementById("portal-root")
   );
 };
