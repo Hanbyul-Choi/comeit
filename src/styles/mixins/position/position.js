@@ -1,10 +1,8 @@
-import { css } from "@emotion/react";
-import styled from "@emotion/styled";
-import { styleHelper } from "~/styles/utils";
-import { getObjectEntries } from "~/utils";
+import { css, styled } from "styled-components";
+import { styleHelper } from "styles/utils";
 
 export const position = ({ ...props }) => css`
-  ${getObjectEntries(props).map(([key, value]) => styleHelper(key, value))}
+  ${Object.entries(props).map(([key, value]) => styleHelper(key, value))}
 `;
 
 const absolute = props => css`

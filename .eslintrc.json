@@ -12,6 +12,7 @@
   "ignorePatterns": ["**/build/**/*.*", "node_modules", ".pnp.*"],
   "rules": {
     "import/prefer-default-export": 0, // 0 -> 0ff / 1 -> on (default)
+    "import/no-cycle": 0,
     "prettier/prettier": 0,
     "import/extensions": 0,
     "import/no-unresolved": 0,
