@@ -16,7 +16,7 @@ const DropdownContext = createContext(null);
 
 const DropdownOptionType = (<DropdownOption />).type;
 
-export const Dropdown = ({ children, size, onChange }) => {
+export const DropdownMain = ({ children, size, onChange }) => {
   const [isOpen, setIsOpen] = useBoolean(false);
   const [data, setData] = useState({
     label: "선택해주세요",
@@ -72,3 +72,7 @@ export const useDropdownContext = () => {
 
   return dropdownContext;
 };
+
+export const Dropdown = Object.assign(DropdownMain, {
+  Option: DropdownOption
+});
