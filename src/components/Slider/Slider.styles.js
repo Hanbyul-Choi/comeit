@@ -1,58 +1,43 @@
 import { css, styled } from "styled-components";
 import { flex } from "styles/mixins";
 
-const variantStyle = ({ variant, theme: { palettes, shadows } }) => {
-  const { base } = palettes.blue;
-
-  switch (variant) {
-    case "outline":
-      return css`
-        border: 1px solid ${base};
-
-        box-shadow: ${shadows.drop1};
-
-        color: ${base};
-      `;
-
-    default:
-      return;
-  }
-};
-
-const baseStyle = ({ showContentNum }) => {
-  return css`
-    width: ${750 / showContentNum}px;
-
-    ${flex.center()}
-
-    padding: 8px;
-
-    border-radius: 8px;
-  `;
-};
-
 export const Img = styled.img`
-  ${props => baseStyle(props)}
+  ${props => css`
+    width: ${props.contentWidth}px;
+    padding: 0 ${props.space}px;
+  `}
 `;
 
 export const SliderContainer = styled.div`
-  padding: 12px;
-  width: 250px;
   display: flex;
-  gap: 24px;
+  min-width: ${props => props.sliceWidth}px;
 `;
 
 export const Container = styled.div`
-  width: 750px;
+  width: ${({ contentWidth, space, showContentNum }) =>
+    (contentWidth + space / 2 - space) * showContentNum}px;
   overflow: hidden;
   position: relative;
-  .prev {
-    top: 100px;
-    z-index: 1;
-  }
-  .next {
-    top: 100px;
-    right: 10px;
-  }
-  ${props => variantStyle(props)}
+`;
+
+export const ContainerBlock = styled.div`
+  ${flex.center()}
+  padding: 10px;
+  gap: 12px;
+`;
+
+export const Button = styled.button`
+  ${({ theme }) => css`
+    width: 22px;
+    height: 22px;
+    border: 1px solid ${theme.palettes.blue.base};
+    color: ${theme.palettes.blue.base};
+    background-color: ${theme.colors.white};
+    border-radius: 5px;
+    &:hover {
+      transition: all 0.3s ease-in-out;
+      background-color: ${theme.palettes.blue.base};
+      color: ${theme.colors.white};
+    }
+  `}
 `;

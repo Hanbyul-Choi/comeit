@@ -34,7 +34,7 @@ export const Home = () => {
         <Input placeholder="참석 정원" />
         <Textarea placeholder="모임 소개" />
       </FlexColumn>
-      <Slider showContentNum="4" contents={imgArr} />
+      <Slider showContentNum={3} space={5} contents={imgArr} />
       {/* <Icon name="place" /> */}
     </div>
   );

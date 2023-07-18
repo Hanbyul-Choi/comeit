@@ -1,19 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import { Container, Img, SliderContainer } from "./Slider.styles";
+import { Button, Container, ContainerBlock, Img, SliderContainer } from "./Slider.styles";
 
-const { styled } = require("styled-components");
-
-export const Slider = ({ showContentNum = 3, contents }) => {
+export const Slider = ({
+  showContentNum = 3,
+  space = 1,
+  contents,
+  contentWidth = 100,
+  onClickHandler
+}) => {
   const TOTAL_SLIDES = contents.length - 1;
+  const sliceWidth = contentWidth * showContentNum + space * (showContentNum - 1);
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef(null);
+  const isLastSlide = currentSlide === TOTAL_SLIDES + 1 - showContentNum;
   const nextSlide = () => {
-    if (currentSlide >= TOTAL_SLIDES) {
-      // 더 이상 넘어갈 슬라이드가 없으면 슬라이드를 초기화
-      setCurrentSlide(0);
-    } else {
-      setCurrentSlide(currentSlide + 1);
-    }
+    setCurrentSlide(currentSlide + 1);
   };
   const prevSlide = () => {
     if (currentSlide === 0) {
@@ -25,38 +26,30 @@ export const Slider = ({ showContentNum = 3, contents }) => {
 
   useEffect(() => {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
-    slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
-  }, [currentSlide]);
+    slideRef.current.style.transform = `translateX(-${currentSlide * contentWidth}px)`;
+  }, [currentSlide, contentWidth]);
 
   return (
-    <Container variant="outline">
-      {currentSlide + 1}
-      <Button className="prev" onClick={prevSlide}>
+    <ContainerBlock>
+      <Button className="prev" onClick={prevSlide} disabled={currentSlide === 0}>
         &lt;
       </Button>
-      <SliderContainer ref={slideRef}>
-        {contents.map(item => (
-          <Img showContentNum={showContentNum} key={item} src={item} />
-        ))}
-      </SliderContainer>
-      <Button className="next" onClick={nextSlide}>
+      <Container contentWidth={contentWidth} showContentNum={showContentNum} space={space}>
+        <SliderContainer sliceWidth={sliceWidth} ref={slideRef}>
+          {contents.map(item => (
+            <Img
+              space={space}
+              contentWidth={contentWidth}
+              key={item}
+              src={item}
+              onClick={() => onClickHandler(item)}
+            />
+          ))}
+        </SliderContainer>
+      </Container>
+      <Button className="next" onClick={nextSlide} disabled={isLastSlide}>
         &gt;
       </Button>
-    </Container>
+    </ContainerBlock>
   );
 };
-
-const Button = styled.button`
-  all: unset;
-  border: 1px solid coral;
-  position: absolute;
-  padding: 0.5em;
-  color: coral;
-  background-color: #fff;
-  border-radius: 10px;
-  &:hover {
-    transition: all 0.3s ease-in-out;
-    background-color: coral;
-    color: #fff;
-  }
-`;
