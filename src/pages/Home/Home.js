@@ -1,5 +1,4 @@
-import { Button, Input, Label, Slider, Textarea } from "components";
-
+import { Button, Input, Label, Slider, Textarea, useModal } from "components";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import img1 from "../../assets/exampleImg/leaves-g2699eb18f_1920.jpg";
 import img2 from "../../assets/exampleImg/rose-g248783ca6_1920.jpg";
@@ -7,15 +6,27 @@ import img3 from "../../assets/exampleImg/rose-g33c9b5bac_1920.jpg";
 
 export const Home = () => {
   const imgArr = [img1, img2, img3, img1, img2, img3];
+  const { mount, unmount } = useModal();
+
   return (
-    <div>
+    <div style={{ paddingBottom: "5000px" }}>
       <FlexCenter>
-        <Button variant="text">버튼</Button>
-        <Button variant="outline">버튼</Button>
-        <Button size="small">버튼</Button>
-        <Button disabled>버튼</Button>
-        <Button size="large">버튼</Button>
+        <Button
+          size="large"
+          onClick={() =>
+            mount(
+              "SAMPLE",
+              <div>
+                테스트 입니다.
+                <Button onClick={() => unmount("SAMPLE")}>닫기</Button>
+              </div>
+            )
+          }
+        >
+          버튼
+        </Button>
       </FlexCenter>
+
       <FlexColumn>
         <Label variant="text">아이디</Label>
         <Input variant="outline" placeholder="아이디 입력" />
