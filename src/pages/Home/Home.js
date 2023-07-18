@@ -11,6 +11,7 @@ export const Home = () => {
         <Button disabled>버튼</Button>
         <Button size="large">버튼</Button>
       </FlexCenter>
+      {/* <Button onClick={open}>다이얼로그</Button> */}
 
       {/* <Icon name="place" /> */}
     </div>
