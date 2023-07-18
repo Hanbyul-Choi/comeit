@@ -17,11 +17,7 @@ export const Slider = ({
     setCurrentSlide(currentSlide + 1);
   };
   const prevSlide = () => {
-    if (currentSlide === 0) {
-      setCurrentSlide(TOTAL_SLIDES);
-    } else {
-      setCurrentSlide(currentSlide - 1);
-    }
+    setCurrentSlide(currentSlide - 1);
   };
 
   useEffect(() => {
@@ -40,9 +36,9 @@ export const Slider = ({
             <Img
               space={space}
               contentWidth={contentWidth}
-              key={item}
-              src={item}
-              onClick={() => onClickHandler(item)}
+              key={item.id}
+              src={item.imgUrl}
+              onClick={() => onClickHandler(item.id)}
             />
           ))}
         </SliderContainer>
