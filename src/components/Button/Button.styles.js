@@ -9,6 +9,7 @@ const variantStyle = ({ variant, theme: { colors, palettes, shadows } }) => {
     case "outline":
       return css`
         border: 1px solid ${base};
+
         ${selector("borderColor", { hover, active })}
 
         box-shadow: ${shadows.drop1};
