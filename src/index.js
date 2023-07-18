@@ -1,5 +1,7 @@
 import isPropValid from "@emotion/is-prop-valid";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Portal } from "common/Portal";
+import { Dialog } from "components";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
@@ -22,6 +24,9 @@ root.render(
         <ThemeProvider theme={theme}>
           <BrowserRouter>
             <App />
+            <Portal>
+              <Dialog />
+            </Portal>
           </BrowserRouter>
         </ThemeProvider>
       </QueryClientProvider>
