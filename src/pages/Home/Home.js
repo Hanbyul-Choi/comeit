@@ -12,9 +12,10 @@ export const Home = () => {
         <Button size="large">버튼</Button>
 
         <Modal>
-          <input type="text" placeholder="인풋" />
+          <input />
         </Modal>
       </FlexCenter>
+
       <FlexColumn>
         <Label variant="text">아이디</Label>
         <Input variant="outline" placeholder="아이디 입력" />
