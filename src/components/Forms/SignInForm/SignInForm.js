@@ -10,8 +10,9 @@ export const SIGN_IN_MODAL = "SIGN_IN_MODAL";
 export const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { unmount } = useModal();
   const [errorMessage, setErrorMessage] = useState("");
+
+  const { unmount } = useModal();
 
   const signIn = async () => {
     try {
@@ -36,12 +37,12 @@ export const SignInForm = () => {
 
   const onUserEmailChangeHandler = event => {
     setEmail(event.target.value);
-    setErrorMessage(""); // 이메일이 변경되면 에러 메시지 초기화
+    setErrorMessage("");
   };
 
   const onPasswordChangeHandler = event => {
     setPassword(event.target.value);
-    setErrorMessage(""); // 비밀번호가 변경되면 에러 메시지 초기화
+    setErrorMessage("");
   };
 
   const signInHandler = event => {

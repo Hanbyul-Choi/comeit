@@ -1,4 +1,5 @@
-import { Button, SIGN_IN_MODAL, SIGN_UP_MODAL, SignInForm, SignUpForm, useModal } from "components";
+import { Button, useModal } from "components";
+import { SIGN_IN_MODAL, SIGN_UP_MODAL, SignInForm, SignUpForm } from "components/Forms";
 
 export const Home = () => {
   const { mount } = useModal();
