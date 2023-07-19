@@ -1,28 +1,35 @@
 import { Button } from "components/Button";
+import { SIGN_IN_MODAL, SIGN_UP_MODAL, SignInForm, SignUpForm } from "components/Forms";
+import { useModal } from "components/Overlay";
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { useSelector } from "react-redux";
 import * as Styled from "./Header.styles";
 import { UserDropdown } from "./UserDropdown";
 
 export const Header = () => {
   const [openOption, setOpenOption] = useState(false);
-  const isloggedIn = false;
+  const { mount } = useModal();
+  const user = useSelector(state => state.user.user);
+
   const openMenu = () => {
     setOpenOption(prev => !prev);
   };
 
   const onLogin = () => {
-    alert("로그인하기");
+    mount(SIGN_IN_MODAL, <SignInForm />);
   };
-  const onResister = () => {
-    alert("회원가입하기");
+
+  const onRegister = () => {
+    mount(SIGN_UP_MODAL, <SignUpForm />);
   };
+
   return (
     <Styled.Container>
       <Styled.Wrapper>
         <div className="logo">커밋</div>
         <div className="right">
-          {isloggedIn ? (
+          {user !== null ? (
             <>
               <Styled.UserImg onClick={openMenu}>user</Styled.UserImg>
               {openOption && createPortal(<UserDropdown />, document.getElementById("portal-root"))}
@@ -32,7 +39,7 @@ export const Header = () => {
               <Styled.SigninButton size="small" onClick={onLogin}>
                 로그인
               </Styled.SigninButton>
-              <Button size="small" onClick={onResister}>
+              <Button size="small" onClick={onRegister}>
                 회원가입
               </Button>
             </>
