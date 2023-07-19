@@ -22,7 +22,6 @@ export const Container = styled.div`
 
 export const ContainerBlock = styled.div`
   ${flex.center()}
-  padding: 10px;
   gap: 12px;
 `;
 

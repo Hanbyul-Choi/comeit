@@ -8,9 +8,9 @@ export const Container = styled.div`
 
   ${size({ height: HEADER_HEIGHT })}
 
-  /* ${({ theme }) => css`
-    background-color: ${theme.colors.blue};
-  `} */
+  ${({ theme }) => css`
+    box-shadow: ${theme.shadows.drop2};
+  `}
 
   padding: 0 24px;
 `;
