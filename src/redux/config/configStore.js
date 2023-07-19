@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dialog from "redux/modules/dialogSlice";
+import user from "redux/modules/userSlice";
 
 const store = configureStore({
   reducer: {
-    dialog
+    user
   }
 });
 

@@ -1,5 +1,6 @@
 export * from "./Button";
 export * from "./Dropdown";
+export * from "./Forms";
 export * from "./Header";
 export * from "./Input";
 export * from "./Label";

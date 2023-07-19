@@ -1,9 +1,19 @@
 import { css, styled } from "styled-components";
-import { size, typography } from "styles/mixins";
+import { flex, size, typography } from "styles/mixins";
+
+const variantStyle = ({ variant }) => {
+  switch (variant) {
+    case "middle":
+      return css`
+        ${flex.center()}
+      `;
+    default:
+      return;
+  }
+};
 
 const baseStyle = ({ size: _size = "small", theme: { colors, shadows, sizes } }) => {
   return css`
-    box-shadow: ${shadows.drop1};
     // 글씨 색상
     color: ${colors.gray3};
 
@@ -21,4 +31,5 @@ const baseStyle = ({ size: _size = "small", theme: { colors, shadows, sizes } })
 
 export const Label = styled.label`
   ${props => baseStyle(props)}
+  ${props => variantStyle(props)}
 `;
