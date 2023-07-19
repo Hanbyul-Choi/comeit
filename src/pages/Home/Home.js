@@ -1,13 +1,19 @@
-import { Button, useModal } from "components";
-import { SIGN_IN_MODAL, SIGN_UP_MODAL, SignInForm, SignUpForm } from "components/Forms";
+import { Header } from "components";
+import { Container, NaverMap } from "react-naver-maps";
+import * as Styled from "./Home.styles";
 
 export const Home = () => {
-  const { mount } = useModal();
-
   return (
-    <div>
-      <Button onClick={() => mount(SIGN_UP_MODAL, <SignUpForm />)}>버튼</Button>
-      <Button onClick={() => mount(SIGN_IN_MODAL, <SignInForm />)}>로그인</Button>
-    </div>
+    <>
+      <Header />
+
+      <Styled.Container>
+        <Styled.Sidebar>사이드바</Styled.Sidebar>
+
+        <Container style={{ flex: 1 }}>
+          <NaverMap />
+        </Container>
+      </Styled.Container>
+    </>
   );
 };
