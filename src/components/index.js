@@ -6,6 +6,5 @@ export * from "./Header";
 export * from "./Input";
 export * from "./Label";
 export * from "./Overlay";
-export * from "./Overlay/Dialog";
 export * from "./Slider";
 export * from "./Textarea";
