@@ -1,5 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Container, ContainerBlock, Img, SliderContainer } from "./Slider.styles";
+import {
+  Button,
+  Container,
+  ContainerBlock,
+  Img,
+  SlideItem,
+  SliderContainer
+} from "./Slider.styles";
 
 export const Slider = ({
   showContentNum = 3,
@@ -30,16 +37,23 @@ export const Slider = ({
       <Button className="prev" onClick={prevSlide} disabled={currentSlide === 0}>
         &lt;
       </Button>
+
       <Container contentWidth={contentWidth} showContentNum={showContentNum} space={space}>
         <SliderContainer sliceWidth={sliceWidth} ref={slideRef}>
-          {contents.map(item => (
-            <Img
+          {contents.map((item, index) => (
+            <SlideItem
               space={space}
               contentWidth={contentWidth}
-              key={item.id}
-              src={item.imgUrl}
+              key={item.id || index} // 아이템에 id가 없을 경우 index를 사용하여 key 설정
+              color={item.color}
               onClick={() => onClickHandler(item.id)}
-            />
+            >
+              {typeof item === "string" ? ( // item이 문자열인 경우 이미지 소스로 가정하고 이미지 태그 렌더링
+                <Img src={item} space={space} contentWidth={contentWidth} />
+              ) : (
+                item // 이미지가 아닌 다른 요소라면 그대로 렌더링
+              )}
+            </SlideItem>
           ))}
         </SliderContainer>
       </Container>

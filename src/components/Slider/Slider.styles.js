@@ -1,10 +1,18 @@
 import { css, styled } from "styled-components";
 import { flex } from "styles/mixins";
 
+export const SlideItem = styled.div`
+  ${props => css`
+    width: ${props.contentWidth}px;
+    padding: 0 ${props.space}px;
+  `}
+`;
+
 export const Img = styled.img`
   ${props => css`
     width: ${props.contentWidth}px;
     padding: 0 ${props.space}px;
+    border-radius: 10px;
   `}
 `;
 
@@ -14,15 +22,17 @@ export const SliderContainer = styled.div`
 `;
 
 export const Container = styled.div`
+  /* width: ${({ contentWidth, space, showContentNum }) =>
+    (contentWidth + space / 2 - space) * showContentNum}px; */
+
   width: ${({ contentWidth, space, showContentNum }) =>
-    (contentWidth + space / 2 - space) * showContentNum}px;
+    contentWidth * showContentNum + space * 2}px;
   overflow: hidden;
   position: relative;
 `;
 
 export const ContainerBlock = styled.div`
   ${flex.center()}
-  gap: 12px;
 `;
 
 export const Button = styled.button`
