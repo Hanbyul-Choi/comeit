@@ -25,9 +25,6 @@ export const SliderContainer = styled.div`
 `;
 
 export const Container = styled.div`
-  /* width: ${({ contentWidth, space, showContentNum }) =>
-    (contentWidth + space / 2 - space) * showContentNum}px; */
-
   width: ${({ contentWidth, space, showContentNum }) =>
     contentWidth * showContentNum + space * 2}px;
   overflow: hidden;
@@ -39,7 +36,7 @@ export const ContainerBlock = styled.div`
 `;
 
 export const Button = styled.button`
-  ${({ theme }) => css`
+  ${({ theme, position }) => css`
     width: 22px;
     height: 22px;
     border: none;
@@ -47,21 +44,13 @@ export const Button = styled.button`
     background-color: ${hexToRgba(theme.colors.gray3, 0.3)};
     border-radius: 5px;
     transition: all 0.3s ease-in-out;
+    position: absolute;
+    top: 35px;
+    ${position}: 10px;
 
     &:hover {
       background-color: ${theme.palettes.blue.base};
       color: ${theme.colors.white};
     }
   `}
-
-  &.prev {
-    position: absolute;
-    left: 10px;
-    top: 35px;
-  }
-  &.next {
-    position: absolute;
-    right: 10px;
-    top: 35px;
-  }
 `;

@@ -10,7 +10,10 @@ export const Slider = ({
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
+
   const slideRef = useRef(null);
+  const prev = useRef(null);
+  const next = useRef(null);
 
   const TOTAL_SLIDES = contents.length - 1;
   const sliceWidth = contentWidth * showContentNum + space * (showContentNum - 1);
@@ -19,6 +22,7 @@ export const Slider = ({
   const nextSlide = () => {
     setCurrentSlide(currentSlide + 1);
   };
+
   const prevSlide = () => {
     setCurrentSlide(currentSlide - 1);
   };
@@ -32,9 +36,12 @@ export const Slider = ({
   };
 
   useEffect(() => {
+    if (prev.current) prev.current.style.display = currentSlide === 0 ? "none" : "block";
+    if (next.current) next.current.style.display = isLastSlide ? "none" : "block";
+
     slideRef.current.style.transition = "all 0.5s ease-in-out";
     slideRef.current.style.transform = `translateX(-${currentSlide * contentWidth}px)`;
-  }, [currentSlide, contentWidth]);
+  }, [currentSlide, isLastSlide, isButtonVisible, contentWidth]);
 
   return (
     <Styled.ContainerBlock onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -59,10 +66,10 @@ export const Slider = ({
 
         {isButtonVisible && (
           <>
-            <Styled.Button className="prev" onClick={prevSlide} disabled={currentSlide === 0}>
+            <Styled.Button ref={prev} onClick={prevSlide} position="left">
               &lt;
             </Styled.Button>
-            <Styled.Button className="next" onClick={nextSlide} disabled={isLastSlide}>
+            <Styled.Button ref={next} onClick={nextSlide} position="right">
               &gt;
             </Styled.Button>
           </>
