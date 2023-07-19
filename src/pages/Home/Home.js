@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 
 export const Home = () => {
-  const { mount } = useDialog();
+  const { Alert, Confirm } = useDialog();
   const navigate = useNavigate();
 
   const testHandler = async () => {
-    if (await mount("Test", "Confirm", "hello")) {
-      await mount("test2", "Alert", "ok");
+    if (await Confirm("Hello")) {
+      await Alert("Ok");
       navigate("/");
     } else {
       return;

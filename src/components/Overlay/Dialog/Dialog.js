@@ -3,11 +3,11 @@ import { useLockBodyScroll } from "hooks/useLockBodyScroll";
 import { Flex, Typography } from "styles/mixins";
 import * as Styled from "./Dialog.styles";
 
-export const Dialog = ({ onClose, onSucess, name, type = "Confirm", children }) => {
+export const Dialog = ({ onClose, onSucess, type, children }) => {
   const close = event => {
     const { target, currentTarget } = event;
     if (target !== currentTarget) return;
-    onSucess(name);
+    onClose();
   };
 
   useLockBodyScroll(true);
@@ -25,7 +25,7 @@ export const Dialog = ({ onClose, onSucess, name, type = "Confirm", children }) 
           </Flex>
         ) : (
           <Flex gap={20}>
-            <Button onClick={onSucess}>확인</Button>
+            <Button onClick={close}>확인</Button>
           </Flex>
         )}
       </Styled.DialogBody>

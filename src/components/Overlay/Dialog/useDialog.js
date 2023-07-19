@@ -4,49 +4,43 @@ import { Dialog } from "./Dialog";
 export const useDialog = () => {
   const { mount: _mount, unmount: _unmount } = useOverlayContext();
 
-  const mount = (name, type, element) => {
+  const Confirm = element => {
     return new Promise(resolve => {
-      switch (type) {
-        case "Confirm": {
-          _mount(
-            name,
-            <Dialog
-              type={type}
-              name={name}
-              onClose={() => {
-                resolve(false);
-                _unmount(name);
-              }}
-              onSucess={() => {
-                resolve(true);
-                _unmount(name);
-              }}
-            >
-              {element}
-            </Dialog>
-          );
-          break;
-        }
-        case "Alert": {
-          _mount(
-            name,
-            <Dialog
-              type={type}
-              name={name}
-              onSucess={() => {
-                resolve(true);
-                _unmount(name);
-              }}
-            >
-              {element}
-            </Dialog>
-          );
-          break;
-        }
-        default:
-      }
+      _mount(
+        "Confirm",
+        <Dialog
+          type="Confirm"
+          onClose={() => {
+            resolve(false);
+            _unmount("Confirm");
+          }}
+          onSucess={() => {
+            resolve(true);
+            _unmount("Confirm");
+          }}
+        >
+          {element}
+        </Dialog>
+      );
     });
   };
 
-  return { mount };
+  const Alert = element => {
+    return new Promise(resolve => {
+      _mount(
+        "Alert",
+        <Dialog
+          type="Alert"
+          onClose={() => {
+            resolve(true);
+            _unmount("Alert");
+          }}
+        >
+          {element}
+        </Dialog>
+      );
+    });
+  };
+
+  return { Alert, Confirm };
 };
