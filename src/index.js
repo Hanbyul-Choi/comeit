@@ -1,5 +1,6 @@
 import isPropValid from "@emotion/is-prop-valid";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { OverlayProvider } from "components";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { NavermapsProvider } from "react-naver-maps";
@@ -22,9 +23,11 @@ root.render(
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
-            <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_KEY}>
-              <App />
-            </NavermapsProvider>
+            <OverlayProvider>
+              <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_KEY}>
+                <App />
+              </NavermapsProvider>
+            </OverlayProvider>
           </BrowserRouter>
         </ThemeProvider>
       </QueryClientProvider>

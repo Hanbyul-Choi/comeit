@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { Button, Input, Label, useModal } from "components";
+import { Button, Input, Label, useDialog, useModal } from "components";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "server/config";
@@ -13,25 +13,28 @@ export const SignInForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { unmount } = useModal();
+  const { Alert } = useDialog();
 
   const signIn = async () => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-      if (userCredential) {
-        alert("로그인 되었습니다.");
-        unmount(SIGN_IN_MODAL);
-      }
-    } catch (error) {
-      console.log("로그인 에러:", error);
-      setErrorMessage("이메일 또는 비밀번호가 올바르지 않습니다.");
+    if (userCredential) {
+      Alert("로그인 되었습니다.");
+      unmount(SIGN_IN_MODAL);
     }
   };
 
   const { mutate } = useMutation(signIn, {
-    onError: () => {
-      console.log("로그인 에러");
-      setErrorMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+    onError: error => {
+      if (
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/user-not-found" ||
+        error.code === "auth/invalid-email"
+      ) {
+        setErrorMessage("이메일 또는 비밀번호가 올바르지 않습니다.");
+      } else {
+        setErrorMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+      }
     }
   });
 
@@ -75,7 +78,9 @@ export const SignInForm = () => {
         onChange={onPasswordChangeHandler}
       />
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-      <Button type="submit">로그인</Button>
+      <Button type="submit" style={{ marginTop: "15px" }}>
+        로그인
+      </Button>
     </FlexColumn>
   );
 };
