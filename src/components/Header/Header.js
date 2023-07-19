@@ -4,16 +4,17 @@ import { useModal } from "components/Overlay";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
+import userImg from "../../assets/userImg/user.png";
 import * as Styled from "./Header.styles";
 import { UserDropdown } from "./UserDropdown";
 
 export const Header = () => {
-  const [openOption, setOpenOption] = useState(false);
   const { mount } = useModal();
+  const [openOption, setOpenOption] = useState(false);
   const user = useSelector(state => state.user.user);
 
   const openMenu = () => {
-    setOpenOption(prev => !prev);
+    setOpenOption(() => true);
   };
 
   const onLogin = () => {
@@ -23,16 +24,20 @@ export const Header = () => {
   const onRegister = () => {
     mount(SIGN_UP_MODAL, <SignUpForm />);
   };
-
   return (
     <Styled.Container>
       <Styled.Wrapper>
-        <div className="logo">커밋</div>
+        <div className="logo">Come it!</div>
         <div className="right">
-          {user !== null ? (
+          {user ? (
             <>
-              <Styled.UserImg onClick={openMenu}>user</Styled.UserImg>
-              {openOption && createPortal(<UserDropdown />, document.getElementById("portal-root"))}
+              <p>{user.nickname ?? "닉네임"}</p>
+              <Styled.UserImg src={user.userImgUrl ?? userImg} alt="user Img" onClick={openMenu} />
+              {openOption &&
+                createPortal(
+                  <UserDropdown setOpenOption={setOpenOption} />,
+                  document.getElementById("portal-root")
+                )}
             </>
           ) : (
             <>

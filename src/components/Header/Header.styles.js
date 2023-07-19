@@ -8,18 +8,24 @@ export const Container = styled.div`
 
   ${size({ height: HEADER_HEIGHT })}
 
-  /* ${({ theme }) => css`
-    background-color: ${theme.colors.blue};
-  `} */
-
-  padding: 0 24px;
+  ${({ theme }) => css`
+    background-color: ${theme.colors.gray1};
+    padding: 0 24px;
+  `}
 `;
 
 export const Wrapper = styled.div`
   ${flex({ align: "center", justify: "between" })}
   width: 100%;
+  .logo {
+    font-weight: 600;
+  }
   .right {
     ${flex({ align: "center", gap: 12 })}
+    p {
+      font-size: 14px;
+      font-weight: 500;
+    }
   }
 `;
 
@@ -33,11 +39,16 @@ export const SigninButton = styled(Button)`
   `}
 `;
 
-export const UserImg = styled.div`
-  width: 40px;
-  height: 40px;
-  background-color: coral;
+export const UserImg = styled.img`
+  width: 45px;
+  height: 45px;
   border-radius: 20px;
+  ${({ theme }) => css`
+    &:hover {
+      border: 1px solid ${theme.colors.black};
+    }
+  `}
+
   ${flex({ align: "center", justify: "center" })}
   cursor: pointer;
 `;

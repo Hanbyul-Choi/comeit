@@ -17,7 +17,7 @@ export const ModalOuter = styled.div`
 `;
 
 export const ModalInner = styled.div`
-  ${size({ width: "calc(100% - 80px)", maxWidth: 600 })}
+  ${size({ width: "calc(100% - 80px)", maxWidth: 400 })}
 
   padding: 20px;
 
