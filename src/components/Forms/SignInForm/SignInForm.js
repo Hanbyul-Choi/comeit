@@ -2,6 +2,8 @@ import { useMutation } from "@tanstack/react-query";
 import { Button, Input, Label, useDialog, useModal } from "components";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getUser } from "redux/modules/userSlice";
 import { auth } from "server/config";
 import { FlexColumn } from "styles/mixins";
 
@@ -11,6 +13,7 @@ export const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
 
   const { unmount } = useModal();
   const { Alert } = useDialog();
@@ -21,6 +24,7 @@ export const SignInForm = () => {
     if (userCredential) {
       Alert("로그인 되었습니다.");
       unmount(SIGN_IN_MODAL);
+      dispatch(getUser(userCredential.user));
     }
   };
 
