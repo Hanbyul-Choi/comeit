@@ -6,7 +6,6 @@ export const Home = () => {
   return (
     <>
       <Header />
-
       <Styled.Container>
         <Styled.Sidebar>사이드바</Styled.Sidebar>
 
