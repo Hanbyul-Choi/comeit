@@ -19,13 +19,13 @@ import * as Styled from "./PostForm.styles";
 export const PostForm = ({ closePost }) => {
   const { Alert } = useDialog();
   const navigate = useNavigate();
-  const [groupName, onChangeGroupName] = useInput("");
-  const [meetingDate, onChangeMeetingDate] = useInput("");
-  const [meetingPlace, onChangeMeetingPlace] = useInput("");
-  const [groupContact, onChangeGroupContact] = useInput("");
-  const [meetingNumber, onChangeMeetingNumber] = useInput("");
+  const [groupName, onChangeGroupName] = useInput();
+  const [meetingDate, onChangeMeetingDate] = useInput();
+  const [meetingPlace, onChangeMeetingPlace] = useInput();
+  const [groupContact, onChangeGroupContact] = useInput();
+  const [meetingNumber, onChangeMeetingNumber] = useInput();
   const [category, setCategory] = useState(null);
-  const [groupIntro, onChangeGroupIntro] = useInput("");
+  const [groupIntro, onChangeGroupIntro] = useInput();
   const [attachment, setAttachment] = useState("");
 
   const { user } = useSelector(state => state.user);
