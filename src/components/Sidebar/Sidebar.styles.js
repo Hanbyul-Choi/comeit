@@ -1,16 +1,20 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import { flex } from "styles/mixins";
 
-export const SidebarWrapper = styled.div`
-  ${flex.column({ gap: 20 })}
+export const baseStyle = ({ gap = 0, padding = 20 }) => css`
+  ${flex.column()}
+  gap: ${gap}px;
+  padding: ${padding}px;
+`;
 
-  padding: 20px;
+export const SidebarWrapper = styled.div`
+  ${props => baseStyle(props)}
 `;
 
 export const SearchContainer = styled.div`
-  ${flex.column()}
+  ${props => baseStyle(props)}
 `;
 
 export const PostContainer = styled.ul`
-  ${flex.column({ gap: 20 })}
+  ${props => baseStyle(props)}
 `;
