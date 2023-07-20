@@ -1,11 +1,12 @@
-import { Header, PostForm, Sidebar } from "components";
-import { Show } from "components/ExtendSideBar/Show/Show";
+import { Header, PostForm, Show, Sidebar } from "components";
 import { Container, NaverMap } from "react-naver-maps";
+import { useLocation } from "react-router-dom";
 import * as Styled from "./Home.styles";
 
 export const Home = () => {
   // const [extendtype, setExtendtype] = useState("");
   // const [showExtend, setshowExtend] = useState("");
+  const currentUrl = useLocation();
 
   return (
     <>
@@ -13,10 +14,11 @@ export const Home = () => {
       <Styled.Container>
         <Sidebar />
 
-        {/* {showExtend && extendtype === "post" ? <Post /> : <Show />}         */}
-        {/* {extendtype === "post" ? <Post /> : <Show />} */}
-        <PostForm />
-        <Show />
+        {currentUrl.pathname !== "/home" && currentUrl.pathname.includes("post") ? (
+          <PostForm />
+        ) : (
+          <Show />
+        )}
         <Container style={{ flex: 1 }}>
           <NaverMap />
         </Container>
