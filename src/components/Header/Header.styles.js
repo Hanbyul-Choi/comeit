@@ -1,4 +1,5 @@
 import { Button } from "components/Button";
+import { Link } from "react-router-dom";
 import { css, styled } from "styled-components";
 import { flex, size } from "styles/mixins";
 import { HEADER_HEIGHT } from "./Header.constants";
@@ -12,16 +13,22 @@ export const Container = styled.div`
   padding: 0 24px;
 `;
 
-export const Wrapper = styled.div`
-  ${flex({ align: "center", justify: "between" })}
-  width: 100%;
-  .logo {
+export const StLink = styled(Link)`
+  ${({ theme }) => css`
     font-weight: 600;
     ${flex({ align: "center", justify: "between" })}
     img {
       width: 40px;
     }
-  }
+    &:hover {
+      color: ${theme.palettes.blue.hover};
+    }
+  `}
+`;
+
+export const Wrapper = styled.div`
+  ${flex({ align: "center", justify: "between" })}
+  width: 100%;
   .right {
     position: relative;
     ${flex({ align: "center", gap: 12 })}

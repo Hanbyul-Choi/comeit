@@ -26,10 +26,10 @@ export const Header = () => {
   return (
     <Styled.Container>
       <Styled.Wrapper>
-        <div className="logo">
+        <Styled.StLink to="/">
           <img src={logo} alt="logo" />
           Come it!
-        </div>
+        </Styled.StLink>
         <div className="right">
           {user ? (
             <>

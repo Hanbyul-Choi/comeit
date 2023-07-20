@@ -9,7 +9,7 @@ export const Intro = () => {
       <Styled.Container>
         <Styled.Img src={mainImage} alt="Intro 이미지" />
         <Styled.Box>
-          <Styled.NavigateButton>동네 모임 둘러보기</Styled.NavigateButton>
+          <Styled.NavigateButton to="/home">동네 모임 둘러보기</Styled.NavigateButton>
         </Styled.Box>
       </Styled.Container>
     </Styled.Layout>
