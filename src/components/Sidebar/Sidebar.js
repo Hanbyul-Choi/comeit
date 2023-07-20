@@ -47,9 +47,14 @@ export const Sidebar = () => {
         {filteredData?.map(content => {
           return (
             <Styled.Link to={`/home/${content.id}`} key={content.id}>
-              <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
-              <Styled.ContentBox>{content.meetingDate}</Styled.ContentBox>
-              <Styled.ContentBox>{content.meetingPlace}</Styled.ContentBox>
+              <div>
+                <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
+              </div>
+              <div>
+                <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
+                <Styled.ContentBox>{content.meetingDate}</Styled.ContentBox>
+                <Styled.ContentBox>{content.meetingPlace}</Styled.ContentBox>
+              </div>
             </Styled.Link>
           );
         })}

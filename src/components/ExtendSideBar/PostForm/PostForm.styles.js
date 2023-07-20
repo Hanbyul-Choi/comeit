@@ -2,6 +2,7 @@ import { HEADER_HEIGHT } from "components/Header/Header.constants";
 import { styled } from "styled-components";
 import { flex, size } from "styles/mixins";
 import { theme } from "styles/theme";
+import { colors } from "styles/theme/colors";
 import { sizes } from "styles/theme/sizes";
 
 export const Sidebar = styled.div`
@@ -23,7 +24,7 @@ export const ImgBox = styled.div`
   ${flex({ align: "center", justify: "center" })}
   width: 17.2rem;
   height: 14rem;
-  background-color: ${theme.colors.lightBlue};
+  background-color: ${colors.gray2};
   border-radius: 10px;
   position: relative;
 `;

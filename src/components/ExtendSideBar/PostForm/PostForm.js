@@ -156,7 +156,7 @@ export const PostForm = ({ closePost }) => {
           </Dropdown>
 
           <Textarea placeholder="모임 소개" value={groupIntro} onChange={onChangeGroupIntro} />
-          <FlexCenter style={{ marginTop: "15px", gap: 20 }}>
+          <FlexCenter style={{ marginTop: "15px", gap: 5 }}>
             <Button
               type="button"
               variant="outline"

@@ -1,7 +1,9 @@
 import { Label } from "components/Label";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
+import arrowPrev from "assets/buttonIcon/arrowPrev.svg";
 import { db } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./Show.styles";
@@ -30,6 +32,8 @@ export const Show = ({ id }) => {
             <FlexCenter>
               <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
             </FlexCenter>
+            <Label variant="variant">작성자</Label>
+            <Styled.ContentBox>{content.uid}</Styled.ContentBox>
             <Label variant="variant">모임 이름</Label>
             <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
             <Label variant="variant">모임 날짜</Label>
@@ -45,6 +49,12 @@ export const Show = ({ id }) => {
           </FlexColumn>
         )}
       </Styled.ExtendSidebar>
+      {createPortal(
+        <Styled.Button>
+          <img src={arrowPrev} alt="이전버튼" />
+        </Styled.Button>,
+        document.getElementById("portal-root")
+      )}
     </div>
   );
 };
