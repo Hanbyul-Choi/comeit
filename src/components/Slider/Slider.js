@@ -1,3 +1,5 @@
+import arrowNext from "assets/buttonIcon/arrowNext.svg";
+import arrowPrev from "assets/buttonIcon/arrowPrev.svg";
 import { useEffect, useRef, useState } from "react";
 import * as Styled from "./Slider.styles";
 
@@ -67,10 +69,10 @@ export const Slider = ({
         {isButtonVisible && (
           <>
             <Styled.Button ref={prev} onClick={prevSlide} position="left">
-              &lt;
+              <img src={arrowPrev} alt="이전버튼" />
             </Styled.Button>
             <Styled.Button ref={next} onClick={nextSlide} position="right">
-              &gt;
+              <img src={arrowNext} alt="다음버튼" />
             </Styled.Button>
           </>
         )}

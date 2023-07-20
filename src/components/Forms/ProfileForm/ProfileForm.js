@@ -1,6 +1,7 @@
 import { doc, updateDoc } from "@firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 import { useMutation } from "@tanstack/react-query";
+import userImg from "assets/userImg/user.png";
 import { Button, Input, Label, useDialog, useModal } from "components";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
@@ -9,7 +10,6 @@ import { updateNickname, updateProfileImg } from "redux/modules/userSlice";
 import { auth, db, storage } from "server/config";
 import { css, styled } from "styled-components";
 import { FlexColumn, flex } from "styles/mixins";
-import userImg from "../../../assets/userImg/user.png";
 
 export const PROFILE_EDIT_MODAL = "PROFILE_EDIT_MODAL";
 

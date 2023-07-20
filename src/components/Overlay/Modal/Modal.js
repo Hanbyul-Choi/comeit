@@ -1,4 +1,4 @@
-import { useLockBodyScroll } from "hooks/useLockBodyScroll";
+import { useLockBodyScroll } from "hooks";
 import { createPortal } from "react-dom";
 import { useOverlayContext } from "../Overlay.context";
 import * as Styled from "./Modal.styles";
