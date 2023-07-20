@@ -1,5 +1,12 @@
 import { Button } from "components";
 import { css, styled } from "styled-components";
+import { flex } from "styles/mixins";
+
+export const Layout = styled.div`
+  ${flex({ align: "center", direction: "column", justify: "center" })}
+  margin: 0 auto;
+  width: 80%;
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -12,6 +19,7 @@ export const LogoImg = styled.img`
   height: 50px;
 `;
 export const Img = styled.img`
+  width: 100%;
   display: flex;
   padding-top: 100px;
   padding-bottom: 50px;

@@ -1,9 +1,14 @@
+import { doc, updateDoc } from "@firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 import { useMutation } from "@tanstack/react-query";
 import { Button, Input, Label, useDialog, useModal } from "components";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateNickname, updateProfileImg } from "redux/modules/userSlice";
+import { auth, db, storage } from "server/config";
 import { css, styled } from "styled-components";
-import { FlexColumn } from "styles/mixins";
+import { FlexColumn, flex } from "styles/mixins";
 import userImg from "../../../assets/userImg/user.png";
 
 export const PROFILE_EDIT_MODAL = "PROFILE_EDIT_MODAL";
@@ -13,24 +18,27 @@ export const ProfileForm = () => {
   const { Alert } = useDialog();
 
   const { user } = useSelector(state => state.user);
-  const { email, nickname, userImgUrl } = user;
+  const { email, nickname, userImgUrl, id } = user;
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [editNickname, setEditNickname] = useState(nickname);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const dispatch = useDispatch();
+
   const updateProfile = async () => {
-    // await setDoc(doc(db, "users", userCredential.user.uid), {
-    //   id: userCredential.user.uid,
-    //   email,
-    //   nickname,
-    //   userImgUrl: ""
-    // });
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    if (userCredential) {
+      await updateDoc(doc(db, "users", id), {
+        nickname: editNickname
+      });
+    }
   };
 
   const { mutate } = useMutation({
     mutationFn: updateProfile,
     onSuccess: () => {
+      dispatch(updateNickname(editNickname));
       setPassword("");
       setConfirmPassword("");
       setEditNickname("");
@@ -39,10 +47,10 @@ export const ProfileForm = () => {
       Alert("프로필이 수정되었습니다.");
     },
     onError: error => {
-      if (error.code === "auth/email-already-in-use") {
-        setErrorMessage("이미 존재하는 이메일 주소입니다.");
+      if (error.code === "auth/wrong-password") {
+        setErrorMessage("비밀번호가 틀립니다.");
       } else {
-        setErrorMessage("회원가입에 실패했습니다. 다시 시도해주세요.");
+        setErrorMessage("중복된 닉네임 입니다."); // 회원가입 시 닉네임 중복 검사부분 작성 필요
       }
     }
   });
@@ -60,11 +68,26 @@ export const ProfileForm = () => {
     setErrorMessage("");
   };
 
-  const submitHandler = event => {
-    event.preventDefault();
+  const onFileChange = async e => {
+    const {
+      target: { files }
+    } = e;
+    const theFile = files[0];
+    const imageRef = ref(storage, `profileImg/${id}`);
+    await uploadBytes(imageRef, theFile);
+    const attachmentUrl = await getDownloadURL(ref(storage, imageRef));
+    updateDoc(doc(db, "users", id), { userImgUrl: attachmentUrl });
+    dispatch(updateProfileImg(attachmentUrl));
+  };
 
+  const submitHandler = async event => {
+    event.preventDefault();
     if (password !== confirmPassword) {
       setErrorMessage("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+    if (password.trim() === "" || confirmPassword.trim() === "") {
+      setErrorMessage("비밀번호를 입력해주세요");
       return;
     }
     mutate();
@@ -72,7 +95,10 @@ export const ProfileForm = () => {
 
   return (
     <FlexColumn gap={8} as="form" onSubmit={submitHandler}>
-      <UserImg src={userImgUrl ?? userImg} />
+      <FileLabel htmlFor="fileInput">
+        <UserImg src={userImgUrl ?? userImg} />
+      </FileLabel>
+      <FileInput type="file" id="fileInput" accept="image/*" onChange={onFileChange} />
       <Label variant="text">아이디</Label>
       <Input variant="outline" placeholder="example@naver.com" value={email} disabled />
 
@@ -122,4 +148,11 @@ const UserImg = styled.img`
       border: 2px solid ${theme.colors.blue.hover};
     }
   `}
+`;
+
+const FileInput = styled.input`
+  display: none;
+`;
+const FileLabel = styled.label`
+  ${flex({ justify: "center" })}
 `;

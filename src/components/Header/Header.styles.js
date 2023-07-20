@@ -7,11 +7,9 @@ export const Container = styled.div`
   ${flex({ align: "center" })}
 
   ${size({ height: HEADER_HEIGHT })}
+  width: 100%;
 
-  ${({ theme }) => css`
-    background-color: ${theme.colors.gray1};
-    padding: 0 24px;
-  `}
+  padding: 0 24px;
 `;
 
 export const Wrapper = styled.div`
@@ -19,8 +17,13 @@ export const Wrapper = styled.div`
   width: 100%;
   .logo {
     font-weight: 600;
+    ${flex({ align: "center", justify: "between" })}
+    img {
+      width: 40px;
+    }
   }
   .right {
+    position: relative;
     ${flex({ align: "center", gap: 12 })}
     p {
       font-size: 14px;
