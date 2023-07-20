@@ -7,8 +7,8 @@ export const Container = styled.div`
   ${flex({ align: "center" })}
 
   ${size({ height: HEADER_HEIGHT })}
+  
   width: 100%;
-
   padding: 0 24px;
 `;
 
