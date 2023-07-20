@@ -4,8 +4,8 @@ import { flex } from "styles/mixins";
 export const UserDropdownWrapper = styled.div`
   ${flex({ direction: "column", align: "center", justify: "center" })}
   position: absolute;
-  top: 50px;
-  right: -20px;
+  top: 52px;
+  right: 10px;
   border-radius: 5px;
   overflow: hidden;
   background-color: white;

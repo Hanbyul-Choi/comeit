@@ -5,7 +5,7 @@ import { flex } from "styles/mixins";
 export const Layout = styled.div`
   ${flex({ align: "center", direction: "column", justify: "center" })}
   margin: 0 auto;
-  width: 80%;
+  width: 100%;
 `;
 
 export const Container = styled.div`
