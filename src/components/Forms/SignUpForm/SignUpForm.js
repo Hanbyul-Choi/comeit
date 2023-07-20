@@ -33,10 +33,10 @@ export const SignUpForm = () => {
 
   const { mutate, reset } = useMutation({
     mutationFn: signUp,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await Alert("회원가입이 완료되었습니다.");
       unmount(SIGN_UP_MODAL);
       reset();
-      Alert("회원가입이 완료되었습니다.");
     },
     onError: error => {
       if (error.code === "auth/email-already-in-use") {
