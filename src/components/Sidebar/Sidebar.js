@@ -11,23 +11,17 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import * as Styled from "./Sidebar.styles";
 
-const CategoryArr = [sports, game, travel, culture, language, social];
+const CategoryImages = [sports, game, travel, culture, language, social];
+const CategoryNames = ["sports", "game", "travel", "culture", "language", "social"];
 
 export const Sidebar = () => {
-<<<<<<< HEAD
-  // 1. 파이어스토어에 있는 post 전체를 가져오는 함수를 만든다. (비동기함수)
-=======
-  const SliderArr = [sports, game, travel, culture, language, social];
->>>>>>> 0bc1e064e7c9ec1c8d2d36387bb8af24cae3f8f6
-  // 2. 리액트 쿼리(useQuery)를 사용해서 그 함수를 실행시킨다.
-  // 3. data를 추출해서 map메서드로 리스트를 생성한다.
-
   const { data } = useQuery(["contents"], fetchData);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const handleCategoryClick = category => {
-    setSelectedCategory(category);
+  const handleCategoryClick = categoryImage => {
+    const categoryIndex = CategoryImages.indexOf(categoryImage);
+    setSelectedCategory(CategoryNames[categoryIndex]);
   };
 
   const filterData = () => {
@@ -63,7 +57,7 @@ export const Sidebar = () => {
       <Slider
         showContentNum={3}
         space={5}
-        contents={CategoryArr}
+        contents={CategoryImages}
         onClickHandler={handleCategoryClick}
       />
 
