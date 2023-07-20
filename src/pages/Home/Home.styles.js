@@ -9,5 +9,6 @@ export const Container = styled.div`
 `;
 
 export const Sidebar = styled.div`
-  width: 300px;
+  /* width: 300px; */
+  ${size({ width: 300, height: `calc(100vh - ${HEADER_HEIGHT}px)` })}
 `;

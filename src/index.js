@@ -1,8 +1,11 @@
 import isPropValid from "@emotion/is-prop-valid";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { OverlayProvider } from "components";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import store from "redux/config/configStore";
 import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { theme } from "styles/theme";
 import App from "./App";
@@ -20,9 +23,13 @@ root.render(
     >
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <Provider store={store}>
+            <BrowserRouter>
+              <OverlayProvider>
+                  <App />
+              </OverlayProvider>
+            </BrowserRouter>
+          </Provider>
         </ThemeProvider>
       </QueryClientProvider>
     </StyleSheetManager>

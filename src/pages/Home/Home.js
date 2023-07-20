@@ -1,6 +1,8 @@
-import { ClickedMarker, Header, MarkerItem } from "components";
+
+import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar } from "components";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
+import { useLocation } from "react-router-dom";
 import * as Styled from "./Home.styles";
 
 const TMP = [
@@ -27,6 +29,7 @@ const TMP = [
 ];
 
 export const Home = () => {
+
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
 
@@ -34,11 +37,21 @@ export const Home = () => {
     setPosition({ lat: e.latLng.getLat(), lng: e.latLng.getLng() });
     setSelected(null);
   };
+
+  // const [extendtype, setExtendtype] = useState("");
+  // const [showExtend, setshowExtend] = useState("");
+  const currentUrl = useLocation();
+
   return (
     <>
       <Header />
       <Styled.Container>
-        <Styled.Sidebar>사이드바</Styled.Sidebar>
+        <Sidebar />
+        {currentUrl.pathname !== "/home" && currentUrl.pathname.includes("post") ? (
+          <PostForm />
+        ) : (
+          <Show />
+        )}
         <Map
           center={{ lat: 33.45168, lng: 126.574942 }}
           style={{ width: "100%", height: "100%" }}
