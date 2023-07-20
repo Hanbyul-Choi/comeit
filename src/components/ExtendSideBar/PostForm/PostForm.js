@@ -82,13 +82,6 @@ export const PostForm = ({ closePost }) => {
   const { mutate } = useMutation({
     mutationFn: Post,
     onSuccess: () => {
-      // setGroupName("");
-      // setMeetingDate("");
-      // setMeetingPlace("");
-      // setGroupContact("");
-      // setMeetingNumber("");
-      // setGroupIntro("");
-
       Alert("게시물이 등록되었습니다.");
       closePost();
     },
@@ -156,10 +149,10 @@ export const PostForm = ({ closePost }) => {
             <Dropdown.DropdownMain />
             <Dropdown.Option value="sports">운동/스포츠</Dropdown.Option>
             <Dropdown.Option value="game">게임</Dropdown.Option>
-            <Dropdown.Option value="outdoor">아웃도어/여행</Dropdown.Option>
-            <Dropdown.Option value="show">문화/공연</Dropdown.Option>
+            <Dropdown.Option value="travel">아웃도어/여행</Dropdown.Option>
+            <Dropdown.Option value="culture">문화/공연</Dropdown.Option>
             <Dropdown.Option value="language">외국/언어</Dropdown.Option>
-            <Dropdown.Option value="friendship">친목</Dropdown.Option>
+            <Dropdown.Option value="social">친목</Dropdown.Option>
           </Dropdown>
 
           <Textarea placeholder="모임 소개" value={groupIntro} onChange={onChangeGroupIntro} />
