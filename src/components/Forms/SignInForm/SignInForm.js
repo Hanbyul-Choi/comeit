@@ -58,7 +58,7 @@ export const SignInForm = () => {
   const signInHandler = event => {
     event.preventDefault();
 
-    if (email && password) {
+    if (email.trim() && password.trim()) {
       mutate();
     } else {
       setErrorMessage("이메일과 비밀번호를 모두 입력해주세요.");

@@ -43,16 +43,13 @@ export const SignUpForm = () => {
     onError: error => {
       if (error.code === "auth/email-already-in-use") {
         setErrorMessage("이미 존재하는 이메일 주소입니다.");
+      } else if (error.code === "auth/invalid-email") {
+        setErrorMessage("올바른 이메일 형식이 아닙니다.");
       } else {
         setErrorMessage("회원가입에 실패했습니다. 다시 시도해주세요.");
       }
     }
   });
-
-  const isValidEmail = id => {
-    const emailRegex = /\S+@\S+\.\S+/;
-    return emailRegex.test(id);
-  };
 
   const isValidPassword = pw => {
     const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,}$/;
@@ -77,21 +74,21 @@ export const SignUpForm = () => {
     setErrorMessage("");
   };
 
-  const submitHandler = event => {
+  const submitHandler = async event => {
     event.preventDefault();
 
-    if (!email || !password || !nickname) {
+    if (
+      email.trim() === "" ||
+      nickname.trim() === "" ||
+      password.trim() === "" ||
+      confirmPassword.trim() === ""
+    ) {
       setErrorMessage("빈칸을 모두 작성해 주세요.");
       return;
     }
 
     if (password !== confirmPassword) {
       setErrorMessage("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-
-    if (!isValidEmail(email)) {
-      setErrorMessage("올바른 이메일 형식이 아닙니다.");
       return;
     }
 
@@ -102,13 +99,6 @@ export const SignUpForm = () => {
 
     mutate();
   };
-
-  // (1) signUp 함수 실행해서 회원가입 ㅇ
-  // firebase db에 있는 유저 정보를 가지고 있어야 되니까
-  // (2) 유즈 쿼리로 유저 정보 받아오기 (데이터 안에 받음) --> 필요없다
-  // 누가 회원가입하면 db에 새로운 유저정보 입력됨
-  // 업데이트된 db 유저정보와 직전에 유즈쿼리로 받은 정보는 달라짐
-  // (3) 그러니까 다시 데이터 무효화시키고 새로운 데이터로 갈아끼우기 위해 api 함수 실행
 
   return (
     <FlexColumn gap={12} as="form" onSubmit={submitHandler}>
