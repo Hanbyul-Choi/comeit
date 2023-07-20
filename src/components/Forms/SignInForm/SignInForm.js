@@ -27,6 +27,7 @@ export const SignInForm = () => {
       const querySnapshot = await getDoc(q);
       Alert("로그인 되었습니다.");
       unmount(SIGN_IN_MODAL);
+      localStorage.setItem("user", uid);
       dispatch(getUser(querySnapshot.data()));
     }
   };
@@ -58,7 +59,7 @@ export const SignInForm = () => {
   const signInHandler = event => {
     event.preventDefault();
 
-    if (email && password) {
+    if (email.trim() && password.trim()) {
       mutate();
     } else {
       setErrorMessage("이메일과 비밀번호를 모두 입력해주세요.");
@@ -88,6 +89,8 @@ export const SignInForm = () => {
       <Button type="submit" style={{ marginTop: "15px" }}>
         로그인
       </Button>
+      <Label variant="middle">계정이 없으신가요?</Label>
+      <Button variant="outline">회원가입</Button>
     </FlexColumn>
   );
 };

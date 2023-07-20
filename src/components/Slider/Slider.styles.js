@@ -14,7 +14,7 @@ export const Img = styled.img`
   ${props => css`
     width: ${props.contentWidth}px;
     padding: 0 ${props.space}px;
-    border-radius: 10px;
+    border-radius: 15px;
   `}
 `;
 
@@ -37,20 +37,27 @@ export const ContainerBlock = styled.div`
 
 export const Button = styled.button`
   ${({ theme, position }) => css`
+    position: absolute;
+    top: 25px;
+    ${position}: 10px;
+
     width: 22px;
     height: 22px;
     border: none;
-    color: ${theme.colors.white};
+    padding: 20px 0;
     background-color: ${hexToRgba(theme.colors.gray3, 0.3)};
     border-radius: 5px;
     transition: all 0.3s ease-in-out;
-    position: absolute;
-    top: 35px;
-    ${position}: 10px;
 
     &:hover {
       background-color: ${theme.palettes.blue.base};
-      color: ${theme.colors.white};
+    }
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   `}
 `;
