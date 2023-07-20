@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateNickname, updateProfileImg } from "redux/modules/userSlice";
 import { auth, db, storage } from "server/config";
 import { css, styled } from "styled-components";
-import { FlexColumn, flex } from "styles/mixins";
+import { flex, FlexColumn } from "styles/mixins";
 
 export const PROFILE_EDIT_MODAL = "PROFILE_EDIT_MODAL";
 
@@ -37,14 +37,14 @@ export const ProfileForm = () => {
 
   const { mutate } = useMutation({
     mutationFn: updateProfile,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await Alert("프로필이 수정되었습니다.");
       dispatch(updateNickname(editNickname));
       setPassword("");
       setConfirmPassword("");
       setEditNickname("");
 
       unmount(PROFILE_EDIT_MODAL);
-      Alert("프로필이 수정되었습니다.");
     },
     onError: error => {
       if (error.code === "auth/wrong-password") {
@@ -130,7 +130,7 @@ export const ProfileForm = () => {
 
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
-      <Button variant="outline" type="submit" style={{ marginTop: "15px" }}>
+      <Button type="submit" style={{ marginTop: "15px" }}>
         수정완료
       </Button>
     </FlexColumn>

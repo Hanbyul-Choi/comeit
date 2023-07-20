@@ -1,4 +1,4 @@
-import { PROFILE_EDIT_MODAL, ProfileForm } from "components/Forms/ProfileForm";
+import { ProfileForm, PROFILE_EDIT_MODAL } from "components/Forms/ProfileForm";
 import { useDialog, useModal } from "components/Overlay";
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -7,7 +7,7 @@ import { Option, UserDropdownWrapper } from "./UserDropdown.styles";
 
 export const UserDropdown = ({ setOpenOption }) => {
   const dispatch = useDispatch();
-  const { Alert } = useDialog();
+  const { Alert, Confirm } = useDialog();
   const { mount } = useModal();
 
   const dropdownRef = useRef(null);
@@ -25,10 +25,11 @@ export const UserDropdown = ({ setOpenOption }) => {
     };
   });
 
-  const onLogout = () => {
+  const onLogout = async () => {
+    if (!(await Confirm("나갈거임?"))) return;
+    await Alert("로그아웃 되었습니다.");
     dispatch(initializeUser());
     localStorage.removeItem("user");
-    Alert("로그아웃 되었습니다.");
   };
 
   const onEditProfile = () => {
