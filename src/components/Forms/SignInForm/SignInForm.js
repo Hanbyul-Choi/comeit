@@ -1,6 +1,6 @@
 import { doc, getDoc } from "@firebase/firestore";
 import { useMutation } from "@tanstack/react-query";
-import { Button, Input, Label, useDialog, useModal } from "components";
+import { Button, Input, Label, SIGN_UP_MODAL, SignUpForm, useDialog, useModal } from "components";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -16,7 +16,7 @@ export const SignInForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
 
-  const { unmount } = useModal();
+  const { mount, unmount } = useModal();
   const { Alert } = useDialog();
 
   const signIn = async () => {
@@ -89,7 +89,15 @@ export const SignInForm = () => {
         로그인
       </Button>
       <Label variant="middle">계정이 없으신가요?</Label>
-      <Button variant="outline">회원가입</Button>
+      <Button
+        variant="outline"
+        onClick={() => {
+          unmount(SIGN_IN_MODAL);
+          mount(SIGN_UP_MODAL, <SignUpForm />);
+        }}
+      >
+        회원가입
+      </Button>
     </FlexColumn>
   );
 };

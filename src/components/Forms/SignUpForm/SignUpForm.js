@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { Button, Input, Label, useDialog, useModal } from "components";
+import { Button, Input, Label, SIGN_IN_MODAL, SignInForm, useDialog, useModal } from "components";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { useInput } from "hooks";
@@ -10,7 +10,7 @@ import { FlexColumn } from "styles/mixins";
 export const SIGN_UP_MODAL = "SIGN_UP_MODAL";
 
 export const SignUpForm = () => {
-  const { unmount } = useModal();
+  const { mount, unmount } = useModal();
   const { Alert } = useDialog();
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -146,7 +146,15 @@ export const SignUpForm = () => {
         회원가입
       </Button>
       <Label variant="middle">이미 회원이신가요?</Label>
-      <Button variant="outline">로그인</Button>
+      <Button
+        variant="outline"
+        onClick={() => {
+          unmount(SIGN_UP_MODAL);
+          mount(SIGN_IN_MODAL, <SignInForm />);
+        }}
+      >
+        로그인
+      </Button>
     </FlexColumn>
   );
 };
