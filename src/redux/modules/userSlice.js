@@ -11,9 +11,18 @@ const userSlice = createSlice({
     getUser: (state, action) => ({
       ...state,
       user: action.payload
+    }),
+    initializeUser: () => initialState,
+    updateProfileImg: (state, { payload: userImgUrl }) => ({
+      ...state,
+      user: { ...state.user, userImgUrl }
+    }),
+    updateNickname: (state, { payload: nickname }) => ({
+      ...state,
+      user: { ...state.user, nickname }
     })
   }
 });
 
 export default userSlice.reducer;
-export const { getUser } = userSlice.actions;
+export const { getUser, initializeUser, updateProfileImg, updateNickname } = userSlice.actions;

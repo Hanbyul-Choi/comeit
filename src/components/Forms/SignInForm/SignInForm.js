@@ -1,10 +1,11 @@
+import { doc, getDoc } from "@firebase/firestore";
 import { useMutation } from "@tanstack/react-query";
 import { Button, Input, Label, useDialog, useModal } from "components";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getUser } from "redux/modules/userSlice";
-import { auth } from "server/config";
+import { auth, db } from "server/config";
 import { FlexColumn } from "styles/mixins";
 
 export const SIGN_IN_MODAL = "SIGN_IN_MODAL";
@@ -20,11 +21,13 @@ export const SignInForm = () => {
 
   const signIn = async () => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
     if (userCredential) {
+      const { uid } = userCredential.user;
+      const q = doc(db, "users", uid);
+      const querySnapshot = await getDoc(q);
       Alert("로그인 되었습니다.");
       unmount(SIGN_IN_MODAL);
-      dispatch(getUser(userCredential.user));
+      dispatch(getUser(querySnapshot.data()));
     }
   };
 

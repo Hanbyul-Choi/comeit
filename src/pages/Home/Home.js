@@ -1,4 +1,4 @@
-import { Header, PostForm } from "components";
+import { Header, PostForm, Sidebar } from "components";
 import { Show } from "components/ExtendSideBar/Show/Show";
 import { Container, NaverMap } from "react-naver-maps";
 import * as Styled from "./Home.styles";
@@ -11,7 +11,7 @@ export const Home = () => {
     <>
       <Header />
       <Styled.Container>
-        <Styled.Sidebar>사이드바</Styled.Sidebar>
+        <Sidebar />
 
         {/* {showExtend && extendtype === "post" ? <Post /> : <Show />}         */}
         {/* {extendtype === "post" ? <Post /> : <Show />} */}

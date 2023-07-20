@@ -25,7 +25,7 @@ export const SignUpForm = () => {
       id: userCredential.user.uid,
       email,
       nickname,
-      userImgUrl: ""
+      userImgUrl: null
     });
   };
 
