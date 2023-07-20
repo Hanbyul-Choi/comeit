@@ -1,6 +1,6 @@
+import mainImage from "assets/Intro/main1.png";
 import { Header } from "components";
 import * as Styled from "./Intro.styles";
-import mainImage from "./main1.png";
 
 export const Intro = () => {
   return (

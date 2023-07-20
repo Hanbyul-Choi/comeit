@@ -1,9 +1,9 @@
+import logo from "assets/logo/COMEIT.png";
+import userImg from "assets/userImg/user.png";
 import { SIGN_IN_MODAL, SIGN_UP_MODAL, SignInForm, SignUpForm, useModal } from "components";
 import { Button } from "components/Button";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import logo from "../../assets/logo/COMEIT.png";
-import userImg from "../../assets/userImg/user.png";
 import * as Styled from "./Header.styles";
 import { UserDropdown } from "./UserDropdown";
 

@@ -1,5 +1,5 @@
 import { Button } from "components";
-import { useLockBodyScroll } from "hooks/useLockBodyScroll";
+import { useLockBodyScroll } from "hooks";
 import { Flex, Typography } from "styles/mixins";
 import * as Styled from "./Dialog.styles";
 

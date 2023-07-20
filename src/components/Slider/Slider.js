@@ -1,5 +1,5 @@
-import arrowNext from "assets/arrowNext.svg";
-import arrowPrev from "assets/arrowPrev.svg";
+import arrowNext from "assets/buttonIcon/arrowNext.svg";
+import arrowPrev from "assets/buttonIcon/arrowPrev.svg";
 import { useEffect, useRef, useState } from "react";
 import * as Styled from "./Slider.styles";
 

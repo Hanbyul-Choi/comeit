@@ -1,9 +1,9 @@
-import culture from "assets/culture.png";
-import game from "assets/game.png";
-import language from "assets/language.png";
-import social from "assets/social.png";
-import sports from "assets/sports.png";
-import travel from "assets/travel.png";
+import culture from "assets/categories/culture.png";
+import game from "assets/categories/game.png";
+import language from "assets/categories/language.png";
+import social from "assets/categories/social.png";
+import sports from "assets/categories/sports.png";
+import travel from "assets/categories/travel.png";
 import { Input, Slider } from "components";
 import * as Styled from "./Sidebar.styles";
 
