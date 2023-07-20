@@ -1,4 +1,4 @@
-import { Button } from "components";
+import { Link } from "react-router-dom";
 import { css, styled } from "styled-components";
 import { flex } from "styles/mixins";
 
@@ -30,14 +30,16 @@ export const Box = styled.div`
   justify-content: flex-end;
   padding-right: 200px;
 `;
-export const NavigateButton = styled(Button)`
+export const NavigateButton = styled(Link)`
   ${({ theme }) => css`
     background-color: ${theme.colors.white};
     border: 1px solid ${theme.colors.black};
-
+    padding: 10px;
     color: ${theme.colors.black};
+    border-radius: 10px;
     &:hover {
       border: 1px solid ${theme.colors.deepblue};
+      background-color: ${theme.palettes.blue.hover};
       color: ${theme.colors.white};
     }
   `}

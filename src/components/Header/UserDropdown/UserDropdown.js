@@ -27,6 +27,7 @@ export const UserDropdown = ({ setOpenOption }) => {
 
   const onLogout = () => {
     dispatch(initializeUser());
+    localStorage.removeItem("user");
     Alert("로그아웃 되었습니다.");
   };
 
