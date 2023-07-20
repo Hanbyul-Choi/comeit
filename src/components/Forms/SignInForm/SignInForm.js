@@ -88,6 +88,8 @@ export const SignInForm = () => {
       <Button type="submit" style={{ marginTop: "15px" }}>
         로그인
       </Button>
+      <Label variant="middle">계정이 없으신가요?</Label>
+      <Button variant="outline">회원가입</Button>
     </FlexColumn>
   );
 };
