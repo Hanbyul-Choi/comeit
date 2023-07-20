@@ -11,14 +11,12 @@ export const Sidebar = () => {
   const SliderArr = [sports, game, travel, culture, language, social];
 
   return (
-    <Styled.SidebarWrapper gap={20} padding={20}>
-      <Styled.SearchContainer>
-        <Input placeholder="검색어를 입력해 주세요" />
-      </Styled.SearchContainer>
+    <Styled.SidebarWrapper>
+      <Input placeholder="검색어를 입력해 주세요" />
 
       <Slider showContentNum={3} space={5} contents={SliderArr} />
 
-      <Styled.PostContainer gap={20}>
+      <Styled.PostContainer>
         <li style={{ border: "1px solid black" }}>게시물1</li>
         <li style={{ border: "1px solid black" }}>게시물2</li>
         <li style={{ border: "1px solid black" }}>게시물3</li>
