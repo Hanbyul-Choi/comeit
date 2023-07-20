@@ -10,7 +10,7 @@ import { FlexColumn } from "styles/mixins";
 export const SIGN_UP_MODAL = "SIGN_UP_MODAL";
 
 export const SignUpForm = () => {
-  const { mount, unmount } = useModal();
+  const { unmount, mount } = useModal();
   const { Alert } = useDialog();
 
   const [errorMessage, setErrorMessage] = useState("");

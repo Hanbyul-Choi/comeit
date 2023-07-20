@@ -16,7 +16,7 @@ export const SignInForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
 
-  const { mount, unmount } = useModal();
+  const { unmount, mount } = useModal();
   const { Alert } = useDialog();
 
   const signIn = async () => {
@@ -25,7 +25,7 @@ export const SignInForm = () => {
       const { uid } = userCredential.user;
       const q = doc(db, "users", uid);
       const querySnapshot = await getDoc(q);
-      Alert("로그인 되었습니다.");
+      await Alert("로그인 되었습니다.");
       unmount(SIGN_IN_MODAL);
       localStorage.setItem("user", uid);
       dispatch(getUser(querySnapshot.data()));
