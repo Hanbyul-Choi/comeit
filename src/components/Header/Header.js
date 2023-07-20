@@ -1,7 +1,5 @@
 import { SIGN_IN_MODAL, SIGN_UP_MODAL, SignInForm, SignUpForm, useModal } from "components";
 import { Button } from "components/Button";
-import { SIGN_IN_MODAL, SIGN_UP_MODAL, SignInForm, SignUpForm } from "components/Forms";
-import { useModal } from "components/Overlay";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import logo from "../../assets/logo/COMEIT.png";
