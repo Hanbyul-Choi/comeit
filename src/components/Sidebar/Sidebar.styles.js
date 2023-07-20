@@ -1,7 +1,7 @@
 import { css, styled } from "styled-components";
 import { flex } from "styles/mixins";
 
-export const baseStyle = ({ gap = 0, padding = 20 }) => css`
+export const baseStyle = ({ gap = 0, padding = "none" }) => css`
   ${flex.column()}
   gap: ${gap}px;
   padding: ${padding}px;
