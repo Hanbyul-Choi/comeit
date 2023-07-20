@@ -4,31 +4,66 @@ import { Input } from "components/Input";
 import { useDialog } from "components/Overlay";
 import { Textarea } from "components/Textarea";
 import { addDoc, collection } from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useState } from "react";
-import { db } from "server/config";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { db, storage } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./PostForm.styles";
 
 export const PostForm = () => {
   const { Alert } = useDialog();
+  const navigate = useNavigate();
   const [groupName, setGroupName] = useState("");
   const [meetingDate, setMeetingDate] = useState("");
   const [meetingPlace, setMeetingPlace] = useState("");
   const [groupContact, setGroupContact] = useState("");
   const [meetingNumber, setMeetingNumber] = useState("");
   const [groupIntro, setGroupIntro] = useState("");
+  const [attachment, setAttachment] = useState("");
+
+  const { id } = useSelector(state => state.user);
 
   const Post = async () => {
+    const attachmentRef = ref(storage, `${id}/${Date.now()}`);
+    await uploadString(attachmentRef, attachment, "data_url");
+    const groupImgUrl = await getDownloadURL(ref(storage, attachmentRef));
     const newContent = {
       groupName,
       meetingDate,
       meetingPlace,
       groupContact,
       meetingNumber,
-      groupIntro
+      groupIntro,
+      groupImgUrl,
+      time: Date.now()
     };
     const collectionRef = collection(db, "contents");
     await addDoc(collectionRef, newContent);
+  };
+
+  const onFileChange = e => {
+    const {
+      target: { files }
+    } = e;
+    if (files.length === 0) {
+      onClearAttachment();
+      return;
+    }
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = finishedEvent => {
+      const {
+        currentTarget: { result }
+      } = finishedEvent;
+      setAttachment(result);
+    };
+    reader.readAsDataURL(theFile);
+  };
+
+  const onClearAttachment = () => {
+    setAttachment("");
   };
 
   const { mutate } = useMutation({
@@ -42,6 +77,7 @@ export const PostForm = () => {
       setGroupIntro("");
 
       Alert("게시물이 등록되었습니다.");
+      navigate("/home");
     },
     onError: error => {
       Alert.alert("Error", error.message);
@@ -70,10 +106,24 @@ export const PostForm = () => {
     mutate();
   };
 
+  const onCancle = () => {
+    navigate("/");
+  };
   return (
     <div>
       <Styled.ExtendSidebar>
         <FlexColumn gap={12} as="form" onSubmit={submitHandler}>
+          <Styled.ImgBox>
+            <label htmlFor="file">
+              <Styled.BtnUpload>파일 업로드하기</Styled.BtnUpload>
+            </label>
+            <Styled.ImgInput type="file" id="file" accept="image/*" onChange={onFileChange} />
+            {attachment && (
+              <Styled.PreView onClick={onClearAttachment}>
+                <Styled.PreViewImg src={attachment} alt="" />
+              </Styled.PreView>
+            )}
+          </Styled.ImgBox>
           <Input
             variant="outline"
             placeholder="모임 이름"
@@ -102,6 +152,7 @@ export const PostForm = () => {
             onChange={onGroupContactChangeHandler}
           />
           <Input
+            type="number"
             variant="outline"
             placeholder="참여 정원"
             value={meetingNumber}
@@ -113,11 +164,16 @@ export const PostForm = () => {
             value={groupIntro}
             onChange={onGroupIntroChangeHandler}
           />
-          <FlexCenter style={{ marginTop: "15px" }}>
-            <Button variant="outline" style={{ marginRight: "5px" }}>
+          <FlexCenter style={{ marginTop: "15px", gap: 20 }}>
+            <Button
+              type="button"
+              variant="outline"
+              style={{ marginRight: "5px" }}
+              onClick={onCancle}
+            >
               취소하기
             </Button>
-            <Button type="submit">모임 만들기</Button>
+            <Button>모임 만들기</Button>
           </FlexCenter>
         </FlexColumn>
       </Styled.ExtendSidebar>
