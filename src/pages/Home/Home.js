@@ -1,12 +1,10 @@
-import { Header } from "components";
-import { Post } from "components/ExtendSideBar";
+import { Header, PostForm } from "components";
 import { Show } from "components/ExtendSideBar/Show/Show";
-import { useState } from "react";
 import { Container, NaverMap } from "react-naver-maps";
 import * as Styled from "./Home.styles";
 
 export const Home = () => {
-  const [extendtype, setExtendtype] = useState("");
+  // const [extendtype, setExtendtype] = useState("");
   // const [showExtend, setshowExtend] = useState("");
 
   return (
@@ -17,7 +15,7 @@ export const Home = () => {
 
         {/* {showExtend && extendtype === "post" ? <Post /> : <Show />}         */}
         {/* {extendtype === "post" ? <Post /> : <Show />} */}
-        <Post />
+        <PostForm />
         <Show />
         <Container style={{ flex: 1 }}>
           <NaverMap />

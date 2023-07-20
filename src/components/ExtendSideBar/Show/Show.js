@@ -1,14 +1,15 @@
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+
 import { db } from "server/config";
 import * as Styled from "./Show.styles";
 
-export const Show = () => {
+export const Show = ({ id }) => {
   const [content, setContent] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      const snapContent = await getDoc(doc(db, "contents", "content"));
+      const snapContent = await getDoc(doc(db, "contents", id));
       console.log(snapContent);
       if (snapContent.exists()) {
         console.log(snapContent.data());
@@ -19,7 +20,7 @@ export const Show = () => {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <div>
