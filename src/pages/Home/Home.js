@@ -35,10 +35,10 @@ export const Home = () => {
     setPosition({ lat: e.latLng.getLat(), lng: e.latLng.getLng() });
     setSelected(null);
   };
+  const currentUrl = useLocation();
 
   // const [extendtype, setExtendtype] = useState("");
   // const [showExtend, setshowExtend] = useState("");
-  const currentUrl = useLocation();
 
   return (
     <>

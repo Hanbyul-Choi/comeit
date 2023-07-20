@@ -1,5 +1,6 @@
 import PlaceImage from "assets/svgs/addLocation.svg";
 import { Button } from "components/Button";
+import { getData } from "hooks/api";
 import { useEffect, useState } from "react";
 import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
 import { css, styled } from "styled-components";
@@ -11,6 +12,11 @@ export const ClickedMarker = ({ position }) => {
     width: 48,
     height: 49
   });
+
+  const handleCreate = async () => {
+    const data = await getData(position);
+    console.log(data);
+  };
 
   useEffect(() => {
     setIsOpen(false);
@@ -34,7 +40,9 @@ export const ClickedMarker = ({ position }) => {
       {isOpen && (
         <CustomOverlayMap position={position} clickable>
           <OverlayContainer>
-            <Button size="medium">생성</Button>
+            <Button onClick={handleCreate} size="medium">
+              생성
+            </Button>
           </OverlayContainer>
         </CustomOverlayMap>
       )}
