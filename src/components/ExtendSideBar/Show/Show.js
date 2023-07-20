@@ -1,21 +1,17 @@
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 import { db } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./Show.styles";
 
-export const Show = () => {
+export const Show = ({ id }) => {
   const [content, setContent] = useState("");
-
-  const params = useParams().contentid;
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!params) return;
-      const snapContent = await getDoc(doc(db, "contents", params));
-
+      if (!id) return;
+      const snapContent = await getDoc(doc(db, "contents", id));
       if (snapContent.exists()) {
         setContent(snapContent.data());
       } else {
@@ -23,7 +19,7 @@ export const Show = () => {
       }
     };
     fetchData();
-  }, [params]);
+  }, [id]);
 
   return (
     <div>

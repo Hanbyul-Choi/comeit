@@ -5,7 +5,7 @@ import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
 import { css, styled } from "styled-components";
 import { flex } from "styles/mixins";
 
-export const ClickedMarker = ({ position }) => {
+export const ClickedMarker = ({ position, openPost }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -28,7 +28,9 @@ export const ClickedMarker = ({ position }) => {
       {isOpen && (
         <CustomOverlayMap position={position} clickable>
           <OverlayContainer>
-            <Button size="medium">생성</Button>
+            <Button size="medium" onClick={openPost}>
+              생성
+            </Button>
           </OverlayContainer>
         </CustomOverlayMap>
       )}
