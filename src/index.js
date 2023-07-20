@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { OverlayProvider } from "components";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { NavermapsProvider } from "react-naver-maps";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import store from "redux/config/configStore";
@@ -27,9 +26,7 @@ root.render(
           <Provider store={store}>
             <BrowserRouter>
               <OverlayProvider>
-                <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_KEY}>
                   <App />
-                </NavermapsProvider>
               </OverlayProvider>
             </BrowserRouter>
           </Provider>
