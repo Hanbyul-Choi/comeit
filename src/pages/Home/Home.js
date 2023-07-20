@@ -1,8 +1,7 @@
-
 import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar } from "components";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as Styled from "./Home.styles";
 
 const TMP = [
@@ -29,29 +28,30 @@ const TMP = [
 ];
 
 export const Home = () => {
-
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
+  const [showPost, setshowPost] = useState(false);
+  const params = useParams();
 
   const MapClickHandler = (_t, e) => {
     setPosition({ lat: e.latLng.getLat(), lng: e.latLng.getLng() });
     setSelected(null);
   };
 
-  // const [extendtype, setExtendtype] = useState("");
-  // const [showExtend, setshowExtend] = useState("");
-  const currentUrl = useLocation();
+  const openPost = () => {
+    setshowPost(true);
+  };
+  const closePost = () => {
+    setshowPost(false);
+  };
 
   return (
     <>
       <Header />
       <Styled.Container>
         <Sidebar />
-        {currentUrl.pathname !== "/home" && currentUrl.pathname.includes("post") ? (
-          <PostForm />
-        ) : (
-          <Show />
-        )}
+        {params && !showPost && <Show id={params.contentid} />}
+        {showPost && <PostForm closePost={closePost} />}
         <Map
           center={{ lat: 33.45168, lng: 126.574942 }}
           style={{ width: "100%", height: "100%" }}
@@ -65,7 +65,7 @@ export const Home = () => {
               selected={selected}
             />
           ))}
-          <ClickedMarker position={position} />
+          <ClickedMarker openPost={openPost} position={position} />
         </Map>
       </Styled.Container>
     </>

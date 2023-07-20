@@ -1,18 +1,21 @@
 import { useMutation } from "@tanstack/react-query";
+import arrowPrev from "assets/buttonIcon/arrowPrev.svg";
 import { Button } from "components/Button";
+import { Dropdown } from "components/Dropdown";
 import { Input } from "components/Input";
 import { useDialog } from "components/Overlay";
 import { Textarea } from "components/Textarea";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { db, storage } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./PostForm.styles";
 
-export const PostForm = () => {
+export const PostForm = ({ closePost }) => {
   const { Alert } = useDialog();
   const navigate = useNavigate();
   const [groupName, setGroupName] = useState("");
@@ -23,10 +26,16 @@ export const PostForm = () => {
   const [groupIntro, setGroupIntro] = useState("");
   const [attachment, setAttachment] = useState("");
 
-  const { id } = useSelector(state => state.user);
+  const { user } = useSelector(state => state.user);
+  useEffect(() => {
+    if (!user) {
+      Alert("로그인 후 이용 가능합니다.");
+      navigate("/home");
+    }
+  }, [user, navigate, Alert]);
 
   const Post = async () => {
-    const attachmentRef = ref(storage, `${id}/${Date.now()}`);
+    const attachmentRef = ref(storage, `${user.id}/${Date.now()}`);
     await uploadString(attachmentRef, attachment, "data_url");
     const groupImgUrl = await getDownloadURL(ref(storage, attachmentRef));
     const newContent = {
@@ -106,16 +115,13 @@ export const PostForm = () => {
     mutate();
   };
 
-  const onCancle = () => {
-    navigate("/");
-  };
   return (
-    <div>
+    <Styled.PostFormBlock>
       <Styled.ExtendSidebar>
         <FlexColumn gap={12} as="form" onSubmit={submitHandler}>
           <Styled.ImgBox>
             <label htmlFor="file">
-              <Styled.BtnUpload>파일 업로드하기</Styled.BtnUpload>
+              <Styled.BtnUpload>대표사진</Styled.BtnUpload>
             </label>
             <Styled.ImgInput type="file" id="file" accept="image/*" onChange={onFileChange} />
             {attachment && (
@@ -159,6 +165,17 @@ export const PostForm = () => {
             onChange={onMeetingNumberChangeHandler}
           />
 
+          <Dropdown onChange={value => console.log(value)}>
+            <Dropdown.Option value={1} selected>
+              운동/스포츠
+            </Dropdown.Option>
+            <Dropdown.Option value={2}>게임</Dropdown.Option>
+            <Dropdown.Option value={3}>아웃도어/여행</Dropdown.Option>
+            <Dropdown.Option value={4}>문화/공연</Dropdown.Option>
+            <Dropdown.Option value={5}>외국/언어</Dropdown.Option>
+            <Dropdown.Option value={6}>친목</Dropdown.Option>
+          </Dropdown>
+
           <Textarea
             placeholder="모임 소개"
             value={groupIntro}
@@ -169,7 +186,7 @@ export const PostForm = () => {
               type="button"
               variant="outline"
               style={{ marginRight: "5px" }}
-              onClick={onCancle}
+              onClick={closePost}
             >
               취소하기
             </Button>
@@ -177,6 +194,12 @@ export const PostForm = () => {
           </FlexCenter>
         </FlexColumn>
       </Styled.ExtendSidebar>
-    </div>
+      {createPortal(
+        <Styled.Button onClick={closePost}>
+          <img src={arrowPrev} alt="이전버튼" />
+        </Styled.Button>,
+        document.getElementById("portal-root")
+      )}
+    </Styled.PostFormBlock>
   );
 };

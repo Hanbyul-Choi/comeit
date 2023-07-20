@@ -7,23 +7,27 @@ import { sizes } from "styles/theme/sizes";
 export const Sidebar = styled.div`
   width: 300px;
 `;
+export const PostFormBlock = styled.div`
+  ${flex({ align: "center", justify: "center" })}
+`;
 export const ExtendSidebar = styled.div`
-  /* width: 300px; */
   ${size({ width: 300, height: `calc(100vh - ${HEADER_HEIGHT}px)` })}
   ${flex({ justify: "center" })}
-  /* background-color: white; */
-  color: ${theme.colors.white};
+  color: ${theme.colors.black};
   padding: ${sizes.padding.medium}px;
+  position: relative;
+  border-left: 1px solid ${theme.colors.gray2};
 `;
 
 export const ImgBox = styled.div`
   ${flex({ align: "center", justify: "center" })}
   width: 17.2rem;
   height: 14rem;
-  background-color: #d9d9d9;
+  background-color: ${theme.colors.lightBlue};
   border-radius: 10px;
   position: relative;
 `;
+
 export const PreView = styled.div`
   ${flex({ align: "center", justify: "center" })}
   cursor: pointer;
@@ -48,7 +52,7 @@ export const RemoveImg = styled.button`
   top: 0;
   right: 0;
   background-color: transparent;
-  color: #fff;
+
   border: none;
   cursor: pointer;
   &:hover {
@@ -62,14 +66,41 @@ export const ImgInput = styled.input`
 
 export const BtnUpload = styled.div`
   ${flex({ align: "center", justify: "center" })}
-  width: 150px;
   height: 30px;
   font-size: 1.3rem;
   text-decoration: underline;
   font-weight: 500;
+  padding: 10px;
+  border-radius: 10px;
   cursor: pointer;
   &:hover {
-    background: rgb(77, 77, 77);
-    color: #fff;
+    background: ${theme.palettes.blue.hover};
+    color: ${theme.colors.white};
+  }
+`;
+
+export const Button = styled.button`
+  position: absolute;
+  top: 50%;
+  left: 635px;
+  z-index: 1;
+
+  width: 22px;
+  height: 22px;
+  border: none;
+  padding: 20px 0;
+  background-color: ${theme.colors.gray3};
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: ${theme.palettes.blue.base};
+  }
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `;
