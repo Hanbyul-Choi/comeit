@@ -6,9 +6,11 @@ import language from "assets/categories/language.png";
 import social from "assets/categories/social.png";
 import sports from "assets/categories/sports.png";
 import travel from "assets/categories/travel.png";
-import { Input, Slider } from "components";
+import { Button, Input, Slider } from "components";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { setCenter } from "redux/modules/centerSlice";
 import * as Styled from "./Sidebar.styles";
 
 export const Sidebar = () => {
@@ -18,6 +20,7 @@ export const Sidebar = () => {
   // 3. data를 추출해서 map메서드로 리스트를 생성한다.
 
   const { data } = useQuery(["contents"], fetchData);
+  const dispatch = useDispatch();
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -44,6 +47,9 @@ export const Sidebar = () => {
       />
 
       <Slider showContentNum={3} space={5} contents={SliderArr} />
+
+      {/* 리덕스 테스트 버튼 */}
+      <Button onClick={() => dispatch(setCenter({ lat: 37.54699, lng: 127.09598 }))}>click</Button>
 
       <Styled.PostContainer>
         {filteredData?.map(content => {
