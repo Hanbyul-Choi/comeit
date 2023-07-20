@@ -7,6 +7,10 @@ import { flex } from "styles/mixins";
 
 export const ClickedMarker = ({ position }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [iconSize, setIconSize] = useState({
+    width: 48,
+    height: 49
+  });
 
   useEffect(() => {
     setIsOpen(false);
@@ -18,12 +22,14 @@ export const ClickedMarker = ({ position }) => {
         image={{
           src: PlaceImage,
           size: {
-            width: 48,
-            height: 49
+            width: iconSize.width,
+            height: iconSize.height
           }
         }}
         clickable
         onClick={() => setIsOpen(prev => !prev)}
+        onMouseOver={() => setIconSize({ width: 55, height: 55 })}
+        onMouseOut={() => setIconSize({ width: 48, height: 49 })}
       />
       {isOpen && (
         <CustomOverlayMap position={position} clickable>
