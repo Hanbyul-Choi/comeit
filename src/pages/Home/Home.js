@@ -1,4 +1,3 @@
-
 import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar } from "components";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
@@ -6,30 +5,13 @@ import { useLocation } from "react-router-dom";
 import * as Styled from "./Home.styles";
 
 const TMP = [
-  {
-    title: "title1",
-
-    latlng: { lat: 33.450705, lng: 126.570677 }
-  },
-  {
-    title: "title2",
-
-    latlng: { lat: 33.450936, lng: 126.569477 }
-  },
-  {
-    title: "title3",
-
-    latlng: { lat: 33.450879, lng: 126.56994 }
-  },
-  {
-    title: "title4",
-
-    latlng: { lat: 33.451393, lng: 126.570738 }
-  }
+  { title: "title1", latlng: { lat: 33.450705, lng: 126.570677 } },
+  { title: "title2", latlng: { lat: 33.450936, lng: 126.569477 } },
+  { title: "title3", latlng: { lat: 33.450879, lng: 126.56994 } },
+  { title: "title4", latlng: { lat: 33.451393, lng: 126.570738 } }
 ];
 
 export const Home = () => {
-
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
 
@@ -38,8 +20,6 @@ export const Home = () => {
     setSelected(null);
   };
 
-  // const [extendtype, setExtendtype] = useState("");
-  // const [showExtend, setshowExtend] = useState("");
   const currentUrl = useLocation();
 
   return (

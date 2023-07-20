@@ -11,24 +11,37 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import * as Styled from "./Sidebar.styles";
 
+const CategoryArr = [sports, game, travel, culture, language, social];
+
 export const Sidebar = () => {
-  const SliderArr = [sports, game, travel, culture, language, social];
   // 1. 파이어스토어에 있는 post 전체를 가져오는 함수를 만든다. (비동기함수)
   // 2. 리액트 쿼리(useQuery)를 사용해서 그 함수를 실행시킨다.
   // 3. data를 추출해서 map메서드로 리스트를 생성한다.
 
   const { data } = useQuery(["contents"], fetchData);
-
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handleCategoryClick = category => {
+    setSelectedCategory(category);
+  };
 
   const filterData = () => {
-    if (!searchTerm) {
-      return data; // 검색어가 없으면 모든 데이터 반환
+    let filteredData = data;
+
+    if (searchTerm) {
+      filteredData = filteredData.filter(content =>
+        content.groupName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
 
-    const filteredData = data.filter(content =>
-      content.groupName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    if (selectedCategory) {
+      filteredData = filteredData.filter(content => {
+        console.log("카테고리", content.category);
+        console.log("배열 인덱스", selectedCategory);
+        return content.category === selectedCategory;
+      });
+    }
 
     return filteredData;
   };
@@ -43,7 +56,12 @@ export const Sidebar = () => {
         onChange={e => setSearchTerm(e.target.value)}
       />
 
-      <Slider showContentNum={3} space={5} contents={SliderArr} />
+      <Slider
+        showContentNum={3}
+        space={5}
+        contents={CategoryArr}
+        onClickHandler={handleCategoryClick}
+      />
 
       <Styled.PostContainer>
         {filteredData?.map(content => {

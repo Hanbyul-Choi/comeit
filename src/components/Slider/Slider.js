@@ -55,7 +55,7 @@ export const Slider = ({
               contentWidth={contentWidth}
               key={item.id || index}
               color={item.color}
-              onClick={() => onClickHandler(item.id)}
+              onClick={() => onClickHandler(item)}
             >
               {typeof item === "string" ? (
                 <Styled.Img src={item} space={space} contentWidth={contentWidth} />
