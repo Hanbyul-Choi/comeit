@@ -1,12 +1,13 @@
+import { useQuery } from "@tanstack/react-query";
+import { fetchData } from "api/contents";
 import culture from "assets/categories/culture.png";
 import game from "assets/categories/game.png";
 import language from "assets/categories/language.png";
 import social from "assets/categories/social.png";
 import sports from "assets/categories/sports.png";
 import travel from "assets/categories/travel.png";
-import { useQuery } from "@tanstack/react-query";
-import { fetchData } from "api/contents";
 import { Input, Slider } from "components";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import * as Styled from "./Sidebar.styles";
 
@@ -18,14 +19,34 @@ export const Sidebar = () => {
 
   const { data } = useQuery(["contents"], fetchData);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filterData = () => {
+    if (!searchTerm) {
+      return data; // 검색어가 없으면 모든 데이터 반환
+    }
+
+    const filteredData = data.filter(content =>
+      content.groupName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return filteredData;
+  };
+
+  const filteredData = filterData();
+
   return (
     <Styled.SidebarWrapper>
-      <Input placeholder="검색어를 입력해 주세요" />
+      <Input
+        placeholder="검색어를 입력해 주세요"
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+      />
 
       <Slider showContentNum={3} space={5} contents={SliderArr} />
 
       <Styled.PostContainer>
-        {data?.map(content => {
+        {filteredData?.map(content => {
           return (
             <Link to={`/home/${content.id}`} key={content.id}>
               <div>{content.groupName}</div>

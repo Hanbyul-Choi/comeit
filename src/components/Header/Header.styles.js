@@ -17,6 +17,7 @@ export const StLink = styled(Link)`
   ${({ theme }) => css`
     font-weight: 600;
     ${flex({ align: "center", justify: "between" })}
+    color: ${theme.colors.black};
     img {
       width: 40px;
     }
