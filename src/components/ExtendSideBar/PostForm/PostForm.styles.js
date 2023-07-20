@@ -5,7 +5,7 @@ import { theme } from "styles/theme";
 import { sizes } from "styles/theme/sizes";
 
 export const Sidebar = styled.div`
-  width: 300px;
+  /* width: 300px; */
 `;
 export const ExtendSidebar = styled.div`
   /* width: 300px; */

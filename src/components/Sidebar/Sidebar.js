@@ -23,7 +23,7 @@ export const Sidebar = () => {
 
   const filterData = () => {
     if (!searchTerm) {
-      return data; // 검색어가 없으면 모든 데이터 반환
+      return data;
     }
 
     const filteredData = data.filter(content =>

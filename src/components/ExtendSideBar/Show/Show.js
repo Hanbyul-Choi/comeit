@@ -3,16 +3,19 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { db } from "server/config";
+import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./Show.styles";
 
 export const Show = () => {
   const [content, setContent] = useState("");
+
   const params = useParams().contentid;
 
   useEffect(() => {
     const fetchData = async () => {
       if (!params) return;
       const snapContent = await getDoc(doc(db, "contents", params));
+
       if (snapContent.exists()) {
         setContent(snapContent.data());
       } else {
@@ -24,17 +27,21 @@ export const Show = () => {
 
   return (
     <div>
-      {content && (
-        <Styled.ExtendSidebar>
-          <div>{content.groupName}</div>
-          <div>{content.groupLeader}</div>
-          <div>{content.meetingDate}</div>
-          <div>{content.meetingPlace}</div>
-          <div>{content.groupContact}</div>
-          <div>{content.groupIntro}</div>
-          <div>{content.meetingMember}</div>
-        </Styled.ExtendSidebar>
-      )}
+      <Styled.ExtendSidebar>
+        {content && (
+          <FlexColumn gap={12}>
+            <FlexCenter>
+              <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
+            </FlexCenter>
+            <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
+            <Styled.ContentBox>{content.meetingDate}</Styled.ContentBox>
+            <Styled.ContentBox>{content.meetingPlace}</Styled.ContentBox>
+            <Styled.ContentBox>{content.groupContact}</Styled.ContentBox>
+            <Styled.ContentBox>{content.groupIntro}</Styled.ContentBox>
+            <Styled.ContentBox>{content.meetingMember}</Styled.ContentBox>
+          </FlexColumn>
+        )}
+      </Styled.ExtendSidebar>
     </div>
   );
 };
