@@ -181,7 +181,7 @@ export const PostForm = ({ closePost }) => {
             value={groupIntro}
             onChange={onGroupIntroChangeHandler}
           />
-          <FlexCenter style={{ marginTop: "15px", gap: 20 }}>
+          <FlexCenter style={{ marginTop: "15px", gap: 3 }}>
             <Button
               type="button"
               variant="outline"

@@ -8,7 +8,6 @@ import sports from "assets/categories/sports.png";
 import travel from "assets/categories/travel.png";
 import { Input, Slider } from "components";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import * as Styled from "./Sidebar.styles";
 
 export const Sidebar = () => {
@@ -48,11 +47,11 @@ export const Sidebar = () => {
       <Styled.PostContainer>
         {filteredData?.map(content => {
           return (
-            <Link to={`/home/${content.id}`} key={content.id}>
-              <div>{content.groupName}</div>
-              <div>{content.meeingDate}</div>
-              <div>{content.meetingPlace}</div>
-            </Link>
+            <Styled.Link to={`/home/${content.id}`} key={content.id}>
+              <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
+              <Styled.ContentBox>{content.meetingDate}</Styled.ContentBox>
+              <Styled.ContentBox>{content.meetingPlace}</Styled.ContentBox>
+            </Styled.Link>
           );
         })}
       </Styled.PostContainer>
