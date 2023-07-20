@@ -1,7 +1,7 @@
 import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar } from "components";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Styled from "./Home.styles";
 
 const TMP = [
@@ -31,6 +31,7 @@ export const Home = () => {
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
   const [showPost, setshowPost] = useState(false);
+  const navigate = useNavigate();
   const params = useParams();
 
   const MapClickHandler = (_t, e) => {
@@ -40,6 +41,7 @@ export const Home = () => {
 
   const openPost = () => {
     setshowPost(true);
+    navigate("/home");
   };
   const closePost = () => {
     setshowPost(false);
