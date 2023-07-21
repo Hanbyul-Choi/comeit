@@ -1,6 +1,5 @@
 import { Label } from "components/Label";
 import {
-  addDoc,
   and,
   collection,
   deleteDoc,
@@ -8,6 +7,7 @@ import {
   getDoc,
   getDocs,
   query,
+  setDoc,
   where
 } from "firebase/firestore";
 import { createPortal } from "react-dom";
@@ -67,13 +67,13 @@ export const Show = ({ id, closeDetail, openPost }) => {
   };
 
   const handleLike = async () => {
-    const likeRef = collection(db, "likes");
     if (isLike) {
-      setIsLike(false);
       await deleteDoc(doc(db, "likes", docId));
+      setIsLike(false);
     } else {
+      setDocId(`${id}-${Date.now()}`);
+      await setDoc(doc(db, "likes", `${id}-${Date.now()}`), { postId: id, uid: currentUser.id });
       setIsLike(true);
-      await addDoc(likeRef, { postId: id, uid: currentUser.id });
     }
   };
 
@@ -86,7 +86,9 @@ export const Show = ({ id, closeDetail, openPost }) => {
       const document = await getDocs(q);
       if (document.size) {
         setIsLike(true);
-        document.forEach(el => setDocId(el.id));
+        document.forEach(el => {
+          setDocId(el.id);
+        });
       } else {
         setIsLike(false);
       }

@@ -35,7 +35,8 @@ export const getMarkers = async () => {
       title: mark.data().groupName,
       category: mark.data().category,
       latlng: mark.data().location,
-      uid: mark.data().uid
+      uid: mark.data().uid,
+      postId: mark.id
     };
     TMP.push(marker);
   });

@@ -6,37 +6,39 @@ import myIcon from "assets/svgs/myIcon.svg";
 import placeImage from "assets/svgs/place.svg";
 import sportIcon from "assets/svgs/sportIcon.svg";
 import tripIcon from "assets/svgs/tripIcon.svg";
-import { useMount } from "hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export const useSelectCategory = data => {
   const [icon, setIcon] = useState(placeImage);
-  const { category, auth } = data;
-  useMount(() => {
-    if (auth) return setIcon(myIcon);
+  const currentId = useSelector(state => state.user.user.id);
+  const { category, uid } = data;
+
+  useEffect(() => {
+    if (currentId === uid) return setIcon(myIcon);
     switch (category) {
-      case "sports":
+      case "운동/스포츠":
         setIcon(sportIcon);
         break;
-      case "game":
+      case "게임":
         setIcon(gameIcon);
         break;
-      case "travel":
+      case "아웃도어/여행":
         setIcon(tripIcon);
         break;
-      case "culture":
+      case "문화/공연":
         setIcon(cultureIcon);
         break;
-      case "language":
+      case "외국/언어":
         setIcon(languageIcon);
         break;
-      case "social":
+      case "친목":
         setIcon(communityIcon);
         break;
       default:
         setIcon(placeImage);
     }
-  });
+  }, [category, currentId, uid]);
 
   return { icon };
 };
