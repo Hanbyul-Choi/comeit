@@ -1,22 +1,31 @@
-import PlaceImage from "assets/svgs/place.svg";
+import { useState } from "react";
 import { MapMarker } from "react-kakao-maps-sdk";
 import { CustomOverlayItem } from "./CustomOverlayItem";
+import { useSelectCategory } from "./useSelectCategory";
 
 export const MarkerItem = ({ data, onClick, selected }) => {
-  const { latlng, title } = data;
+  const { latlng, title, category } = data;
+  const [iconSize, setIconSize] = useState({
+    width: 48,
+    height: 49
+  });
+  const { icon } = useSelectCategory(category);
+
   return (
     <>
       <MapMarker
         position={latlng}
         image={{
-          src: PlaceImage,
+          src: icon,
           size: {
-            width: 48,
-            height: 49
+            width: iconSize.width,
+            height: iconSize.height
           }
         }}
         clickable
         onClick={onClick}
+        onMouseOver={() => setIconSize({ width: 55, height: 55 })}
+        onMouseOut={() => setIconSize({ width: 48, height: 49 })}
       />
       {selected === title && <CustomOverlayItem title={title} position={latlng} />}
     </>
