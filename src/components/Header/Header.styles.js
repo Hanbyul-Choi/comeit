@@ -2,13 +2,15 @@ import { Button } from "components/Button";
 import { Link } from "react-router-dom";
 import { css, styled } from "styled-components";
 import { flex, size } from "styles/mixins";
+import { shadows } from "styles/theme/shadows";
 import { HEADER_HEIGHT } from "./Header.constants";
 
 export const Container = styled.div`
   ${flex({ align: "center" })}
+  box-shadow: ${shadows.drop2};
 
   ${size({ height: HEADER_HEIGHT })}
-  
+
   width: 100%;
   padding: 0 24px;
 `;

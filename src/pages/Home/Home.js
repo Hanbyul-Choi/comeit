@@ -5,6 +5,7 @@ import { Map } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { setCenter } from "redux/modules/centerSlice";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Styled from "./Home.styles";
 
 const TMP = [
@@ -31,20 +32,32 @@ const TMP = [
 ];
 
 export const Home = () => {
+  const { Alert } = useDialog();
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
-  const data = useSelector(state => state.center);
   const dispatch = useDispatch();
   const { Alert } = useDialog();
+  const { data, currentUser } = useSelector(({ center, user }) => ({
+    data: center.center,
+    currentUser: user.user
+  }));
+  const [showPost, setShowPost] = useState(false);
+  const [showDetail, setShowDeatil] = useState(false);
+  const navigate = useNavigate();
+  const params = useParams();
 
   const MapClickHandler = (_t, e) => {
     setPosition({ lat: e.latLng.getLat(), lng: e.latLng.getLng() });
     setSelected(null);
   };
-  const currentUrl = useLocation();
 
-  // const [extendtype, setExtendtype] = useState("");
-  // const [showExtend, setshowExtend] = useState("");
+  const openPost = () => {
+    if (!currentUser) return Alert("로그인 후 이용가능합니다.");
+    setShowDeatil(false);
+    setShowPost(true);
+    navigate("/home");
+  };
+
 
   useMount(() => {
     if (navigator.geolocation) {
@@ -57,16 +70,25 @@ export const Home = () => {
     }
   });
 
+  const openDetail = () => {
+    setShowPost(false);
+    setShowDeatil(true);
+  };
+  const closeDetail = () => {
+    setShowDeatil(false);
+  };
+
+  const closePost = () => {
+    setShowPost(false);
+  };
+
   return (
     <>
       <Header />
       <Styled.Container>
-        <Sidebar />
-        {currentUrl.pathname !== "/home" && currentUrl.pathname.includes("post") ? (
-          <PostForm />
-        ) : (
-          <Show />
-        )}
+        <Sidebar openDetail={openDetail} />
+        {showDetail && <Show id={params.contentid} closeDetail={closeDetail} />}
+        {showPost && <PostForm closePost={closePost} />}
         <Map center={data} style={{ width: "100%", height: "100%" }} onClick={MapClickHandler}>
           {TMP.map(marker => (
             <MarkerItem
@@ -76,7 +98,7 @@ export const Home = () => {
               selected={selected}
             />
           ))}
-          <ClickedMarker position={position} />
+          <ClickedMarker closePost={closePost} openPost={openPost} position={position} />
         </Map>
       </Styled.Container>
     </>
