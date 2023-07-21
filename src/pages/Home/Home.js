@@ -73,8 +73,9 @@ export const Home = () => {
         <Map center={location} style={{ width: "100%", height: "100%" }} onClick={MapClickHandler}>
           {data.map(marker => (
             <MarkerItem
-              key={marker.title}
+              key={marker.postId}
               data={marker}
+              open={openDetail}
               onClick={() => setSelected(marker.title)}
               selected={selected}
             />

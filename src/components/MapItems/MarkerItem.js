@@ -3,8 +3,8 @@ import { MapMarker } from "react-kakao-maps-sdk";
 import { CustomOverlayItem } from "./CustomOverlayItem";
 import { useSelectCategory } from "./useSelectCategory";
 
-export const MarkerItem = ({ data, onClick, selected }) => {
-  const { latlng, title } = data;
+export const MarkerItem = ({ data, onClick, open, selected }) => {
+  const { latlng, title, postId } = data;
   const [iconSize, setIconSize] = useState({
     width: 48,
     height: 49
@@ -27,7 +27,9 @@ export const MarkerItem = ({ data, onClick, selected }) => {
         onMouseOver={() => setIconSize({ width: 55, height: 55 })}
         onMouseOut={() => setIconSize({ width: 48, height: 49 })}
       />
-      {selected === title && <CustomOverlayItem title={title} position={latlng} />}
+      {selected === title && (
+        <CustomOverlayItem title={title} position={latlng} open={open} postId={postId} />
+      )}
     </>
   );
 };
