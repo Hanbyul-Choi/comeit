@@ -11,7 +11,8 @@ export const SidebarWrapper = styled.div`
 
 export const PostContainer = styled.ul`
   ${flex.column()}
-  ${flex.center()}
+
+  overflow: scroll;
 `;
 
 export const Link = styled(RouterLink)`
