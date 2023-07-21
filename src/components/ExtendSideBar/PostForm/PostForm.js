@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import arrowPrev from "assets/buttonIcon/arrowPrev.svg";
 import { Button } from "components/Button";
 import { Dropdown } from "components/Dropdown";
@@ -8,36 +8,34 @@ import { Textarea } from "components/Textarea";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useInput } from "hooks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { db, storage } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./PostForm.styles";
 
 export const PostForm = ({ closePost }) => {
-  const { Alert } = useDialog();
-  const navigate = useNavigate();
+  const { Alert, Confirm } = useDialog();
+  const queryClient = useQueryClient();
+
+  const { currentUser, place, location } = useSelector(({ user, center }) => ({
+    currentUser: user.user,
+    place: center.place,
+    location: center.position
+  }));
   const [groupName, onChangeGroupName] = useInput();
   const [meetingDate, onChangeMeetingDate] = useInput();
-  const [meetingPlace, onChangeMeetingPlace] = useInput();
+  const [meetingPlace, onChangeMeetingPlace] = useInput(place);
   const [groupContact, onChangeGroupContact] = useInput();
   const [meetingNumber, onChangeMeetingNumber] = useInput();
-  const [category, setCategory] = useState(null);
   const [groupIntro, onChangeGroupIntro] = useInput();
+  const [category, setCategory] = useState(null);
   const [attachment, setAttachment] = useState("");
-
-  const { user } = useSelector(state => state.user);
-  useEffect(() => {
-    if (!user) {
-      Alert("로그인 후 이용 가능합니다.");
-      navigate("/home");
-    }
-  }, [user, navigate, Alert]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const Post = async () => {
-    const attachmentRef = ref(storage, `${user.id}/${Date.now()}`);
+    const attachmentRef = ref(storage, `${currentUser.id}/${Date.now()}`);
     await uploadString(attachmentRef, attachment, "data_url");
     const groupImgUrl = await getDownloadURL(ref(storage, attachmentRef));
     const newContent = {
@@ -50,7 +48,8 @@ export const PostForm = ({ closePost }) => {
       groupImgUrl,
       time: Date.now(),
       category,
-      uid: user.id
+      location,
+      uid: currentUser.id
     };
     const collectionRef = collection(db, "contents");
     await addDoc(collectionRef, newContent);
@@ -82,16 +81,39 @@ export const PostForm = ({ closePost }) => {
   const { mutate } = useMutation({
     mutationFn: Post,
     onSuccess: () => {
+      queryClient.invalidateQueries(["contents"]);
       Alert("게시물이 등록되었습니다.");
       closePost();
-    },
-    onError: error => {
-      Alert.alert("Error", error.message);
     }
   });
 
-  const submitHandler = event => {
+  const submitHandler = async event => {
     event.preventDefault();
+    if (
+      groupName.trim() === "" ||
+      meetingDate.trim() === "" ||
+      groupContact.trim() === "" ||
+      meetingNumber.trim() === "" ||
+      groupIntro.trim() === "" ||
+      groupName.trim() === ""
+    ) {
+      setErrorMessage("빈칸을 모두 작성해 주세요.");
+      return;
+    }
+    if (category === null) {
+      setErrorMessage("카테고리를 선택하세요");
+      return;
+    }
+    if (attachment === "") {
+      setErrorMessage("사진을 등록하세요");
+      return;
+    }
+
+    if (meetingNumber < 2) {
+      setErrorMessage("모집인원은 최소 2명입니다.");
+      return;
+    }
+    if (!(await Confirm("이대로 등록하시겠습니까?"))) return;
     mutate();
   };
 
@@ -146,7 +168,6 @@ export const PostForm = ({ closePost }) => {
           />
 
           <Dropdown onChange={value => setCategory(value)}>
-            <Dropdown.DropdownMain />
             <Dropdown.Option value="sports">운동/스포츠</Dropdown.Option>
             <Dropdown.Option value="game">게임</Dropdown.Option>
             <Dropdown.Option value="travel">아웃도어/여행</Dropdown.Option>
@@ -156,6 +177,7 @@ export const PostForm = ({ closePost }) => {
           </Dropdown>
 
           <Textarea placeholder="모임 소개" value={groupIntro} onChange={onChangeGroupIntro} />
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           <FlexCenter style={{ marginTop: "15px", gap: 5 }}>
             <Button
               type="button"

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-export const useInput = (onError = () => {}) => {
-  const [value, setValue] = useState("");
+export const useInput = (init = "", onError = () => {}) => {
+  const [value, setValue] = useState(init);
 
   const onChange = event => {
     setValue(event.target.value);
