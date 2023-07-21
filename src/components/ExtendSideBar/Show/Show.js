@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getDetail } from "api/contents";
-import arrowPrev from "assets/buttonIcon/arrowPrev.svg";
+import arrowPrev from "assets/svgs/arrowPrev.svg";
 import { Button } from "components/Button";
 import { useDialog } from "components/Overlay";
 import { useSelector } from "react-redux";

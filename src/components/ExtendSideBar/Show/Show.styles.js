@@ -10,7 +10,6 @@ export const Sidebar = styled.div`
   width: 300px;
 `;
 export const ExtendSidebar = styled.div`
-  /* width: 300px; */
   ${size({ width: 300, height: `calc(100vh - ${HEADER_HEIGHT}px)` })}
   position: relative;
   overflow-y: auto;
@@ -23,13 +22,9 @@ export const ExtendSidebar = styled.div`
   padding: ${sizes.padding.medium}px;
 `;
 export const ContentBox = styled.div`
-  width: 280px;
-  height: 25px;
   color: ${colors.gray4};
 
-  ${size({ height: sizes.height.small })}
-
-  padding-left: ${sizes.padding.small}px;
+  padding: 0 ${sizes.padding.small}px;
 
   border-radius: 8px;
 

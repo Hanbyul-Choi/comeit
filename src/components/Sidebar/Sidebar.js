@@ -1,39 +1,63 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "api/contents";
-import culture from "assets/categories/culture.png";
-import game from "assets/categories/game.png";
-import language from "assets/categories/language.png";
-import social from "assets/categories/social.png";
-import sports from "assets/categories/sports.png";
-import travel from "assets/categories/travel.png";
-import { Input, Slider } from "components";
+import { all, culture, game, language, social, sports, travel } from "assets/categories";
+import { Button, Input, Slider } from "components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCenter } from "redux/modules/centerSlice";
-import { Flex } from "styles/mixins";
 import * as Styled from "./Sidebar.styles";
 
-export const Sidebar = ({ openDetail }) => {
-  const SliderArr = [sports, game, travel, culture, language, social];
+const CategoryImages = [
+  { name: "전체", image: all },
+  { name: "운동/스포츠", image: sports },
+  { name: "게임", image: game },
+  { name: "아웃도어/여행", image: travel },
+  { name: "문화/공연", image: culture },
+  { name: "외국/언어", image: language },
+  { name: "친목", image: social }
+];
 
+export const Sidebar = ({ openDetail }) => {
   const { data } = useQuery(["contents"], fetchData);
   const dispatch = useDispatch();
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const filterData = () => {
-    if (!searchTerm) {
-      return data;
+    let filteredData = [];
+
+    if (data) {
+      filteredData = data;
     }
 
-    const filteredData = data.filter(content =>
-      content.groupName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    if (searchTerm) {
+      filteredData = filteredData.filter(content =>
+        content.groupName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (selectedCategory && selectedCategory !== "전체") {
+      filteredData = filteredData.filter(content => content.category === selectedCategory);
+    }
 
     return filteredData;
   };
 
   const filteredData = filterData();
+
+  const handleCategoryClick = categoryImage => {
+    const clickedCategory = CategoryImages.find(category => category.image === categoryImage);
+
+    setSelectedCategory(currentCategory => {
+      return currentCategory === clickedCategory.name ? null : clickedCategory.name;
+    });
+  };
+
+  const getDisplayCategoryText = () => {
+    const currentCategory = CategoryImages.find(category => category.name === selectedCategory);
+    return selectedCategory && currentCategory ? currentCategory.name : "전체";
+  };
 
   const onClickContent = location => {
     dispatch(setCenter(location));
@@ -48,29 +72,39 @@ export const Sidebar = ({ openDetail }) => {
         onChange={e => setSearchTerm(e.target.value)}
       />
 
-      <Slider showContentNum={3} space={5} contents={SliderArr} />
+      <Slider
+        showContentNum={3}
+        space={5}
+        contents={CategoryImages.map(category => category.image)}
+        onClickHandler={handleCategoryClick}
+      />
 
+      {/* 리덕스 테스트 버튼 */}
+      <Button onClick={() => dispatch(setCenter({ lat: 37.54699, lng: 127.09598 }))}>click</Button>
+      <p>{getDisplayCategoryText()}</p>
       <Styled.PostContainer>
-        {filteredData?.map(content => {
-          return (
-            <Styled.Link
-              to={`/home/${content.id}`}
-              key={content.id}
-              onClick={() => onClickContent(content.location)}
-            >
-              <div>
-                <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
-              </div>
-              <Flex>
+        {filteredData.length === 0 ? (
+          <Styled.NoResultMessage>검색 결과가 없습니다</Styled.NoResultMessage>
+        ) : (
+          filteredData.map(content => {
+            return (
+              <Styled.Link
+                to={`/home/${content.id}`}
+                key={content.id}
+                onClick={() => onClickContent(content.location)}
+              >
+                <div>
+                  <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
+                </div>
                 <div>
                   <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
                   <Styled.ContentBox>{content.meetingDate}</Styled.ContentBox>
                   <Styled.ContentBox>{content.meetingPlace}</Styled.ContentBox>
                 </div>
-              </Flex>
-            </Styled.Link>
-          );
-        })}
+              </Styled.Link>
+            );
+          })
+        )}
       </Styled.PostContainer>
     </Styled.SidebarWrapper>
   );
