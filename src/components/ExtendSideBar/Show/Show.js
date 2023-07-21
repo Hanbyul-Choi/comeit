@@ -12,31 +12,38 @@ import {
 } from "firebase/firestore";
 import { createPortal } from "react-dom";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getDetail } from "api/contents";
 import arrowPrev from "assets/svgs/arrowPrev.svg";
 import { Button } from "components/Button";
 import { useDialog } from "components/Overlay";
-import { useMount } from "hooks";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { db } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./Show.styles";
 
-export const Show = ({ id, closeDetail }) => {
+export const Show = ({ id, closeDetail, openPost }) => {
   const { Confirm } = useDialog();
   const params = useParams();
   const queryClient = useQueryClient();
-  const [nickname, setNickname] = useState(null);
+  const [nickname, setNickname] = useState("");
   const [isLike, setIsLike] = useState(false);
   const [likeNum, setLikeNum] = useState(0);
-  const [docId, setDocId] = useState(null);
+  const [docId, setDocId] = useState("");
+  const [data, setData] = useState(null);
 
   const { currentUser } = useSelector(({ user }) => ({ currentUser: user.user }));
+  const navigate = useNavigate();
+  // const { data } = useQuery(["detail"], () => getDetail(id));
 
-  const { data } = useQuery(["detail"], () => getDetail(id));
+  useEffect(() => {
+    const test = async () => {
+      setData(await getDetail(id));
+    };
+    test();
+  }, [id]);
 
   const Delete = () => {
     deleteDoc(doc(db, "contents", params.contentid));
@@ -50,7 +57,10 @@ export const Show = ({ id, closeDetail }) => {
     }
   });
 
-  const onUpdate = () => {};
+  const onUpdate = () => {
+    openPost();
+    navigate(`/edit/${id}`);
+  };
   const onDelete = async () => {
     if (!(await Confirm("게시물을 삭제하시겠습니까?"))) return;
     mutate();
@@ -67,7 +77,7 @@ export const Show = ({ id, closeDetail }) => {
     }
   };
 
-  useMount(() => {
+  useEffect(() => {
     const loadIsLiked = async postId => {
       const q = query(
         collection(db, "likes"),
@@ -82,7 +92,7 @@ export const Show = ({ id, closeDetail }) => {
       }
     };
     loadIsLiked(id);
-  });
+  }, [currentUser.id, id]);
 
   useEffect(() => {
     const loadLikes = async postId => {

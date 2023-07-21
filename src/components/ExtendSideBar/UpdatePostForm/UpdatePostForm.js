@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getDetail } from "api/contents";
 import arrowPrev from "assets/svgs/arrowPrev.svg";
 import { Button } from "components/Button";
 import { Dropdown } from "components/Dropdown";
@@ -12,49 +11,31 @@ import { useInput } from "hooks";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
 import { db, storage } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
-import * as Styled from "./PostForm.styles";
+import * as Styled from "./UpdatePostForm.styles";
 
-export const PostForm = ({ closePost }) => {
+export const UpdatePostForm = ({ closePost }) => {
   const { Alert, Confirm } = useDialog();
   const queryClient = useQueryClient();
-  const params = useParams();
-  const [data, setData] = useState(null);
 
   const { currentUser, place, location } = useSelector(({ user, center }) => ({
     currentUser: user.user,
     place: center.place,
     location: center.position
   }));
+  useEffect(() => {}, [place]);
 
-  useEffect(() => {
-    const test = async () => {
-      setData(await getDetail(params.contentid));
-    };
-    test();
-  }, [params.contentid]);
-
-  const [groupName, onChangeGroupName, onSetgroupName] = useInput();
-  const [meetingDate, onChangeMeetingDate, onSetmeetingDate] = useInput();
-  const [groupContact, onChangeGroupContact, onSetgroupContact] = useInput();
-  const [meetingNumber, onChangeMeetingNumber, onSetmeetingNumber] = useInput();
-  const [groupIntro, onChangeGroupIntro, onSetgroupIntro] = useInput();
+  const [groupName, onChangeGroupName] = useInput();
+  const [meetingDate, onChangeMeetingDate] = useInput();
+  const [groupContact, onChangeGroupContact] = useInput();
+  const [meetingNumber, onChangeMeetingNumber] = useInput();
+  const [groupIntro, onChangeGroupIntro] = useInput();
   const [meetingPlace, setMeetingPlace] = useState(place);
   const [category, setCategory] = useState(null);
   const [attachment, setAttachment] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  if (data) {
-    onSetgroupName(data.groupName);
-    onSetmeetingDate(data.meetingDate);
-    onSetgroupContact(data.groupContact);
-    onSetmeetingNumber(data.meetingNumber);
-    onSetgroupIntro(data.groupIntro);
-    setMeetingPlace(data.meetingPlace);
-    setAttachment(data.groupImgUrl);
-  }
   useEffect(() => {
     setMeetingPlace(place);
   }, [place]);
@@ -167,7 +148,6 @@ export const PostForm = ({ closePost }) => {
           <Input
             variant="outline"
             placeholder="모임 날짜"
-            type="date"
             value={meetingDate}
             onChange={onChangeMeetingDate}
           />
@@ -189,13 +169,12 @@ export const PostForm = ({ closePost }) => {
           />
 
           <Dropdown onChange={value => setCategory(value)}>
-            <Dropdown.DropdownMain />
-            <Dropdown.Option value="운동/스포츠">운동/스포츠</Dropdown.Option>
-            <Dropdown.Option value="게임">게임</Dropdown.Option>
-            <Dropdown.Option value="아웃도어/여행">아웃도어/여행</Dropdown.Option>
-            <Dropdown.Option value="문화/공연">문화/공연</Dropdown.Option>
-            <Dropdown.Option value="외국/언어">외국/언어</Dropdown.Option>
-            <Dropdown.Option value="친목">친목</Dropdown.Option>
+            <Dropdown.Option value="sports">운동/스포츠</Dropdown.Option>
+            <Dropdown.Option value="game">게임</Dropdown.Option>
+            <Dropdown.Option value="travel">아웃도어/여행</Dropdown.Option>
+            <Dropdown.Option value="culture">문화/공연</Dropdown.Option>
+            <Dropdown.Option value="language">외국/언어</Dropdown.Option>
+            <Dropdown.Option value="social">친목</Dropdown.Option>
           </Dropdown>
 
           <Textarea placeholder="모임 소개" value={groupIntro} onChange={onChangeGroupIntro} />
