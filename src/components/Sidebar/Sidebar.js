@@ -6,9 +6,10 @@ import language from "assets/categories/language.png";
 import social from "assets/categories/social.png";
 import sports from "assets/categories/sports.png";
 import travel from "assets/categories/travel.png";
-import { Input, Slider } from "components";
+import { Button, Input, Slider } from "components";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCenter } from "redux/modules/centerSlice";
 import * as Styled from "./Sidebar.styles";
 
 const CategoryImages = [sports, game, travel, culture, language, social];
@@ -16,6 +17,8 @@ const CategoryNames = ["sports", "game", "travel", "culture", "language", "socia
 
 export const Sidebar = () => {
   const { data } = useQuery(["contents"], fetchData);
+  const dispatch = useDispatch();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -61,16 +64,22 @@ export const Sidebar = () => {
         onClickHandler={handleCategoryClick}
       />
 
+      {/* 리덕스 테스트 버튼 */}
+      <Button onClick={() => dispatch(setCenter({ lat: 37.54699, lng: 127.09598 }))}>click</Button>
+
       <Styled.PostContainer>
         {filteredData?.map(content => {
           return (
-            <Link to={`/home/${content.id}`} key={content.id}>
+            <Styled.Link to={`/home/${content.id}`} key={content.id}>
               <div>
-                <div>{content.groupName}</div>
-                <div>{content.meeingDate}</div>
-                <div>{content.meetingPlace}</div>
+                <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
               </div>
-            </Link>
+              <div>
+                <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
+                <Styled.ContentBox>{content.meetingDate}</Styled.ContentBox>
+                <Styled.ContentBox>{content.meetingPlace}</Styled.ContentBox>
+              </div>
+            </Styled.Link>
           );
         })}
       </Styled.PostContainer>
