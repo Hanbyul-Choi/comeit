@@ -9,7 +9,6 @@ import travel from "assets/categories/travel.png";
 import { Button, Input, Slider } from "components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { setCenter } from "redux/modules/centerSlice";
 import * as Styled from "./Sidebar.styles";
 
@@ -25,7 +24,7 @@ export const Sidebar = () => {
 
   const filterData = () => {
     if (!searchTerm) {
-      return data; // 검색어가 없으면 모든 데이터 반환
+      return data;
     }
 
     const filteredData = data.filter(content =>
@@ -53,13 +52,16 @@ export const Sidebar = () => {
       <Styled.PostContainer>
         {filteredData?.map(content => {
           return (
-            <Link to={`/home/${content.id}`} key={content.id}>
+            <Styled.Link to={`/home/${content.id}`} key={content.id}>
               <div>
-                <div>{content.groupName}</div>
-                <div>{content.meeingDate}</div>
-                <div>{content.meetingPlace}</div>
+                <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
               </div>
-            </Link>
+              <div>
+                <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
+                <Styled.ContentBox>{content.meetingDate}</Styled.ContentBox>
+                <Styled.ContentBox>{content.meetingPlace}</Styled.ContentBox>
+              </div>
+            </Styled.Link>
           );
         })}
       </Styled.PostContainer>
