@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "api/contents";
 import { all, culture, game, language, social, sports, travel } from "assets/categories";
-import { Button, Input, Slider } from "components";
+import { Input, Slider } from "components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCenter } from "redux/modules/centerSlice";
@@ -79,8 +79,6 @@ export const Sidebar = ({ openDetail }) => {
         onClickHandler={handleCategoryClick}
       />
 
-      {/* 리덕스 테스트 버튼 */}
-      <Button onClick={() => dispatch(setCenter({ lat: 37.54699, lng: 127.09598 }))}>click</Button>
       <p>{getDisplayCategoryText()}</p>
       <Styled.PostContainer>
         {filteredData.length === 0 ? (

@@ -50,6 +50,8 @@ export const Home = () => {
     setSelected(null);
   };
 
+  const { Alert } = useDialog();
+
   const openPost = () => {
     if (!currentUser) return Alert("로그인 후 이용가능합니다.");
     setShowDeatil(false);
