@@ -15,13 +15,13 @@ export const useSelectCategory = data => {
   useMount(() => {
     if (auth) return setIcon(myIcon);
     switch (category) {
-      case "sport":
+      case "sports":
         setIcon(sportIcon);
         break;
       case "game":
         setIcon(gameIcon);
         break;
-      case "trip":
+      case "travel":
         setIcon(tripIcon);
         break;
       case "culture":
@@ -30,7 +30,7 @@ export const useSelectCategory = data => {
       case "language":
         setIcon(languageIcon);
         break;
-      case "community":
+      case "social":
         setIcon(communityIcon);
         break;
       default:

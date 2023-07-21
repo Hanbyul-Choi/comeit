@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "api/contents";
 import { all, culture, game, language, social, sports, travel } from "assets/categories";
-import { Input, Slider } from "components";
+import { Input, Slider, useDialog } from "components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCenter } from "redux/modules/centerSlice";
@@ -20,6 +20,7 @@ const CategoryImages = [
 export const Sidebar = ({ openDetail }) => {
   const { data } = useQuery(["contents"], fetchData);
   const dispatch = useDispatch();
+  const { Alert } = useDialog();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -60,6 +61,10 @@ export const Sidebar = ({ openDetail }) => {
   };
 
   const onClickContent = location => {
+    if (!localStorage.getItem("user")) {
+      Alert("로그인 후 확인 가능 합니다.");
+      return;
+    }
     dispatch(setCenter(location));
     openDetail();
   };

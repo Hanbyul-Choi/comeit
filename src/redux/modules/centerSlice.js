@@ -13,6 +13,7 @@ const centerSlice = createSlice({
   name: "center",
   initialState,
   reducers: {
+    initialize: () => initialState,
     setCenter: (state, { payload }) => ({ ...state, center: payload }),
     setPostion: (state, { payload }) => ({ ...state, position: payload }),
     setPlace: (state, { payload }) => ({ ...state, place: payload })
@@ -20,4 +21,4 @@ const centerSlice = createSlice({
 });
 
 export default centerSlice.reducer;
-export const { setCenter, setPlace, setPostion } = centerSlice.actions;
+export const { setCenter, setPlace, setPostion, initialize } = centerSlice.actions;

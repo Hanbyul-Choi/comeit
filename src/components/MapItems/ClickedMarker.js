@@ -4,7 +4,7 @@ import { getData } from "hooks/api";
 import { useEffect, useState } from "react";
 import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
 import { useDispatch } from "react-redux";
-import { setPlace, setPostion } from "redux/modules/centerSlice";
+import { initialize, setPlace, setPostion } from "redux/modules/centerSlice";
 import * as Styled from "./Map.styles";
 
 export const ClickedMarker = ({ position, openPost }) => {
@@ -17,6 +17,7 @@ export const ClickedMarker = ({ position, openPost }) => {
   const dispatch = useDispatch();
 
   const handleCreate = async () => {
+    dispatch(initialize());
     const data = await getData(position);
     dispatch(setPlace(data));
     dispatch(setPostion(position));
