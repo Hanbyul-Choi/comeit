@@ -8,7 +8,7 @@ import { Textarea } from "components/Textarea";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useInput } from "hooks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -29,12 +29,6 @@ export const PostForm = ({ closePost }) => {
   const [attachment, setAttachment] = useState("");
 
   const { user } = useSelector(state => state.user);
-  useEffect(() => {
-    if (!user) {
-      Alert("로그인 후 이용 가능합니다.");
-      navigate("/home");
-    }
-  }, [user, navigate, Alert]);
 
   const Post = async () => {
     const attachmentRef = ref(storage, `${user.id}/${Date.now()}`);

@@ -1,12 +1,8 @@
-import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar } from "components";
+import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar, useDialog } from "components";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
-<<<<<<< HEAD
-import { useNavigate, useParams } from "react-router-dom";
-=======
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
->>>>>>> 0f4ef46cc3f5c0e4f200b40750366719335e4ce6
+import { useNavigate, useParams } from "react-router-dom";
 import * as Styled from "./Home.styles";
 
 const TMP = [
@@ -33,41 +29,36 @@ const TMP = [
 ];
 
 export const Home = () => {
+  const { Alert } = useDialog();
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
-<<<<<<< HEAD
+  const { data, currentUser } = useSelector(({ center, user }) => ({
+    data: center.center,
+    currentUser: user.user
+  }));
   const [showPost, setshowPost] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
-=======
-  const data = useSelector(state => state.center);
->>>>>>> 0f4ef46cc3f5c0e4f200b40750366719335e4ce6
 
   const MapClickHandler = (_t, e) => {
     setPosition({ lat: e.latLng.getLat(), lng: e.latLng.getLng() });
     setSelected(null);
   };
-  const currentUrl = useLocation();
 
-<<<<<<< HEAD
-  const openPost = () => {
+  const openPost = location => {
+    if (!currentUser) return Alert("로그인 후 이용가능합니다.");
     setshowPost(true);
     navigate("/home");
   };
   const closePost = () => {
     setshowPost(false);
   };
-=======
-  // const [extendtype, setExtendtype] = useState("");
-  // const [showExtend, setshowExtend] = useState("");
->>>>>>> 0f4ef46cc3f5c0e4f200b40750366719335e4ce6
 
   return (
     <>
       <Header />
       <Styled.Container>
         <Sidebar />
-<<<<<<< HEAD
         {params && !showPost && <Show id={params.contentid} />}
         {showPost && <PostForm closePost={closePost} />}
         <Map
@@ -75,14 +66,6 @@ export const Home = () => {
           style={{ width: "100%", height: "100%" }}
           onClick={MapClickHandler}
         >
-=======
-        {currentUrl.pathname !== "/home" && currentUrl.pathname.includes("post") ? (
-          <PostForm />
-        ) : (
-          <Show />
-        )}
-        <Map center={data} style={{ width: "100%", height: "100%" }} onClick={MapClickHandler}>
->>>>>>> 0f4ef46cc3f5c0e4f200b40750366719335e4ce6
           {TMP.map(marker => (
             <MarkerItem
               key={marker.title}

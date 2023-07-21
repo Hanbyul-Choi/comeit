@@ -3,6 +3,7 @@ import { Button } from "components/Button";
 import { getData } from "hooks/api";
 import { useEffect, useState } from "react";
 import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
+import { OverlayContainer } from "./Map.styles";
 
 export const ClickedMarker = ({ position, openPost }) => {
   const [isOpen, setIsOpen] = useState(false);
