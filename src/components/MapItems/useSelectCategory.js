@@ -12,13 +12,13 @@ export const useSelectCategory = category => {
   const [icon, setIcon] = useState(placeImage);
   useMount(() => {
     switch (category) {
-      case "sport":
+      case "sports":
         setIcon(sportIcon);
         break;
       case "game":
         setIcon(gameIcon);
         break;
-      case "trip":
+      case "travel":
         setIcon(tripIcon);
         break;
       case "culture":
@@ -27,7 +27,7 @@ export const useSelectCategory = category => {
       case "language":
         setIcon(languageIcon);
         break;
-      case "community":
+      case "social":
         setIcon(communityIcon);
         break;
       default:

@@ -6,7 +6,7 @@ import language from "assets/categories/language.png";
 import social from "assets/categories/social.png";
 import sports from "assets/categories/sports.png";
 import travel from "assets/categories/travel.png";
-import { Input, Slider } from "components";
+import { Input, Slider, useDialog } from "components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCenter } from "redux/modules/centerSlice";
@@ -14,6 +14,7 @@ import * as Styled from "./Sidebar.styles";
 
 export const Sidebar = ({ openDetail }) => {
   const SliderArr = [sports, game, travel, culture, language, social];
+  const { Alert } = useDialog();
 
   const { data } = useQuery(["contents"], fetchData);
   const dispatch = useDispatch();
@@ -35,6 +36,10 @@ export const Sidebar = ({ openDetail }) => {
   const filteredData = filterData();
 
   const onClickContent = location => {
+    if (!localStorage.getItem("user")) {
+      Alert("로그인 후 확인 가능 합니다.");
+      return;
+    }
     dispatch(setCenter(location));
     openDetail();
   };

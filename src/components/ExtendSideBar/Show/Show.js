@@ -2,25 +2,34 @@ import { Label } from "components/Label";
 import { deleteDoc, doc } from "firebase/firestore";
 import { createPortal } from "react-dom";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getDetail } from "api/contents";
 import arrowPrev from "assets/buttonIcon/arrowPrev.svg";
 import { Button } from "components/Button";
 import { useDialog } from "components/Overlay";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { db } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./Show.styles";
 
-export const Show = ({ id, closeDetail }) => {
+export const Show = ({ id, closeDetail, openPost }) => {
   const { Confirm } = useDialog();
   const params = useParams();
   const queryClient = useQueryClient();
+  const [data, setData] = useState(null);
 
   const { currentUser } = useSelector(({ user }) => ({ currentUser: user.user }));
+  const navigate = useNavigate();
+  // const { data } = useQuery(["detail"], () => getDetail(id));
 
-  const { data } = useQuery(["detail"], () => getDetail(id));
+  useEffect(() => {
+    const test = async () => {
+      setData(await getDetail(id));
+    };
+    test();
+  }, [id]);
 
   const Delete = () => {
     deleteDoc(doc(db, "contents", params.contentid));
@@ -34,7 +43,10 @@ export const Show = ({ id, closeDetail }) => {
     }
   });
 
-  const onUpdate = () => {};
+  const onUpdate = () => {
+    openPost();
+    navigate(`/edit/${id}`);
+  };
   const onDelete = async () => {
     if (!(await Confirm("게시물을 삭제하시겠습니까?"))) return;
     mutate();
