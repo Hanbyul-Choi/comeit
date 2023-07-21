@@ -1,18 +1,9 @@
 import { css, styled } from "styled-components";
 import { flex, position } from "styles/mixins";
 
-export const ClickedOverlayContainer = styled.div`
-  ${flex.center({ direction: "column" })}
-  ${position.absolute({ top: "-110px", left: "-35px" })};
-  ${({ theme }) =>
-    css`
-      background-color: ${theme.colors.white};
-      padding: 10px;
-      border-radius: 10px;
-      box-sizing: border-box;
-    `}
+export const PlusButton = styled.button`
+  ${position.absolute({ top: "-90px", left: "-20px" })};
 `;
-
 export const OverlayContainer = styled.div`
   box-sizing: border-box;
   ${flex.center({ direction: "column" })}
@@ -24,13 +15,13 @@ export const OverlayContainer = styled.div`
       border-radius: 10px;
     `} 
   position: absolute;
-  top: -220px;
-  left: -110px;
+  top: -170px;
+  left: -80px;
 `;
 
 export const ThumbnailContainer = styled.div`
-  width: 200px;
-  height: 100px;
+  width: 150px;
+  height: 50px;
   margin-bottom: 10px;
 `;
 

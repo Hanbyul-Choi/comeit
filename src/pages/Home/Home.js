@@ -1,16 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMarkers } from "api/contents";
+import plusbutton from "assets/svgs/add_circle3.svg";
 import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar, useDialog } from "components";
+import { useMount } from "hooks";
+
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { setCenter } from "redux/modules/centerSlice";
 import * as Styled from "./Home.styles";
 
 export const Home = () => {
   const { Alert } = useDialog();
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
+  const dispatch = useDispatch();
+  const { Alert } = useDialog();
   const { location, currentUser } = useSelector(({ center, user }) => ({
     location: center.center,
     currentUser: user.user
@@ -32,6 +38,17 @@ export const Home = () => {
     setShowPost(true);
     navigate("/home");
   };
+
+  useMount(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        posi => dispatch(setCenter({ lat: posi.coords.latitude, lng: posi.coords.longitude })),
+        () => Alert("현재위치를 불러올 수 없습니다.")
+      );
+    } else {
+      Alert("geolocation을 사용할 수 없습니다.");
+    }
+  });
 
   const openDetail = () => {
     setShowPost(false);
@@ -65,6 +82,9 @@ export const Home = () => {
           ))}
           <ClickedMarker closePost={closePost} openPost={openPost} position={position} />
         </Map>
+        <Styled.PlusButton>
+          <img src={plusbutton} alt="게시물 등록" style={{ width: "80px" }} />
+        </Styled.PlusButton>
       </Styled.Container>
     </>
   );
