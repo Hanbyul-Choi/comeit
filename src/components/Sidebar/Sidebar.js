@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "api/contents";
 import { all, culture, game, language, social, sports, travel } from "assets/categories";
-import { Button, Input, Slider } from "components";
+import { Button, Input, Slider, useDialog } from "components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCenter } from "redux/modules/centerSlice";
@@ -20,6 +20,7 @@ const CategoryImages = [
 export const Sidebar = ({ openDetail }) => {
   const { data } = useQuery(["contents"], fetchData);
   const dispatch = useDispatch();
+  const { Alert } = useDialog();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
