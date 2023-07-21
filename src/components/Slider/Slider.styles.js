@@ -66,3 +66,7 @@ export const Button = styled.button`
     }
   `}
 `;
+
+export const CardContents = styled.div`
+  // 원하는 카드 스타일을 여기에 적용해주세요.
+`;

@@ -78,10 +78,12 @@ export const Sidebar = ({ openDetail }) => {
       />
 
       <Slider
+        key={`home-${CategoryImages.index}`}
         showContentNum={3}
         space={5}
         contents={CategoryImages.map(category => category.image)}
         onClickHandler={handleCategoryClick}
+        type="home"
       />
 
       <p>{getDisplayCategoryText()}</p>

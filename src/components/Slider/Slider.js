@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import * as Styled from "./Slider.styles";
 
 export const Slider = ({
+  key,
+  type,
   showContentNum = 3,
   space = 1,
   contents,
@@ -45,25 +47,48 @@ export const Slider = ({
     slideRef.current.style.transform = `translateX(-${currentSlide * contentWidth}px)`;
   }, [currentSlide, isLastSlide, isButtonVisible, contentWidth]);
 
+  const renderContent = () => {
+    if (type === "intro") {
+      return contents.map(item => (
+        <Styled.SlideItem
+          space={space}
+          contentWidth={contentWidth}
+          key={key}
+          color={item.color}
+          onClick={() => onClickHandler(item)}
+        >
+          <Styled.SlideItem>
+            <Styled.Img src={item.groupImgUrl} />
+            <Styled.CardContents>
+              <p>{item.groupName}</p>
+              <p>{item.meetingPlace}</p>
+              <p>{item.category}</p>
+            </Styled.CardContents>
+          </Styled.SlideItem>
+        </Styled.SlideItem>
+      ));
+    }
+
+    if (type === "home") {
+      return contents.map(item => (
+        <Styled.SlideItem
+          space={space}
+          contentWidth={contentWidth}
+          key={key}
+          color={item.color}
+          onClick={() => onClickHandler(item)}
+        >
+          <Styled.Img src={item} space={space} contentWidth={contentWidth} />
+        </Styled.SlideItem>
+      ));
+    }
+  };
+
   return (
     <Styled.ContainerBlock onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <Styled.Container contentWidth={contentWidth} showContentNum={showContentNum} space={space}>
         <Styled.SliderContainer sliceWidth={sliceWidth} ref={slideRef}>
-          {contents.map((item, index) => (
-            <Styled.SlideItem
-              space={space}
-              contentWidth={contentWidth}
-              key={item.id || index}
-              color={item.color}
-              onClick={() => onClickHandler(item)}
-            >
-              {typeof item === "string" ? (
-                <Styled.Img src={item} space={space} contentWidth={contentWidth} />
-              ) : (
-                item
-              )}
-            </Styled.SlideItem>
-          ))}
+          {renderContent()}
         </Styled.SliderContainer>
 
         {isButtonVisible && (
