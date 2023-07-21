@@ -7,6 +7,7 @@ const variantStyle = ({ variant }) => {
       return css`
         ${flex.center()}
       `;
+
     default:
       return;
   }

@@ -1,39 +1,81 @@
-import { doc, getDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Label } from "components/Label";
+import { deleteDoc, doc } from "firebase/firestore";
+import { createPortal } from "react-dom";
 
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getDetail } from "api/contents";
+import arrowPrev from "assets/buttonIcon/arrowPrev.svg";
+import { Button } from "components/Button";
+import { useDialog } from "components/Overlay";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router";
 import { db } from "server/config";
+import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./Show.styles";
 
-export const Show = () => {
-  const [content, setContent] = useState("");
-  const params = useParams().contentid;
+export const Show = ({ id, closeDetail }) => {
+  const { Confirm } = useDialog();
+  const params = useParams();
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!params) return;
-      const snapContent = await getDoc(doc(db, "contents", params));
-      if (snapContent.exists()) {
-        setContent(snapContent.data());
-      } else {
-        console.log("No such document");
-      }
-    };
-    fetchData();
-  }, [params]);
+  const { currentUser } = useSelector(({ user }) => ({ currentUser: user.user }));
+
+  const { data } = useQuery(["detail"], () => getDetail(id));
+
+  const Delete = () => {
+    deleteDoc(doc(db, "contents", params.contentid));
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: Delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["contents"]);
+      closeDetail();
+    }
+  });
+
+  const onUpdate = () => {};
+  const onDelete = async () => {
+    if (!(await Confirm("게시물을 삭제하시겠습니까?"))) return;
+    mutate();
+  };
 
   return (
     <div>
-      {content && (
-        <Styled.ExtendSidebar>
-          <div>{content.groupName}</div>
-          <div>{content.groupLeader}</div>
-          <div>{content.meetingDate}</div>
-          <div>{content.meetingPlace}</div>
-          <div>{content.groupContact}</div>
-          <div>{content.groupIntro}</div>
-          <div>{content.meetingMember}</div>
-        </Styled.ExtendSidebar>
+      <Styled.ExtendSidebar>
+        {data && (
+          <FlexColumn gap={3}>
+            <FlexCenter>
+              <Styled.ContentImg src={data.groupImgUrl} alt={data.groupName} />
+            </FlexCenter>
+            <Label variant="variant">작성자</Label>
+            <Styled.ContentBox>{data.uid}</Styled.ContentBox>
+            <Label variant="variant">모임 이름</Label>
+            <Styled.ContentBox>{data.groupName}</Styled.ContentBox>
+            <Label variant="variant">모임 날짜</Label>
+            <Styled.ContentBox>{data.meetingDate}</Styled.ContentBox>
+            <Label variant="variant">모임 장소</Label>
+            <Styled.ContentBox>{data.meetingPlace}</Styled.ContentBox>
+            <Label variant="variant">오픈톡방/모임주 연락처</Label>
+            <Styled.ContentBox>{data.groupContact}</Styled.ContentBox>
+            <Label variant="variant">모집 정원</Label>
+            <Styled.ContentBox>{data.meetingNumber}</Styled.ContentBox>
+            <Label variant="variant">모임 소개</Label>
+            <Styled.ContentBox>{data.groupIntro}</Styled.ContentBox>
+            {currentUser.id === data.uid && (
+              <Styled.Btns>
+                <Button onClick={() => onUpdate(params.contentid)}>수정</Button>
+                <Button onClick={onDelete}>삭제</Button>
+              </Styled.Btns>
+            )}
+          </FlexColumn>
+        )}
+      </Styled.ExtendSidebar>
+      {createPortal(
+        <Styled.Button onClick={closeDetail}>
+          <img src={arrowPrev} alt="이전버튼" />
+        </Styled.Button>,
+        document.getElementById("portal-root")
       )}
     </div>
   );
