@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "api/contents";
+import all from "assets/categories/all.png";
 import culture from "assets/categories/culture.png";
 import game from "assets/categories/game.png";
 import language from "assets/categories/language.png";
@@ -12,8 +13,8 @@ import { useDispatch } from "react-redux";
 import { setCenter } from "redux/modules/centerSlice";
 import * as Styled from "./Sidebar.styles";
 
-const CategoryImages = [sports, game, travel, culture, language, social];
-const CategoryNames = ["sports", "game", "travel", "culture", "language", "social"];
+const CategoryImages = [all, sports, game, travel, culture, language, social];
+const CategoryNames = [all, "sports", "game", "travel", "culture", "language", "social"];
 
 export const Sidebar = () => {
   const { data } = useQuery(["contents"], fetchData);
