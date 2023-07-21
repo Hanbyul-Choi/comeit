@@ -36,7 +36,8 @@ export const Home = () => {
     data: center.center,
     currentUser: user.user
   }));
-  const [showPost, setshowPost] = useState(false);
+  const [showPost, setShowPost] = useState(false);
+  const [showDetail, setShowDeatil] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
 
@@ -45,27 +46,32 @@ export const Home = () => {
     setSelected(null);
   };
 
-  const openPost = location => {
+  const openPost = () => {
     if (!currentUser) return Alert("로그인 후 이용가능합니다.");
-    setshowPost(true);
+    setShowDeatil(false);
+    setShowPost(true);
     navigate("/home");
   };
-  const closePost = () => {
-    setshowPost(false);
+
+  const openDetail = () => {
+    setShowPost(false);
+    setShowDeatil(true);
+  };
+  const closeDetail = () => {
+    setShowDeatil(false);
   };
 
+  const closePost = () => {
+    setShowPost(false);
+  };
   return (
     <>
       <Header />
       <Styled.Container>
-        <Sidebar />
-        {params && !showPost && <Show id={params.contentid} />}
+        <Sidebar openDetail={openDetail} />
+        {showDetail && <Show id={params.contentid} closeDetail={closeDetail} />}
         {showPost && <PostForm closePost={closePost} />}
-        <Map
-          center={{ lat: 33.45168, lng: 126.574942 }}
-          style={{ width: "100%", height: "100%" }}
-          onClick={MapClickHandler}
-        >
+        <Map center={data} style={{ width: "100%", height: "100%" }} onClick={MapClickHandler}>
           {TMP.map(marker => (
             <MarkerItem
               key={marker.title}
@@ -74,7 +80,7 @@ export const Home = () => {
               selected={selected}
             />
           ))}
-          <ClickedMarker openPost={openPost} position={position} />
+          <ClickedMarker closePost={closePost} openPost={openPost} position={position} />
         </Map>
       </Styled.Container>
     </>

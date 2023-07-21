@@ -3,18 +3,24 @@ import { Button } from "components/Button";
 import { getData } from "hooks/api";
 import { useEffect, useState } from "react";
 import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
+import { useDispatch } from "react-redux";
+import { setPlace, setPostion } from "redux/modules/centerSlice";
 import * as Styled from "./Map.styles";
 
-export const ClickedMarker = ({ position, openPost }) => {
+export const ClickedMarker = ({ position, openPost, closePost }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [iconSize, setIconSize] = useState({
     width: 48,
     height: 49
   });
 
+  const dispatch = useDispatch();
+
   const handleCreate = async () => {
     const data = await getData(position);
-    console.log(data);
+    dispatch(setPlace(data));
+    dispatch(setPostion(position));
+    openPost();
   };
 
   useEffect(() => {

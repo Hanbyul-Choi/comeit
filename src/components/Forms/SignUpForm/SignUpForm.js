@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { Button, Input, Label, SignInForm, SIGN_IN_MODAL, useDialog, useModal } from "components";
+import { Button, Input, Label, SIGN_IN_MODAL, SignInForm, useDialog, useModal } from "components";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { useInput } from "hooks";
@@ -15,10 +15,10 @@ export const SignUpForm = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [email, onEmailChange] = useInput(() => setErrorMessage(""));
-  const [password, onPasswordChange] = useInput(() => setErrorMessage(""));
-  const [confirmPassword, onConfirmPasswordChange] = useInput(() => setErrorMessage(""));
-  const [nickname, onNicknameChange] = useInput(() => setErrorMessage(""));
+  const [email, onEmailChange] = useInput("", () => setErrorMessage(""));
+  const [password, onPasswordChange] = useInput("", () => setErrorMessage(""));
+  const [confirmPassword, onConfirmPasswordChange] = useInput("", () => setErrorMessage(""));
+  const [nickname, onNicknameChange] = useInput("", () => setErrorMessage(""));
 
   const signUp = async () => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);

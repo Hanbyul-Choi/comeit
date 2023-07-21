@@ -6,16 +6,14 @@ import language from "assets/categories/language.png";
 import social from "assets/categories/social.png";
 import sports from "assets/categories/sports.png";
 import travel from "assets/categories/travel.png";
-import { Button, Input, Slider } from "components";
+import { Input, Slider } from "components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCenter } from "redux/modules/centerSlice";
 import * as Styled from "./Sidebar.styles";
 
-export const Sidebar = () => {
+export const Sidebar = ({ openDetail }) => {
   const SliderArr = [sports, game, travel, culture, language, social];
-  // 2. 리액트 쿼리(useQuery)를 사용해서 그 함수를 실행시킨다.
-  // 3. data를 추출해서 map메서드로 리스트를 생성한다.
 
   const { data } = useQuery(["contents"], fetchData);
   const dispatch = useDispatch();
@@ -36,6 +34,11 @@ export const Sidebar = () => {
 
   const filteredData = filterData();
 
+  const onClickContent = location => {
+    dispatch(setCenter(location));
+    openDetail();
+  };
+
   return (
     <Styled.SidebarWrapper>
       <Input
@@ -46,13 +49,14 @@ export const Sidebar = () => {
 
       <Slider showContentNum={3} space={5} contents={SliderArr} />
 
-      {/* 리덕스 테스트 버튼 */}
-      <Button onClick={() => dispatch(setCenter({ lat: 37.54699, lng: 127.09598 }))}>click</Button>
-
       <Styled.PostContainer>
         {filteredData?.map(content => {
           return (
-            <Styled.Link to={`/home/${content.id}`} key={content.id}>
+            <Styled.Link
+              to={`/home/${content.id}`}
+              key={content.id}
+              onClick={() => onClickContent(content.location)}
+            >
               <div>
                 <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
               </div>
