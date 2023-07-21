@@ -43,7 +43,7 @@ export const Show = ({ id }) => {
             <Label variant="variant">오픈톡방/모임주 연락처</Label>
             <Styled.ContentBox>{content.groupContact}</Styled.ContentBox>
             <Label variant="variant">모집 정원</Label>
-            <Styled.ContentBox>{content.meetingMember}</Styled.ContentBox>
+            <Styled.ContentBox>{content.meetingNumber}</Styled.ContentBox>
             <Label variant="variant">모임 소개</Label>
             <Styled.ContentBox>{content.groupIntro}</Styled.ContentBox>
           </FlexColumn>
