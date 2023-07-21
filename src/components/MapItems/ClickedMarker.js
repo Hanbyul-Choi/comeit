@@ -28,7 +28,7 @@ export const ClickedMarker = ({ position, openPost }) => {
       {isOpen && (
         <CustomOverlayMap position={position} clickable>
           <OverlayContainer>
-            <Button size="medium" onClick={openPost}>
+            <Button size="medium" onClick={() => openPost(position)}>
               생성
             </Button>
           </OverlayContainer>

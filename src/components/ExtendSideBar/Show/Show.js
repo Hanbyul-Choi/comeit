@@ -6,6 +6,7 @@ import * as Styled from "./Show.styles";
 
 export const Show = ({ id }) => {
   const [content, setContent] = useState("");
+  const [userdata, setUserdata] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,12 +20,14 @@ export const Show = ({ id }) => {
     };
     fetchData();
   }, [id]);
+  // getPostUser(content.uid);
 
   return (
     <div>
       {content && (
         <Styled.ExtendSidebar>
           <div>{content.groupName}</div>
+          <div>{userdata.nickname}</div>
           <div>{content.groupLeader}</div>
           <div>{content.meetingDate}</div>
           <div>{content.meetingPlace}</div>
