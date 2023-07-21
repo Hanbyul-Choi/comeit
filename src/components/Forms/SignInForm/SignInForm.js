@@ -1,6 +1,6 @@
 import { doc, getDoc } from "@firebase/firestore";
 import { useMutation } from "@tanstack/react-query";
-import { Button, Input, Label, SignUpForm, SIGN_UP_MODAL, useDialog, useModal } from "components";
+import { Button, Input, Label, SIGN_UP_MODAL, SignUpForm, useDialog, useModal } from "components";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -34,12 +34,10 @@ export const SignInForm = () => {
 
   const { mutate } = useMutation(signIn, {
     onError: error => {
-      if (
-        error.code === "auth/wrong-password" ||
-        error.code === "auth/user-not-found" ||
-        error.code === "auth/invalid-email"
-      ) {
+      if (error.code === "auth/wrong-password" || error.code === "auth/invalid-email") {
         setErrorMessage("이메일 또는 비밀번호가 올바르지 않습니다.");
+      } else if (error.code === "auth/user-not-found") {
+        setErrorMessage("가입되지 않은 계정입니다.");
       } else {
         setErrorMessage("로그인에 실패했습니다. 다시 시도해주세요.");
       }
