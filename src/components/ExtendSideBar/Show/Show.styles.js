@@ -10,18 +10,19 @@ export const Sidebar = styled.div`
   width: 300px;
 `;
 export const ExtendSidebar = styled.div`
-  /* width: 300px; */
   ${size({ width: 300, height: `calc(100vh - ${HEADER_HEIGHT}px)` })}
+  position: relative;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   background-color: white;
   box-shadow: ${shadows.drop3};
   padding: ${sizes.padding.medium}px;
 `;
 export const ContentBox = styled.div`
-  height: 25px;
   color: ${colors.gray4};
-
-  ${size({ height: sizes.height.small })}
 
   padding: 0 ${sizes.padding.small}px;
 

@@ -18,8 +18,6 @@ const CategoryImages = [
 ];
 
 export const Sidebar = ({ openDetail }) => {
-  const SliderArr = [sports, game, travel, culture, language, social];
-
   const { data } = useQuery(["contents"], fetchData);
   const dispatch = useDispatch();
 

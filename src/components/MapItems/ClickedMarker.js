@@ -1,5 +1,5 @@
-import PlaceImage from "assets/svgs/addLocation.svg";
-import { Button } from "components/Button";
+import plusbutton from "assets/svgs/add_circle.svg";
+import PlaceImage from "assets/svgs/my.svg";
 import { getData } from "hooks/api";
 import { useEffect, useState } from "react";
 import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
@@ -44,11 +44,9 @@ export const ClickedMarker = ({ position, openPost }) => {
       />
       {isOpen && (
         <CustomOverlayMap position={position} clickable>
-          <Styled.ClickedOverlayContainer>
-            <Button onClick={handleCreate} size="medium">
-              생성
-            </Button>
-          </Styled.ClickedOverlayContainer>
+          <Styled.PlusButton onClick={handleCreate}>
+            <img src={plusbutton} alt="게시물 등록" style={{ width: "40px" }} />
+          </Styled.PlusButton>
         </CustomOverlayMap>
       )}
     </>

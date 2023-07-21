@@ -26,7 +26,7 @@ export const UserDropdown = ({ setOpenOption }) => {
   });
 
   const onLogout = async () => {
-    if (!(await Confirm("나갈거임?"))) return;
+    if (!(await Confirm("로그아웃 하시겠습니까?"))) return;
     await Alert("로그아웃 되었습니다.");
     dispatch(initializeUser());
     localStorage.removeItem("user");

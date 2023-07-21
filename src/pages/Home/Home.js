@@ -1,5 +1,7 @@
+import plusbutton from "assets/svgs/add_circle3.svg";
 import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar, useDialog } from "components";
 import { useMount } from "hooks";
+
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
@@ -97,6 +99,9 @@ export const Home = () => {
           ))}
           <ClickedMarker closePost={closePost} openPost={openPost} position={position} />
         </Map>
+        <Styled.PlusButton>
+          <img src={plusbutton} alt="게시물 등록" style={{ width: "80px" }} />
+        </Styled.PlusButton>
       </Styled.Container>
     </>
   );
