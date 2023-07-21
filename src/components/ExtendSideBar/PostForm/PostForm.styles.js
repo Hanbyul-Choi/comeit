@@ -5,40 +5,48 @@ import { theme } from "styles/theme";
 import { colors } from "styles/theme/colors";
 import { sizes } from "styles/theme/sizes";
 
-export const Sidebar = styled.div`
-  /* width: 300px; */
-`;
 export const PostFormBlock = styled.div`
   ${flex({ align: "center", justify: "center" })}
 `;
 export const ExtendSidebar = styled.div`
   ${size({ width: 300, height: `calc(100vh - ${HEADER_HEIGHT}px)` })}
   ${flex({ justify: "center" })}
+  border-left: 1px solid ${theme.colors.gray2};
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   color: ${theme.colors.black};
   padding: ${sizes.padding.medium}px;
-  position: relative;
-  border-left: 1px solid ${theme.colors.gray2};
 `;
 
 export const ImgBox = styled.div`
   ${flex({ align: "center", justify: "center" })}
   width: 17.2rem;
   height: 14rem;
+
   background-color: ${colors.gray2};
   border-radius: 10px;
+
   position: relative;
 `;
 
 export const PreView = styled.div`
   ${flex({ align: "center", justify: "center" })}
   cursor: pointer;
+
+  width: 17.2rem;
+  height: 14rem;
 `;
 
 export const PreViewImg = styled.img`
   ${flex({ align: "center", justify: "center" })}
   position: absolute;
+
   width: 17.2rem;
   height: 14rem;
+
   top: 0px;
   right: 0px;
   border-radius: 10px;

@@ -22,13 +22,18 @@ export const ExtendSidebar = styled.div`
   padding: ${sizes.padding.medium}px;
 `;
 export const ContentBox = styled.div`
+
+  width: 280px;
   color: ${colors.gray4};
 
-  padding: 0 ${sizes.padding.small}px;
+  padding-left: ${sizes.padding.small}px;
+
 
   border-radius: 8px;
 
   ${typography(sizes.heading.medium)}
+  white-space: pre-wrap;
+  word-break: break-all;
 `;
 export const ContentImg = styled.img`
   width: 280px;
@@ -63,4 +68,5 @@ export const Button = styled.button`
 
 export const Btns = styled.div`
   ${flex({ align: "center", justify: "center", gap: 12 })}
+  padding-top: 20px
 `;

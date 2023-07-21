@@ -13,6 +13,6 @@ export const Sidebar = styled.div`
   ${size({ width: 300, height: `calc(100vh - ${HEADER_HEIGHT}px)` })}
 `;
 export const PlusButton = styled.button`
-  ${position.absolute({ top: "90%", right: "1%" })};
+  ${position.absolute({ top: `calc(100% - 100px)`, right: "20px" })};
   z-index: 1;
 `;
