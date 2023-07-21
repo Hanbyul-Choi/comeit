@@ -16,7 +16,6 @@ export const Home = () => {
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
   const dispatch = useDispatch();
-  const { Alert } = useDialog();
   const { location, currentUser } = useSelector(({ center, user }) => ({
     location: center.center,
     currentUser: user.user
