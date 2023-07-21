@@ -3,7 +3,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-import arrowPrev from "assets/buttonIcon/arrowPrev.svg";
+import arrowPrev from "assets/svgs/arrowPrev.svg";
 import { db } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./Show.styles";

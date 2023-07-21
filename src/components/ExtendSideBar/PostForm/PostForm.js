@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import arrowPrev from "assets/buttonIcon/arrowPrev.svg";
+import arrowPrev from "assets/svgs/arrowPrev.svg";
 import { Button } from "components/Button";
 import { Dropdown } from "components/Dropdown";
 import { Input } from "components/Input";

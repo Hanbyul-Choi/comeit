@@ -15,10 +15,10 @@ export const SignUpForm = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [email, onEmailChange] = useInput(() => setErrorMessage(""));
-  const [password, onPasswordChange] = useInput(() => setErrorMessage(""));
-  const [confirmPassword, onConfirmPasswordChange] = useInput(() => setErrorMessage(""));
-  const [nickname, onNicknameChange] = useInput(() => setErrorMessage(""));
+  const [email, onEmailChange] = useInput("", () => setErrorMessage(""));
+  const [password, onPasswordChange] = useInput("", () => setErrorMessage(""));
+  const [confirmPassword, onConfirmPasswordChange] = useInput("", () => setErrorMessage(""));
+  const [nickname, onNicknameChange] = useInput("", () => setErrorMessage(""));
 
   const signUp = async () => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);

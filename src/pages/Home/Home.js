@@ -56,11 +56,7 @@ export const Home = () => {
         <Sidebar />
         {params && !showPost && <Show id={params.contentid} />}
         {showPost && <PostForm closePost={closePost} />}
-        <Map
-          center={{ lat: 33.45168, lng: 126.574942 }}
-          style={{ width: "100%", height: "100%" }}
-          onClick={MapClickHandler}
-        >
+        <Map center={data} style={{ width: "100%", height: "100%" }} onClick={MapClickHandler}>
           {TMP.map(marker => (
             <MarkerItem
               key={marker.title}

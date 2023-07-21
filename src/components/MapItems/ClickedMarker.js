@@ -14,6 +14,7 @@ export const ClickedMarker = ({ position, openPost }) => {
 
   const handleCreate = async () => {
     const data = await getData(position);
+    openPost(data);
     console.log(data);
   };
 
