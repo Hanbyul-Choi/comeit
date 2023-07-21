@@ -1,5 +1,5 @@
 import mainImage from "assets/Intro/main1.png";
-import { Header } from "components";
+import { Header, Slider } from "components";
 import * as Styled from "./Intro.styles";
 
 export const Intro = () => {
@@ -12,6 +12,10 @@ export const Intro = () => {
           <Styled.NavigateButton to="/home">동네 모임 둘러보기</Styled.NavigateButton>
         </Styled.Box>
       </Styled.Container>
+
+      <div>
+        <Slider showContentNum={3} space={5} />
+      </div>
     </Styled.Layout>
   );
 };
