@@ -17,7 +17,9 @@ const CategoryImages = [
   { name: "친목", image: social }
 ];
 
-export const Sidebar = () => {
+export const Sidebar = ({ openDetail }) => {
+  const SliderArr = [sports, game, travel, culture, language, social];
+
   const { data } = useQuery(["contents"], fetchData);
   const dispatch = useDispatch();
 
@@ -59,6 +61,11 @@ export const Sidebar = () => {
     return selectedCategory && currentCategory ? currentCategory.name : "전체";
   };
 
+  const onClickContent = location => {
+    dispatch(setCenter(location));
+    openDetail();
+  };
+
   return (
     <Styled.SidebarWrapper>
       <Input
@@ -83,7 +90,11 @@ export const Sidebar = () => {
         ) : (
           filteredData.map(content => {
             return (
-              <Styled.Link to={`/home/${content.id}`} key={content.id}>
+              <Styled.Link
+                to={`/home/${content.id}`}
+                key={content.id}
+                onClick={() => onClickContent(content.location)}
+              >
                 <div>
                   <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
                 </div>

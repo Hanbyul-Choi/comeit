@@ -1,7 +1,10 @@
-import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar } from "components";
+import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar, useDialog } from "components";
+import { useMount } from "hooks";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { setCenter } from "redux/modules/centerSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Styled from "./Home.styles";
 
@@ -29,12 +32,19 @@ const TMP = [
 ];
 
 export const Home = () => {
+  const { Alert } = useDialog();
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
-  const [showPost, setshowPost] = useState(false);
+  const dispatch = useDispatch();
+  const { Alert } = useDialog();
+  const { data, currentUser } = useSelector(({ center, user }) => ({
+    data: center.center,
+    currentUser: user.user
+  }));
+  const [showPost, setShowPost] = useState(false);
+  const [showDetail, setShowDeatil] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
-  const data = useSelector(state => state.center);
 
   const MapClickHandler = (_t, e) => {
     setPosition({ lat: e.latLng.getLat(), lng: e.latLng.getLng() });
@@ -42,19 +52,42 @@ export const Home = () => {
   };
 
   const openPost = () => {
-    setshowPost(true);
+    if (!currentUser) return Alert("로그인 후 이용가능합니다.");
+    setShowDeatil(false);
+    setShowPost(true);
     navigate("/home");
   };
+
+
+  useMount(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        posi => dispatch(setCenter({ lat: posi.coords.latitude, lng: posi.coords.longitude })),
+        () => Alert("현재위치를 불러올 수 없습니다.")
+      );
+    } else {
+      Alert("geolocation을 사용할 수 없습니다.");
+    }
+  });
+
+  const openDetail = () => {
+    setShowPost(false);
+    setShowDeatil(true);
+  };
+  const closeDetail = () => {
+    setShowDeatil(false);
+  };
+
   const closePost = () => {
-    setshowPost(false);
+    setShowPost(false);
   };
 
   return (
     <>
       <Header />
       <Styled.Container>
-        <Sidebar />
-        {params && !showPost && <Show id={params.contentid} />}
+        <Sidebar openDetail={openDetail} />
+        {showDetail && <Show id={params.contentid} closeDetail={closeDetail} />}
         {showPost && <PostForm closePost={closePost} />}
         <Map center={data} style={{ width: "100%", height: "100%" }} onClick={MapClickHandler}>
           {TMP.map(marker => (
@@ -65,7 +98,7 @@ export const Home = () => {
               selected={selected}
             />
           ))}
-          <ClickedMarker openPost={openPost} position={position} />
+          <ClickedMarker closePost={closePost} openPost={openPost} position={position} />
         </Map>
       </Styled.Container>
     </>

@@ -2,15 +2,18 @@ import communityIcon from "assets/svgs/communityIcon.svg";
 import cultureIcon from "assets/svgs/cultureIcon.svg";
 import gameIcon from "assets/svgs/gameIcon.svg";
 import languageIcon from "assets/svgs/languageIcon.svg";
+import myIcon from "assets/svgs/myIcon.svg";
 import placeImage from "assets/svgs/place.svg";
 import sportIcon from "assets/svgs/sportIcon.svg";
 import tripIcon from "assets/svgs/tripIcon.svg";
 import { useMount } from "hooks";
 import { useState } from "react";
 
-export const useSelectCategory = category => {
+export const useSelectCategory = data => {
   const [icon, setIcon] = useState(placeImage);
+  const { category, auth } = data;
   useMount(() => {
+    if (auth) return setIcon(myIcon);
     switch (category) {
       case "sport":
         setIcon(sportIcon);

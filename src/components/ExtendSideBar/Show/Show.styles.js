@@ -1,6 +1,6 @@
 import { HEADER_HEIGHT } from "components/Header/Header.constants";
 import { styled } from "styled-components";
-import { size, typography } from "styles/mixins";
+import { flex, size, typography } from "styles/mixins";
 import { theme } from "styles/theme";
 import { colors } from "styles/theme/colors";
 import { shadows } from "styles/theme/shadows";
@@ -58,4 +58,8 @@ export const Button = styled.button`
     left: 50%;
     transform: translate(-50%, -50%);
   }
+`;
+
+export const Btns = styled.div`
+  ${flex({ align: "center", justify: "center", gap: 12 })}
 `;
