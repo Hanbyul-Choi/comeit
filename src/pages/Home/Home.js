@@ -33,7 +33,6 @@ const TMP = [
 ];
 
 export const Home = () => {
-  const { Alert } = useDialog();
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
   const dispatch = useDispatch();
