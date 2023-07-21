@@ -12,6 +12,11 @@ export const Sidebar = styled.div`
 export const ExtendSidebar = styled.div`
   /* width: 300px; */
   ${size({ width: 300, height: `calc(100vh - ${HEADER_HEIGHT}px)` })}
+  position: relative;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   background-color: white;
   box-shadow: ${shadows.drop3};

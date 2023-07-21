@@ -10,6 +10,7 @@ import { Input, Slider } from "components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCenter } from "redux/modules/centerSlice";
+import { Flex } from "styles/mixins";
 import * as Styled from "./Sidebar.styles";
 
 export const Sidebar = ({ openDetail }) => {
@@ -60,11 +61,13 @@ export const Sidebar = ({ openDetail }) => {
               <div>
                 <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
               </div>
-              <div>
-                <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
-                <Styled.ContentBox>{content.meetingDate}</Styled.ContentBox>
-                <Styled.ContentBox>{content.meetingPlace}</Styled.ContentBox>
-              </div>
+              <Flex>
+                <div>
+                  <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
+                  <Styled.ContentBox>{content.meetingDate}</Styled.ContentBox>
+                  <Styled.ContentBox>{content.meetingPlace}</Styled.ContentBox>
+                </div>
+              </Flex>
             </Styled.Link>
           );
         })}

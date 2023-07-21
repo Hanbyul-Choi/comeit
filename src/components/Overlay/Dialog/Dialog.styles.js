@@ -3,15 +3,16 @@ import { flex, position } from "styles/mixins";
 import { hexToRgba } from "styles/utils";
 
 export const DialogBody = styled.div`
-  ${flex.center({ gap: 50, direction: "column" })}
+  ${flex.center({ gap: 25, direction: "column" })}
   ${position.posCenter()}
   ${({ theme }) =>
     css`
       background-color: ${theme.colors.white};
     `}
   border-radius: 8px;
-  padding: 12px;
-  width: 400px;
+  padding: 25px 0px 20px;
+
+  width: 300px;
 `;
 
 export const DialogBackground = styled.div`
