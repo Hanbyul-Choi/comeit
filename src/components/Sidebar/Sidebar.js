@@ -1,20 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "api/contents";
-import all from "assets/categories/all.png";
-import culture from "assets/categories/culture.png";
-import game from "assets/categories/game.png";
-import language from "assets/categories/language.png";
-import social from "assets/categories/social.png";
-import sports from "assets/categories/sports.png";
-import travel from "assets/categories/travel.png";
+import { all, culture, game, language, social, sports, travel } from "assets/categories";
 import { Button, Input, Slider } from "components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCenter } from "redux/modules/centerSlice";
 import * as Styled from "./Sidebar.styles";
 
-const CategoryImages = [all, sports, game, travel, culture, language, social];
-const CategoryNames = [all, "sports", "game", "travel", "culture", "language", "social"];
+const CategoryImages = [
+  { name: "전체", image: all },
+  { name: "운동/스포츠", image: sports },
+  { name: "게임", image: game },
+  { name: "아웃도어/여행", image: travel },
+  { name: "문화/공연", image: culture },
+  { name: "외국/언어", image: language },
+  { name: "친목", image: social }
+];
 
 export const Sidebar = () => {
   const { data } = useQuery(["contents"], fetchData);
@@ -23,13 +24,12 @@ export const Sidebar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const handleCategoryClick = categoryImage => {
-    const categoryIndex = CategoryImages.indexOf(categoryImage);
-    setSelectedCategory(CategoryNames[categoryIndex]);
-  };
-
   const filterData = () => {
-    let filteredData = data;
+    let filteredData = [];
+
+    if (data) {
+      filteredData = data;
+    }
 
     if (searchTerm) {
       filteredData = filteredData.filter(content =>
@@ -37,18 +37,27 @@ export const Sidebar = () => {
       );
     }
 
-    if (selectedCategory) {
-      filteredData = filteredData.filter(content => {
-        console.log("카테고리", content.category);
-        console.log("배열 인덱스", selectedCategory);
-        return content.category === selectedCategory;
-      });
+    if (selectedCategory && selectedCategory !== "전체") {
+      filteredData = filteredData.filter(content => content.category === selectedCategory);
     }
 
     return filteredData;
   };
 
   const filteredData = filterData();
+
+  const handleCategoryClick = categoryImage => {
+    const clickedCategory = CategoryImages.find(category => category.image === categoryImage);
+
+    setSelectedCategory(currentCategory => {
+      return currentCategory === clickedCategory.name ? null : clickedCategory.name;
+    });
+  };
+
+  const getDisplayCategoryText = () => {
+    const currentCategory = CategoryImages.find(category => category.name === selectedCategory);
+    return selectedCategory && currentCategory ? currentCategory.name : "전체";
+  };
 
   return (
     <Styled.SidebarWrapper>
@@ -61,28 +70,32 @@ export const Sidebar = () => {
       <Slider
         showContentNum={3}
         space={5}
-        contents={CategoryImages}
+        contents={CategoryImages.map(category => category.image)}
         onClickHandler={handleCategoryClick}
       />
 
       {/* 리덕스 테스트 버튼 */}
       <Button onClick={() => dispatch(setCenter({ lat: 37.54699, lng: 127.09598 }))}>click</Button>
-
+      <p>{getDisplayCategoryText()}</p>
       <Styled.PostContainer>
-        {filteredData?.map(content => {
-          return (
-            <Styled.Link to={`/home/${content.id}`} key={content.id}>
-              <div>
-                <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
-              </div>
-              <div>
-                <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
-                <Styled.ContentBox>{content.meetingDate}</Styled.ContentBox>
-                <Styled.ContentBox>{content.meetingPlace}</Styled.ContentBox>
-              </div>
-            </Styled.Link>
-          );
-        })}
+        {filteredData.length === 0 ? (
+          <Styled.NoResultMessage>검색 결과가 없습니다</Styled.NoResultMessage>
+        ) : (
+          filteredData.map(content => {
+            return (
+              <Styled.Link to={`/home/${content.id}`} key={content.id}>
+                <div>
+                  <Styled.ContentImg src={content.groupImgUrl} alt={content.groupName} />
+                </div>
+                <div>
+                  <Styled.ContentBox>{content.groupName}</Styled.ContentBox>
+                  <Styled.ContentBox>{content.meetingDate}</Styled.ContentBox>
+                  <Styled.ContentBox>{content.meetingPlace}</Styled.ContentBox>
+                </div>
+              </Styled.Link>
+            );
+          })
+        )}
       </Styled.PostContainer>
     </Styled.SidebarWrapper>
   );

@@ -1,6 +1,6 @@
 import { Link as RouterLink } from "react-router-dom";
 import { styled } from "styled-components";
-import { flex } from "styles/mixins";
+import { flex, typography } from "styles/mixins";
 import { colors } from "styles/theme/colors";
 import { sizes } from "styles/theme/sizes";
 
@@ -11,7 +11,6 @@ export const SidebarWrapper = styled.div`
 
 export const PostContainer = styled.ul`
   ${flex.column()}
-
   overflow: scroll;
 `;
 
@@ -37,4 +36,11 @@ export const ContentImg = styled.img`
 `;
 export const ContentBox = styled.div`
   padding-bottom: ${sizes.padding.small}px;
+`;
+
+export const NoResultMessage = styled.p`
+  ${typography("heading5")};
+
+  color: ${colors.gray3};
+  text-align: center;
 `;

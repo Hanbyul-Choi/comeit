@@ -15,6 +15,11 @@ export const Img = styled.img`
     width: ${props.contentWidth}px;
     padding: 0 ${props.space}px;
     border-radius: 15px;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 0.6;
+    }
   `}
 `;
 

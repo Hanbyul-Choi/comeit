@@ -120,6 +120,7 @@ export const PostForm = ({ closePost }) => {
           <Input
             variant="outline"
             placeholder="모임 날짜"
+            type="date"
             value={meetingDate}
             onChange={onChangeMeetingDate}
           />
@@ -147,12 +148,12 @@ export const PostForm = ({ closePost }) => {
 
           <Dropdown onChange={value => setCategory(value)}>
             <Dropdown.DropdownMain />
-            <Dropdown.Option value="sports">운동/스포츠</Dropdown.Option>
-            <Dropdown.Option value="game">게임</Dropdown.Option>
-            <Dropdown.Option value="travel">아웃도어/여행</Dropdown.Option>
-            <Dropdown.Option value="culture">문화/공연</Dropdown.Option>
-            <Dropdown.Option value="language">외국/언어</Dropdown.Option>
-            <Dropdown.Option value="social">친목</Dropdown.Option>
+            <Dropdown.Option value="운동/스포츠">운동/스포츠</Dropdown.Option>
+            <Dropdown.Option value="게임">게임</Dropdown.Option>
+            <Dropdown.Option value="아웃도어/여행">아웃도어/여행</Dropdown.Option>
+            <Dropdown.Option value="문화/공연">문화/공연</Dropdown.Option>
+            <Dropdown.Option value="외국/언어">외국/언어</Dropdown.Option>
+            <Dropdown.Option value="친목">친목</Dropdown.Option>
           </Dropdown>
 
           <Textarea placeholder="모임 소개" value={groupIntro} onChange={onChangeGroupIntro} />
