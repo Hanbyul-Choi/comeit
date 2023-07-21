@@ -2,7 +2,7 @@ import { css, styled } from "styled-components";
 import { flex, position } from "styles/mixins";
 
 export const PlusButton = styled.button`
-  ${position.absolute({ top: "-90px", left: "-20px" })};
+  ${position.absolute({ top: "-90px", left: "-19px" })};
 `;
 export const OverlayContainer = styled.div`
   box-sizing: border-box;

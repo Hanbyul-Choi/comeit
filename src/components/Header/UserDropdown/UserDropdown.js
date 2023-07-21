@@ -37,7 +37,7 @@ export const UserDropdown = ({ setOpenOption }) => {
   };
   return (
     <UserDropdownWrapper ref={dropdownRef}>
-      <Option onClick={onEditProfile}>내정보 수정</Option>
+      <Option onClick={onEditProfile}>내 정보</Option>
       <Option onClick={onLogout}>로그아웃</Option>
     </UserDropdownWrapper>
   );
