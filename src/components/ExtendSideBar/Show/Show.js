@@ -17,7 +17,6 @@ import { getDetail } from "api/contents";
 import arrowPrev from "assets/svgs/arrowPrev.svg";
 import { Button } from "components/Button";
 import { useDialog } from "components/Overlay";
-import { useMount } from "hooks";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
@@ -29,10 +28,10 @@ export const Show = ({ id, closeDetail, openPost }) => {
   const { Confirm } = useDialog();
   const params = useParams();
   const queryClient = useQueryClient();
-  const [nickname, setNickname] = useState(null);
+  const [nickname, setNickname] = useState("");
   const [isLike, setIsLike] = useState(false);
   const [likeNum, setLikeNum] = useState(0);
-  const [docId, setDocId] = useState(null);
+  const [docId, setDocId] = useState("");
   const [data, setData] = useState(null);
 
   const { currentUser } = useSelector(({ user }) => ({ currentUser: user.user }));
@@ -78,7 +77,7 @@ export const Show = ({ id, closeDetail, openPost }) => {
     }
   };
 
-  useMount(() => {
+  useEffect(() => {
     const loadIsLiked = async postId => {
       const q = query(
         collection(db, "likes"),
@@ -93,7 +92,7 @@ export const Show = ({ id, closeDetail, openPost }) => {
       }
     };
     loadIsLiked(id);
-  });
+  }, [currentUser.id, id]);
 
   useEffect(() => {
     const loadLikes = async postId => {
