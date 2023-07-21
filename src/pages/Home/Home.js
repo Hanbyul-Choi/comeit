@@ -3,9 +3,8 @@ import { useMount } from "hooks";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { setCenter } from "redux/modules/centerSlice";
 import { useNavigate, useParams } from "react-router-dom";
+import { setCenter } from "redux/modules/centerSlice";
 import * as Styled from "./Home.styles";
 
 const TMP = [
@@ -32,7 +31,6 @@ const TMP = [
 ];
 
 export const Home = () => {
-  const { Alert } = useDialog();
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
   const dispatch = useDispatch();
@@ -57,7 +55,6 @@ export const Home = () => {
     setShowPost(true);
     navigate("/home");
   };
-
 
   useMount(() => {
     if (navigator.geolocation) {
