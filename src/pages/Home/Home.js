@@ -1,8 +1,10 @@
-import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar } from "components";
+import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar, useDialog } from "components";
+import { useMount } from "hooks";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { setCenter } from "redux/modules/centerSlice";
 import * as Styled from "./Home.styles";
 
 const TMP = [
@@ -33,6 +35,7 @@ export const Home = () => {
   const [selected, setSelected] = useState(null);
   const data = useSelector(state => state.center);
   const dispatch = useDispatch();
+  const { Alert } = useDialog();
 
   const MapClickHandler = (_t, e) => {
     setPosition({ lat: e.latLng.getLat(), lng: e.latLng.getLng() });
@@ -42,6 +45,17 @@ export const Home = () => {
 
   // const [extendtype, setExtendtype] = useState("");
   // const [showExtend, setshowExtend] = useState("");
+
+  useMount(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        posi => dispatch(setCenter({ lat: posi.coords.latitude, lng: posi.coords.longitude })),
+        () => Alert("현재위치를 불러올 수 없습니다.")
+      );
+    } else {
+      Alert("geolocation을 사용할 수 없습니다.");
+    }
+  });
 
   return (
     <>
@@ -53,15 +67,7 @@ export const Home = () => {
         ) : (
           <Show />
         )}
-        <Map
-          center={data}
-          style={{ width: "100%", height: "100%" }}
-          onClick={MapClickHandler}
-          // onCenterChanged={map => {
-          //   dispatch(setCenter(null));
-          //   console.log(map);
-          // }}
-        >
+        <Map center={data} style={{ width: "100%", height: "100%" }} onClick={MapClickHandler}>
           {TMP.map(marker => (
             <MarkerItem
               key={marker.title}
