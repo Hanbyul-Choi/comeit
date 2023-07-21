@@ -1,7 +1,7 @@
 import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar } from "components";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import * as Styled from "./Home.styles";
 
@@ -32,6 +32,7 @@ export const Home = () => {
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
   const data = useSelector(state => state.center);
+  const dispatch = useDispatch();
 
   const MapClickHandler = (_t, e) => {
     setPosition({ lat: e.latLng.getLat(), lng: e.latLng.getLng() });
@@ -52,7 +53,15 @@ export const Home = () => {
         ) : (
           <Show />
         )}
-        <Map center={data} style={{ width: "100%", height: "100%" }} onClick={MapClickHandler}>
+        <Map
+          center={data}
+          style={{ width: "100%", height: "100%" }}
+          onClick={MapClickHandler}
+          // onCenterChanged={map => {
+          //   dispatch(setCenter(null));
+          //   console.log(map);
+          // }}
+        >
           {TMP.map(marker => (
             <MarkerItem
               key={marker.title}
