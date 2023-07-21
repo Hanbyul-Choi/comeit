@@ -12,7 +12,6 @@ import { setCenter } from "redux/modules/centerSlice";
 import * as Styled from "./Home.styles";
 
 export const Home = () => {
-  const { Alert } = useDialog();
   const [position, setPosition] = useState({});
   const [selected, setSelected] = useState(null);
   const dispatch = useDispatch();

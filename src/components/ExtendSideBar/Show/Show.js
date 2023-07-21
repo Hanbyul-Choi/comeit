@@ -1,5 +1,15 @@
 import { Label } from "components/Label";
-import { deleteDoc, doc } from "firebase/firestore";
+import {
+  addDoc,
+  and,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where
+} from "firebase/firestore";
 import { createPortal } from "react-dom";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -7,6 +17,7 @@ import { getDetail } from "api/contents";
 import arrowPrev from "assets/svgs/arrowPrev.svg";
 import { Button } from "components/Button";
 import { useDialog } from "components/Overlay";
+import { useMount } from "hooks";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
@@ -18,6 +29,10 @@ export const Show = ({ id, closeDetail, openPost }) => {
   const { Confirm } = useDialog();
   const params = useParams();
   const queryClient = useQueryClient();
+  const [nickname, setNickname] = useState(null);
+  const [isLike, setIsLike] = useState(false);
+  const [likeNum, setLikeNum] = useState(0);
+  const [docId, setDocId] = useState(null);
   const [data, setData] = useState(null);
 
   const { currentUser } = useSelector(({ user }) => ({ currentUser: user.user }));
@@ -52,6 +67,52 @@ export const Show = ({ id, closeDetail, openPost }) => {
     mutate();
   };
 
+  const handleLike = async () => {
+    const likeRef = collection(db, "likes");
+    if (isLike) {
+      setIsLike(false);
+      await deleteDoc(doc(db, "likes", docId));
+    } else {
+      setIsLike(true);
+      await addDoc(likeRef, { postId: id, uid: currentUser.id });
+    }
+  };
+
+  useMount(() => {
+    const loadIsLiked = async postId => {
+      const q = query(
+        collection(db, "likes"),
+        and(where("postId", "==", postId), where("uid", "==", currentUser.id))
+      );
+      const document = await getDocs(q);
+      if (document.size) {
+        setIsLike(true);
+        document.forEach(el => setDocId(el.id));
+      } else {
+        setIsLike(false);
+      }
+    };
+    loadIsLiked(id);
+  });
+
+  useEffect(() => {
+    const loadLikes = async postId => {
+      const q = query(collection(db, "likes"), where("postId", "==", postId));
+      const snapShot = await getDocs(q);
+      setLikeNum(snapShot.size);
+    };
+    loadLikes(id);
+  }, [currentUser.id, id, isLike]);
+
+  useEffect(() => {
+    const loadUser = async postId => {
+      const document = await getDoc(doc(db, "contents", postId));
+      const querySnapshot = await getDoc(doc(db, "users", document.data().uid));
+      setNickname(querySnapshot.data().nickname);
+    };
+    loadUser(id);
+  }, [id]);
+
   return (
     <div>
       <Styled.ExtendSidebar>
@@ -61,7 +122,7 @@ export const Show = ({ id, closeDetail, openPost }) => {
               <Styled.ContentImg src={data.groupImgUrl} alt={data.groupName} />
             </FlexCenter>
             <Label variant="variant">작성자</Label>
-            <Styled.ContentBox>{data.uid}</Styled.ContentBox>
+            <Styled.ContentBox>{nickname}</Styled.ContentBox>
             <Label variant="variant">모임 이름</Label>
             <Styled.ContentBox>{data.groupName}</Styled.ContentBox>
             <Label variant="variant">모임 날짜</Label>
@@ -80,6 +141,9 @@ export const Show = ({ id, closeDetail, openPost }) => {
                 <Button onClick={onDelete}>삭제</Button>
               </Styled.Btns>
             )}
+            <Button onClick={handleLike}>찜</Button>
+            <p>좋아요수: {likeNum}</p>
+            <p>좋아요: {String(isLike)}</p>
           </FlexColumn>
         )}
       </Styled.ExtendSidebar>
