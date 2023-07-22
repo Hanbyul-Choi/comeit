@@ -18,16 +18,15 @@ export const ExtendSidebar = styled.div`
   }
 
   background-color: white;
-  box-shadow: ${shadows.drop3};
+  /* box-shadow: ${shadows.drop3}; */
+  border-left: 1px solid ${theme.colors.gray2};
   padding: ${sizes.padding.medium}px;
 `;
 export const ContentBox = styled.div`
-
   width: 280px;
   color: ${colors.gray4};
 
   padding-left: ${sizes.padding.small}px;
-
 
   border-radius: 8px;
 

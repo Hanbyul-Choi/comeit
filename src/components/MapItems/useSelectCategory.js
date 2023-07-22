@@ -11,11 +11,11 @@ import { useSelector } from "react-redux";
 
 export const useSelectCategory = data => {
   const [icon, setIcon] = useState(placeImage);
-  const currentId = useSelector(state => state.user.user.id);
+  const currentId = useSelector(state => state.user.user);
   const { category, uid } = data;
 
   useEffect(() => {
-    if (currentId === uid) return setIcon(myIcon);
+    if (currentId?.id === uid) return setIcon(myIcon);
     switch (category) {
       case "운동/스포츠":
         setIcon(sportIcon);
