@@ -93,6 +93,10 @@ export const ProfileForm = () => {
       setErrorMessage("비밀번호를 입력해주세요.");
       return;
     }
+    if (!imgFile) {
+      mutate();
+      return;
+    }
     const imageRef = ref(storage, `profileImg/${id}`);
     await uploadBytes(imageRef, imgFile);
     const attachmentUrl = await getDownloadURL(ref(storage, imageRef));

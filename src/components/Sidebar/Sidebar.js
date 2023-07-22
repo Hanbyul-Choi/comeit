@@ -45,7 +45,10 @@ export const Sidebar = ({ openDetail }) => {
     return filteredData;
   };
 
-  const filteredData = filterData();
+  const filteredData = filterData().map(el => ({
+    ...el,
+    meetingPlace: el.meetingPlace.split(" ").splice(0, 2).join(" ")
+  }));
 
   const handleCategoryClick = categoryImage => {
     const clickedCategory = CategoryImages.find(category => category.image === categoryImage);

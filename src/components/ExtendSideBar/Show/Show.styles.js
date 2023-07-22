@@ -3,7 +3,6 @@ import { styled } from "styled-components";
 import { flex, size, typography } from "styles/mixins";
 import { theme } from "styles/theme";
 import { colors } from "styles/theme/colors";
-import { shadows } from "styles/theme/shadows";
 import { sizes } from "styles/theme/sizes";
 
 export const Sidebar = styled.div`
@@ -17,8 +16,6 @@ export const ExtendSidebar = styled.div`
     display: none;
   }
 
-  background-color: white;
-  /* box-shadow: ${shadows.drop3}; */
   border-left: 1px solid ${theme.colors.gray2};
   padding: ${sizes.padding.medium}px;
 `;
