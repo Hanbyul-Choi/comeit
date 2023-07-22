@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMarkers } from "api/contents";
+import { fetchData } from "api/contents";
 import plusbutton from "assets/svgs/add_circle3.svg";
 import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar, useDialog } from "components";
 import { useMount } from "hooks";
@@ -27,7 +27,7 @@ export const Home = () => {
   const navigate = useNavigate();
   const params = useParams();
   const currentUrl = useLocation();
-  const { isLoading, data } = useQuery(["marker"], getMarkers);
+  const { isLoading, data } = useQuery(["marker"], fetchData);
 
   const MapClickHandler = (_t, e) => {
     setPosition({ lat: e.latLng.getLat(), lng: e.latLng.getLng() });
@@ -35,10 +35,8 @@ export const Home = () => {
   };
 
   const openPost = () => {
-
     if (!currentUser) return Alert("로그인 후 이용 가능합니다.");
 
-    
     if (currentUrl.pathname.includes("edit")) {
       return;
     }
@@ -86,7 +84,7 @@ export const Home = () => {
       <Styled.Container>
         <Sidebar openDetail={openDetail} />
         {showDetail && <Show id={params.contentid} closeDetail={closeDetail} openPost={openPost} />}
-        {showPost && <PostForm closePost={closePost} />}
+        {showPost && <PostForm closePost={closePost} openDetail={openDetail} />}
         <Map center={location} style={{ width: "100%", height: "100%" }} onClick={MapClickHandler}>
           {data.map(marker => {
             return (
@@ -94,7 +92,7 @@ export const Home = () => {
                 key={marker.postId}
                 data={marker}
                 open={openDetail}
-                onClick={() => setSelected(marker.title)}
+                onClick={() => setSelected(marker.groupName)}
                 selected={selected}
               />
             );

@@ -10,7 +10,6 @@ export const Container = styled.div`
   box-shadow: ${shadows.drop2};
 
   ${size({ height: HEADER_HEIGHT })}
-
   width: 100%;
   padding: 0 24px;
 `;

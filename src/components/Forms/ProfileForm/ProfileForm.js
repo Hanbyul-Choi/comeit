@@ -8,8 +8,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNickname, updateProfileImg } from "redux/modules/userSlice";
 import { auth, db, storage } from "server/config";
-import { css, styled } from "styled-components";
-import { FlexColumn, flex } from "styles/mixins";
+import { FlexColumn } from "styles/mixins";
+import { FileInput, FileLabel, UserImg } from "./ProfileForm.styles";
 
 export const PROFILE_EDIT_MODAL = "PROFILE_EDIT_MODAL";
 
@@ -93,6 +93,10 @@ export const ProfileForm = () => {
       setErrorMessage("비밀번호를 입력해주세요.");
       return;
     }
+    if (!imgFile) {
+      mutate();
+      return;
+    }
     const imageRef = ref(storage, `profileImg/${id}`);
     await uploadBytes(imageRef, imgFile);
     const attachmentUrl = await getDownloadURL(ref(storage, imageRef));
@@ -145,23 +149,3 @@ export const ProfileForm = () => {
     </FlexColumn>
   );
 };
-
-const UserImg = styled.img`
-  width: 150px;
-  height: 150px;
-  margin: 0 auto;
-  border-radius: 50%;
-  cursor: pointer;
-  ${({ theme }) => css`
-    &:hover {
-      border: 2px solid ${theme.colors.blue.hover};
-    }
-  `}
-`;
-
-const FileInput = styled.input`
-  display: none;
-`;
-const FileLabel = styled.label`
-  ${flex({ justify: "center" })}
-`;

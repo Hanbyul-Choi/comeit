@@ -18,7 +18,7 @@ import { db, storage } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./PostForm.styles";
 
-export const PostForm = ({ closePost }) => {
+export const PostForm = ({ closePost, openshow }) => {
   const { Alert, Confirm } = useDialog();
   const queryClient = useQueryClient();
   const params = useParams();
@@ -137,21 +137,22 @@ export const PostForm = ({ closePost }) => {
 
   const { mutate: postMutate } = useMutation({
     mutationFn: Post,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await Alert("게시물이 등록되었습니다.");
       queryClient.invalidateQueries(["contents"]);
       queryClient.invalidateQueries(["marker"]);
-      Alert("게시물이 등록되었습니다.");
       closePost();
     }
   });
 
   const { mutate: updateMutate } = useMutation({
     mutationFn: Update,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await Alert("게시물이 수정되었습니다.");
       queryClient.invalidateQueries(["contents"]);
       queryClient.invalidateQueries(["marker"]);
-      Alert("게시물이 수정되었습니다.");
       closePost();
+      openshow();
     }
   });
 
