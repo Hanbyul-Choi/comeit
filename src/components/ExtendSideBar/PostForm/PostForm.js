@@ -195,8 +195,7 @@ export const PostForm = ({ closePost }) => {
           />
 
           <Dropdown onChange={value => setCategory(value)}>
-            <Dropdown.DropdownMain />
-            <Dropdown.Option value="운동/스포츠">운동/스포츠</Dropdown.Option>
+            <Dropdown.Option selected value="운동/스포츠">운동/스포츠</Dropdown.Option>
             <Dropdown.Option value="게임">게임</Dropdown.Option>
             <Dropdown.Option value="아웃도어/여행">아웃도어/여행</Dropdown.Option>
             <Dropdown.Option value="문화/공연">문화/공연</Dropdown.Option>
