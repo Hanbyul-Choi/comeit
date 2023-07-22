@@ -2,7 +2,7 @@ import communityIcon from "assets/svgs/communityIcon.svg";
 import cultureIcon from "assets/svgs/cultureIcon.svg";
 import gameIcon from "assets/svgs/gameIcon.svg";
 import languageIcon from "assets/svgs/languageIcon.svg";
-import myIcon from "assets/svgs/myIcon.svg";
+import myIcon from "assets/svgs/my5.svg";
 import placeImage from "assets/svgs/place.svg";
 import sportIcon from "assets/svgs/sportIcon.svg";
 import tripIcon from "assets/svgs/tripIcon.svg";

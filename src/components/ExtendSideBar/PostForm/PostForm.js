@@ -126,11 +126,11 @@ export const PostForm = ({ closePost }) => {
       return;
     }
     if (category === null) {
-      setErrorMessage("카테고리를 선택하세요");
+      setErrorMessage("카테고리를 선택하세요.");
       return;
     }
     if (attachment === "") {
-      setErrorMessage("사진을 등록하세요");
+      setErrorMessage("사진을 등록하세요.");
       return;
     }
 

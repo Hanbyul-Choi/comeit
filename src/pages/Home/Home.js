@@ -34,7 +34,7 @@ export const Home = () => {
   };
 
   const openPost = () => {
-    if (!currentUser) return Alert("로그인 후 이용가능합니다.");
+    if (!currentUser) return Alert("로그인 후 이용 가능합니다.");
     setShowDeatil(false);
     setShowPost(true);
     navigate("/home");

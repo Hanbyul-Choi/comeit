@@ -62,7 +62,7 @@ export const Sidebar = ({ openDetail }) => {
 
   const onClickContent = location => {
     if (!localStorage.getItem("user")) {
-      Alert("로그인 후 확인 가능 합니다.");
+      Alert("로그인 후 확인 가능합니다.");
       return;
     }
     dispatch(setCenter(location));

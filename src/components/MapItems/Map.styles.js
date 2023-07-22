@@ -20,13 +20,14 @@ export const OverlayContainer = styled.div`
 `;
 
 export const ThumbnailContainer = styled.div`
+  display: flex;
   width: 150px;
   height: 50px;
   margin-bottom: 10px;
 `;
 
 export const OverlayTitle = styled.h2`
-  position: absolute;
+  /* position: absolute; */
   top: 10px;
   left: 10px;
   padding: 10px;
