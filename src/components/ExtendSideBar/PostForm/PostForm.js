@@ -107,6 +107,7 @@ export const PostForm = ({ closePost }) => {
     mutationFn: Post,
     onSuccess: () => {
       queryClient.invalidateQueries(["contents"]);
+      queryClient.invalidateQueries(["marker"]);
       Alert("게시물이 등록되었습니다.");
       closePost();
     }

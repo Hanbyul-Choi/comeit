@@ -27,7 +27,7 @@ export const SignInForm = () => {
       const querySnapshot = await getDoc(q);
       await Alert("로그인 되었습니다.");
       unmount(SIGN_IN_MODAL);
-      localStorage.setItem("user", uid);
+      sessionStorage.setItem("user", uid);
       dispatch(getUser(querySnapshot.data()));
     }
   };
