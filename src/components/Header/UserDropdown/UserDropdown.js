@@ -1,33 +1,28 @@
 import { PROFILE_EDIT_MODAL, ProfileForm } from "components/Forms/ProfileForm";
 import { useDialog, useModal } from "components/Overlay";
-import { useEffect, useRef } from "react";
+import { useClickAway } from "hooks";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { initializeUser } from "redux/modules/userSlice";
 import { Option, UserDropdownWrapper } from "./UserDropdown.styles";
 
-export const UserDropdown = ({ setOpenOption }) => {
+export const UserDropdown = ({ setIsOpen }) => {
   const dispatch = useDispatch();
-  const { Alert } = useDialog();
+  const { Alert, Confirm } = useDialog();
   const { mount } = useModal();
 
+  const navigate = useNavigate();
+
   const dropdownRef = useRef(null);
-  useEffect(() => {
-    const handler = event => {
-      const { current } = dropdownRef;
-      if (!current) return;
-      if (current.contains(event.target)) return;
-      if (current !== event.target) setOpenOption(() => false);
-    };
+  useClickAway(dropdownRef, setIsOpen.off);
 
-    document.addEventListener("mousedown", handler);
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
-
-  const onLogout = () => {
+  const onLogout = async () => {
+    if (!(await Confirm("로그아웃 하시겠습니까?"))) return;
+    navigate("/");
+    await Alert("로그아웃 되었습니다.");
     dispatch(initializeUser());
-    Alert("로그아웃 되었습니다.");
+    sessionStorage.removeItem("user");
   };
 
   const onEditProfile = () => {
@@ -35,7 +30,7 @@ export const UserDropdown = ({ setOpenOption }) => {
   };
   return (
     <UserDropdownWrapper ref={dropdownRef}>
-      <Option onClick={onEditProfile}>내정보 수정</Option>
+      <Option onClick={onEditProfile}>내 정보</Option>
       <Option onClick={onLogout}>로그아웃</Option>
     </UserDropdownWrapper>
   );

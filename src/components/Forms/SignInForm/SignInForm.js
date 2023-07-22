@@ -1,6 +1,6 @@
 import { doc, getDoc } from "@firebase/firestore";
 import { useMutation } from "@tanstack/react-query";
-import { Button, Input, Label, useDialog, useModal } from "components";
+import { Button, Input, Label, SIGN_UP_MODAL, SignUpForm, useDialog, useModal } from "components";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -16,7 +16,7 @@ export const SignInForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
 
-  const { unmount } = useModal();
+  const { unmount, mount } = useModal();
   const { Alert } = useDialog();
 
   const signIn = async () => {
@@ -25,20 +25,19 @@ export const SignInForm = () => {
       const { uid } = userCredential.user;
       const q = doc(db, "users", uid);
       const querySnapshot = await getDoc(q);
-      Alert("로그인 되었습니다.");
+      await Alert("로그인 되었습니다.");
       unmount(SIGN_IN_MODAL);
+      sessionStorage.setItem("user", uid);
       dispatch(getUser(querySnapshot.data()));
     }
   };
 
   const { mutate } = useMutation(signIn, {
     onError: error => {
-      if (
-        error.code === "auth/wrong-password" ||
-        error.code === "auth/user-not-found" ||
-        error.code === "auth/invalid-email"
-      ) {
+      if (error.code === "auth/wrong-password" || error.code === "auth/invalid-email") {
         setErrorMessage("이메일 또는 비밀번호가 올바르지 않습니다.");
+      } else if (error.code === "auth/user-not-found") {
+        setErrorMessage("가입되지 않은 계정입니다.");
       } else {
         setErrorMessage("로그인에 실패했습니다. 다시 시도해주세요.");
       }
@@ -58,7 +57,7 @@ export const SignInForm = () => {
   const signInHandler = event => {
     event.preventDefault();
 
-    if (email && password) {
+    if (email.trim() && password.trim()) {
       mutate();
     } else {
       setErrorMessage("이메일과 비밀번호를 모두 입력해주세요.");
@@ -87,6 +86,16 @@ export const SignInForm = () => {
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       <Button type="submit" style={{ marginTop: "15px" }}>
         로그인
+      </Button>
+      <Label variant="middle">계정이 없으신가요?</Label>
+      <Button
+        variant="outline"
+        onClick={() => {
+          unmount(SIGN_IN_MODAL);
+          mount(SIGN_UP_MODAL, <SignUpForm />);
+        }}
+      >
+        회원가입
       </Button>
     </FlexColumn>
   );

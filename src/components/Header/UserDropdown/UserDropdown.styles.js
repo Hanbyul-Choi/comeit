@@ -1,21 +1,25 @@
 import { css, styled } from "styled-components";
 import { flex } from "styles/mixins";
+import { shadows } from "styles/theme/shadows";
 
 export const UserDropdownWrapper = styled.div`
   ${flex({ direction: "column", align: "center", justify: "center" })}
   position: absolute;
-  top: 50px;
-  right: -20px;
+  top: 54px;
+  right: 7px;
   border-radius: 5px;
+
   overflow: hidden;
   background-color: white;
   z-index: 1;
+  /* padding: 5px; */
+  box-shadow: ${shadows.drop3};
 `;
 
 export const Option = styled.div`
   width: 80px;
   cursor: pointer;
-  padding: 5px 0;
+  padding: 10px;
   font-size: 14px;
   ${flex({ justify: "center" })}
   ${({ theme }) => css`

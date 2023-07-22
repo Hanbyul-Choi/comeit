@@ -7,12 +7,13 @@ const variantStyle = ({ variant }) => {
       return css`
         ${flex.center()}
       `;
+
     default:
       return;
   }
 };
 
-const baseStyle = ({ size: _size = "small", theme: { colors, shadows, sizes } }) => {
+const baseStyle = ({ size: _size = "small", theme: { colors, sizes } }) => {
   return css`
     // 글씨 색상
     color: ${colors.gray3};

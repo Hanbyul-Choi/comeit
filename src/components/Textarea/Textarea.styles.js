@@ -15,9 +15,11 @@ const baseStyle = ({ size: _size = "medium", theme: { sizes, colors, shadows } }
 
     border-radius: 8px;
 
+    resize: none;
+
     ${typography(sizes.heading[_size])}
     // Textarea 박스 높이
-    ${size({ height: 150 })} 
+    min-height: 150px;
 
     transition: 300ms;
 

@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { OverlayProvider } from "components";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { NavermapsProvider } from "react-naver-maps";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import store from "redux/config/configStore";
@@ -11,7 +10,15 @@ import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { theme } from "styles/theme";
 import App from "./App";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false
+    }
+  }
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -27,9 +34,7 @@ root.render(
           <Provider store={store}>
             <BrowserRouter>
               <OverlayProvider>
-                <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_KEY}>
-                  <App />
-                </NavermapsProvider>
+                <App />
               </OverlayProvider>
             </BrowserRouter>
           </Provider>

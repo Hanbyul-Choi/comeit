@@ -14,6 +14,7 @@ export const ModalOuter = styled.div`
   background-color: ${hexToRgba(colors.gray3, 0.3)};
 
   backdrop-filter: blur(4px);
+  z-index: 99;
 `;
 
 export const ModalInner = styled.div`
