@@ -52,7 +52,7 @@ export const ProfileForm = () => {
       if (error.code === "auth/wrong-password") {
         setErrorMessage("비밀번호가 틀립니다.");
       } else {
-        setErrorMessage("중복된 닉네임 입니다."); // 회원가입 시 닉네임 중복 검사부분 작성 필요
+        setErrorMessage("중복된 닉네임입니다."); // 회원가입 시 닉네임 중복 검사부분 작성 필요
       }
     }
   });
@@ -90,7 +90,7 @@ export const ProfileForm = () => {
       return;
     }
     if (password.trim() === "" || confirmPassword.trim() === "") {
-      setErrorMessage("비밀번호를 입력해주세요");
+      setErrorMessage("비밀번호를 입력해주세요.");
       return;
     }
     const imageRef = ref(storage, `profileImg/${id}`);

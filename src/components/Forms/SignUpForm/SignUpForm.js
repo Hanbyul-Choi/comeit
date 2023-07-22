@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { Button, Input, Label, SIGN_IN_MODAL, SignInForm, useDialog, useModal } from "components";
+import { Button, Input, Label, SignInForm, SIGN_IN_MODAL, useDialog, useModal } from "components";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { useInput } from "hooks";
@@ -44,7 +44,7 @@ export const SignUpForm = () => {
       } else if (error.code === "auth/invalid-email") {
         setErrorMessage("올바른 이메일 형식이 아닙니다.");
       } else {
-        setErrorMessage("회원가입에 실패했습니다. 다시 시도해주세요.");
+        setErrorMessage("회원가입에 실패했습니다. 다시 시도해 주세요.");
       }
     }
   });
@@ -80,7 +80,7 @@ export const SignUpForm = () => {
     }
 
     if (!isValidEmail(email)) {
-      setErrorMessage("이메일은 영문자, 숫자, 특수문자 조합이어야 합니다");
+      setErrorMessage("이메일은 영문자, 숫자, 특수문자 조합이어야 합니다.");
       return;
     }
 
