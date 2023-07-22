@@ -107,6 +107,7 @@ export const PostForm = ({ closePost }) => {
     mutationFn: Post,
     onSuccess: () => {
       queryClient.invalidateQueries(["contents"]);
+      queryClient.invalidateQueries(["marker"]);
       Alert("게시물이 등록되었습니다.");
       closePost();
     }
@@ -172,7 +173,12 @@ export const PostForm = ({ closePost }) => {
             onChange={onChangeMeetingDate}
           />
 
-          <Input variant="outline" placeholder="모임 장소" value={meetingPlace} disabled />
+          <Input
+            variant="outline"
+            placeholder="모임 장소를 지도에서 추가해주세요."
+            value={meetingPlace}
+            disabled
+          />
 
           <Input
             variant="outline"

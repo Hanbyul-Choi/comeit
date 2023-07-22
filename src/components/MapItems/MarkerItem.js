@@ -13,20 +13,23 @@ export const MarkerItem = ({ data, onClick, open, selected }) => {
 
   return (
     <>
-      <MapMarker
-        position={latlng}
-        image={{
-          src: icon,
-          size: {
-            width: iconSize.width,
-            height: iconSize.height
-          }
-        }}
-        clickable
-        onClick={onClick}
-        onMouseOver={() => setIconSize({ width: 55, height: 55 })}
-        onMouseOut={() => setIconSize({ width: 48, height: 49 })}
-      />
+      {latlng !== undefined && (
+        <MapMarker
+          position={latlng}
+          image={{
+            src: icon,
+            size: {
+              width: iconSize.width,
+              height: iconSize.height
+            }
+          }}
+          clickable
+          onClick={onClick}
+          onMouseOver={() => setIconSize({ width: 55, height: 55 })}
+          onMouseOut={() => setIconSize({ width: 48, height: 49 })}
+        />
+      )}
+
       {selected === title && (
         <CustomOverlayItem title={title} position={latlng} open={open} postId={postId} />
       )}

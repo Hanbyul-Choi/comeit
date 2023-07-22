@@ -54,10 +54,18 @@ export const DropdownMain = ({ children, size, onChange }) => {
     [setIsOpen, size]
   );
 
+  const toggleMenu = () => {
+    if (!isOpen) {
+      setIsOpen.toggle();
+      return;
+    }
+    setIsOpen(false);
+  };
+
   return (
     <DropdownContext.Provider value={values}>
       <Styled.Container ref={containerRef}>
-        <Styled.DropdownButton size={size} onClick={setIsOpen.toggle}>
+        <Styled.DropdownButton size={size} onClick={toggleMenu}>
           {data.label}
         </Styled.DropdownButton>
 

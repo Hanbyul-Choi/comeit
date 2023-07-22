@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { setCenter } from "redux/modules/centerSlice";
+import { setCenter, setPlace } from "redux/modules/centerSlice";
 import * as Styled from "./Home.styles";
 
 export const Home = () => {
@@ -64,6 +64,11 @@ export const Home = () => {
     setShowPost(false);
   };
 
+  const postButtonClick = () => {
+    dispatch(setPlace(null));
+    openPost();
+  };
+
   if (isLoading) return <div>Loading...</div>;
   return (
     <>
@@ -84,7 +89,7 @@ export const Home = () => {
           ))}
           <ClickedMarker closePost={closePost} openPost={openPost} position={position} />
         </Map>
-        <Styled.PlusButton>
+        <Styled.PlusButton onClick={postButtonClick}>
           <img src={plusbutton} alt="게시물 등록" style={{ width: "80px" }} />
         </Styled.PlusButton>
       </Styled.Container>
