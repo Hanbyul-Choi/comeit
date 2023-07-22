@@ -28,6 +28,7 @@ export const Home = () => {
   const params = useParams();
 
   const { isLoading, data } = useQuery(["marker"], getMarkers);
+
   const MapClickHandler = (_t, e) => {
     setPosition({ lat: e.latLng.getLat(), lng: e.latLng.getLng() });
     setSelected(null);
@@ -78,15 +79,17 @@ export const Home = () => {
         {showDetail && <Show id={params.contentid} closeDetail={closeDetail} openPost={openPost} />}
         {showPost && <PostForm closePost={closePost} />}
         <Map center={location} style={{ width: "100%", height: "100%" }} onClick={MapClickHandler}>
-          {data.map(marker => (
-            <MarkerItem
-              key={marker.postId}
-              data={marker}
-              open={openDetail}
-              onClick={() => setSelected(marker.title)}
-              selected={selected}
-            />
-          ))}
+          {data.map(marker => {
+            return (
+              <MarkerItem
+                key={marker.postId}
+                data={marker}
+                open={openDetail}
+                onClick={() => setSelected(marker.title)}
+                selected={selected}
+              />
+            );
+          })}
           <ClickedMarker closePost={closePost} openPost={openPost} position={position} />
         </Map>
         <Styled.PlusButton onClick={postButtonClick}>
