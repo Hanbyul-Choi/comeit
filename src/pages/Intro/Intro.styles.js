@@ -21,10 +21,10 @@ export const LogoImg = styled.img`
 `;
 
 export const Img = styled.img`
-  width: 100%;
+  width: 90%;
   display: flex;
-  padding-top: 100px;
-  padding-bottom: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 
 export const Box = styled.div`
@@ -58,17 +58,18 @@ export const Item = styled.div`
 
 export const TodayBox = styled.div`
   ${flex.column()}
-  width: 80%;
-  margin: 50px;
+  /* width: 80%; */
+  margin: 50;
 `;
 
 export const SliderBox = styled.div`
   ${({ theme }) => css`
     ${flex({ justify: "center" })}
     border-radius: 15px;
-    background-color: ${theme.palettes.blue.base};
+    background-color: ${theme.colors.white};
     padding: 25px;
   `}
+  border: 2px solid black
 `;
 
 export const TodayEmpty = styled.div`

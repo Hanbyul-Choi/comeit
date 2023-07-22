@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "api/contents";
-import plusbutton from "assets/svgs/add_circle3.svg";
+import plusbutton from "assets/svgs/post_plus.svg";
 import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar, useDialog } from "components";
 import { useMount } from "hooks";
 

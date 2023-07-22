@@ -38,7 +38,7 @@ export const SliderContainer = styled.div`
 
 export const Container = styled.div`
   width: ${({ contentWidth, space, showContentNum }) =>
-    contentWidth * showContentNum + space * 2}px;
+    contentWidth * showContentNum + space * (showContentNum - 1)}px;
   overflow: hidden;
   position: relative;
 `;
@@ -75,17 +75,14 @@ export const Button = styled.button`
 `;
 
 export const CardContents = styled.div`
-  ${props => css`
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10;
-    padding: 16px;
-    background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    margin: 0 ${props.space}px;
-  `}
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding: 16px;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
 `;
 
 export const ImgBox = styled.div`
