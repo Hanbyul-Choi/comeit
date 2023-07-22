@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "api/contents";
-import plusbutton from "assets/svgs/add_circle3.svg";
+import plusbutton from "assets/svgs/post_plus.svg";
 import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar, useDialog } from "components";
 import { useMount } from "hooks";
 
@@ -47,6 +47,9 @@ export const Home = () => {
   };
 
   useMount(() => {
+    if (params.contentid) {
+      openDetail();
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         posi => dispatch(setCenter({ lat: posi.coords.latitude, lng: posi.coords.longitude })),
