@@ -43,10 +43,10 @@ export const Show = ({ id, closeDetail, openPost }) => {
 
   const { mutate } = useMutation({
     mutationFn: Delete,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await Alert("게시물이 삭제되었습니다.");
       closeDetail();
       queryClient.invalidateQueries(["contents"]);
-      Alert("게시물이 삭제되었습니다.");
     }
   });
 

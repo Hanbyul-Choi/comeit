@@ -35,10 +35,8 @@ export const Home = () => {
   };
 
   const openPost = () => {
-
     if (!currentUser) return Alert("로그인 후 이용 가능합니다.");
 
-    
     if (currentUrl.pathname.includes("edit")) {
       return;
     }
@@ -86,7 +84,7 @@ export const Home = () => {
       <Styled.Container>
         <Sidebar openDetail={openDetail} />
         {showDetail && <Show id={params.contentid} closeDetail={closeDetail} openPost={openPost} />}
-        {showPost && <PostForm closePost={closePost} />}
+        {showPost && <PostForm closePost={closePost} openDetail={openDetail} />}
         <Map center={location} style={{ width: "100%", height: "100%" }} onClick={MapClickHandler}>
           {data.map(marker => {
             return (
