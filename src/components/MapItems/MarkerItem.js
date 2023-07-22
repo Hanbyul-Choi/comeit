@@ -4,7 +4,7 @@ import { CustomOverlayItem } from "./CustomOverlayItem";
 import { useSelectCategory } from "./useSelectCategory";
 
 export const MarkerItem = ({ data, onClick, open, selected }) => {
-  const { latlng, title, category, meetingDate, postId } = data;
+  const { location, groupName, category, meetingDate, postId } = data;
   const [iconSize, setIconSize] = useState({
     width: 48,
     height: 49
@@ -13,9 +13,9 @@ export const MarkerItem = ({ data, onClick, open, selected }) => {
 
   return (
     <>
-      {latlng !== undefined && (
+      {location !== undefined && (
         <MapMarker
-          position={latlng}
+          position={location}
           image={{
             src: icon,
             size: {
@@ -30,12 +30,12 @@ export const MarkerItem = ({ data, onClick, open, selected }) => {
         />
       )}
 
-      {selected === title && (
+      {selected === groupName && (
         <CustomOverlayItem
-          title={title}
+          groupName={groupName}
           category={category}
           meetingDate={meetingDate}
-          position={latlng}
+          position={location}
           open={open}
           postId={postId}
         />

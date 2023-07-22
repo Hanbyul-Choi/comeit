@@ -96,8 +96,8 @@ export const Sidebar = ({ openDetail }) => {
           filteredData.map(content => {
             return (
               <Styled.Link
-                to={`/home/${content.id}`}
-                key={content.id}
+                to={`/home/${content.postId}`}
+                key={content.postId}
                 onClick={() => onClickContent(content.location)}
               >
                 <div>
