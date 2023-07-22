@@ -54,16 +54,18 @@ export const Slider = ({
           space={space}
           contentWidth={contentWidth}
           key={key}
-          color={item.color}
+          border="1px solid black"
           onClick={() => onClickHandler(item)}
         >
           <Styled.SlideItem>
-            <Styled.Img src={item.groupImgUrl} />
-            <Styled.CardContents>
-              <p>{item.groupName}</p>
-              <p>{item.meetingPlace}</p>
-              <p>{item.category}</p>
-            </Styled.CardContents>
+            <Styled.ImgBox>
+              <Styled.Img src={item.groupImgUrl} space={space} contentWidth={contentWidth} />
+              <Styled.CardContents>
+                <p>{item.groupName}</p>
+                <p>{item.meetingPlace}</p>
+                <p>{item.category}</p>
+              </Styled.CardContents>
+            </Styled.ImgBox>
           </Styled.SlideItem>
         </Styled.SlideItem>
       ));
@@ -75,7 +77,6 @@ export const Slider = ({
           space={space}
           contentWidth={contentWidth}
           key={key}
-          color={item.color}
           onClick={() => onClickHandler(item)}
         >
           <Styled.Img src={item} space={space} contentWidth={contentWidth} />

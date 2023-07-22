@@ -55,3 +55,24 @@ export const Item = styled.div`
   width: 100%; // 원하는 슬라이드 아이템의 너비 조절 여기서 할 수 있습니다. 이 값은 기존 코드에서 contentWidth와 같습니다.
   margin-right: 5px; // 슬라이드 아이템 사이의 여백은 여기서 조절할 수 있습니다.
 `;
+
+export const TodayBox = styled.div`
+  ${flex.column()}
+  width: 80%;
+`;
+
+export const SliderBox = styled.div`
+  ${({ theme }) => css`
+    ${flex({ justify: "center" })}
+    border-radius: 15px;
+    background-color: ${theme.palettes.blue.base};
+    padding: 25px;
+  `}
+`;
+
+export const TodayEmpty = styled.div`
+  ${flex.column()}
+  ${({ theme }) => css`
+    color: ${theme.colors.white};
+  `}
+`;

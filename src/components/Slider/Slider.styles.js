@@ -12,8 +12,9 @@ export const SlideItem = styled.div`
 
 export const Img = styled.img`
   ${props => css`
-    width: ${props.contentWidth}px;
-    padding: 0 ${props.space}px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 15px;
     transition: opacity 0.3s;
 
@@ -68,5 +69,24 @@ export const Button = styled.button`
 `;
 
 export const CardContents = styled.div`
-  // 원하는 카드 스타일을 여기에 적용해주세요.
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding: 16px;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 0 0 15px 15px;
+`;
+
+export const ImgBox = styled.div`
+  ${props => css`
+    position: relative;
+    width: ${props.contentWidth}px;
+    padding: 0 ${props.space}px;
+    cursor: pointer;
+    overflow: hidden;
+    height: 200px; // 고정된 높이로 변경하세요.
+  `}
 `;
