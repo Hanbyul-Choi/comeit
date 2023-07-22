@@ -12,9 +12,8 @@ export const SlideItem = styled.div`
 
 export const Img = styled.img`
   ${props => css`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: ${props.contentWidth}px;
+    padding: 0 ${props.space}px;
     border-radius: 15px;
     transition: opacity 0.3s;
 
@@ -89,4 +88,16 @@ export const ImgBox = styled.div`
     overflow: hidden;
     height: 200px; // 고정된 높이로 변경하세요.
   `}
+`;
+
+export const IntroImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: opacity 0.3s;
+
+  &:hover {
+    opacity: 0.6;
+  }
 `;
