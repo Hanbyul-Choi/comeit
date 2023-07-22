@@ -1,6 +1,6 @@
 import { doc, getDoc } from "@firebase/firestore";
 import { useMutation } from "@tanstack/react-query";
-import { Button, Input, Label, SIGN_UP_MODAL, SignUpForm, useDialog, useModal } from "components";
+import { Button, Input, Label, SignUpForm, SIGN_UP_MODAL, useDialog, useModal } from "components";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -27,7 +27,7 @@ export const SignInForm = () => {
       const querySnapshot = await getDoc(q);
       await Alert("로그인 되었습니다.");
       unmount(SIGN_IN_MODAL);
-      localStorage.setItem("user", uid);
+      sessionStorage.setItem("user", uid);
       dispatch(getUser(querySnapshot.data()));
     }
   };
@@ -39,7 +39,7 @@ export const SignInForm = () => {
       } else if (error.code === "auth/user-not-found") {
         setErrorMessage("가입되지 않은 계정입니다.");
       } else {
-        setErrorMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+        setErrorMessage("로그인에 실패했습니다. 다시 시도해 주세요.");
       }
     }
   });
@@ -60,7 +60,7 @@ export const SignInForm = () => {
     if (email.trim() && password.trim()) {
       mutate();
     } else {
-      setErrorMessage("이메일과 비밀번호를 모두 입력해주세요.");
+      setErrorMessage("이메일과 비밀번호를 모두 입력해 주세요.");
     }
   };
 
