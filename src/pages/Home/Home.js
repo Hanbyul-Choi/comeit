@@ -7,7 +7,7 @@ import { useMount } from "hooks";
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { setCenter, setPlace } from "redux/modules/centerSlice";
 import * as Styled from "./Home.styles";
 
@@ -19,14 +19,14 @@ export const Home = () => {
   const { Alert } = useDialog();
   const { location, currentUser } = useSelector(({ center, user }) => ({
     location: center.center,
-
     currentUser: user.user
   }));
+
   const [showPost, setShowPost] = useState(false);
   const [showDetail, setShowDeatil] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
-
+  const currentUrl = useLocation();
   const { isLoading, data } = useQuery(["marker"], getMarkers);
 
   const MapClickHandler = (_t, e) => {
@@ -36,6 +36,9 @@ export const Home = () => {
 
   const openPost = () => {
     if (!currentUser) return Alert("로그인 후 이용가능합니다.");
+    if (currentUrl.pathname.includes("edit")) {
+      return;
+    }
     setShowDeatil(false);
     setShowPost(true);
     navigate("/home");
@@ -59,10 +62,12 @@ export const Home = () => {
 
   const closeDetail = () => {
     setShowDeatil(false);
+    navigate("/home");
   };
 
   const closePost = () => {
     setShowPost(false);
+    navigate("/home");
   };
 
   const postButtonClick = () => {
