@@ -6,13 +6,14 @@ import { Dropdown } from "components/Dropdown";
 import { Input } from "components/Input";
 import { useDialog } from "components/Overlay";
 import { Textarea } from "components/Textarea";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
-import { useInput } from "hooks";
+import { useInput, useMount } from "hooks";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
+import { setPostion } from "redux/modules/centerSlice";
 import { db, storage } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./PostForm.styles";
@@ -21,7 +22,6 @@ export const PostForm = ({ closePost }) => {
   const { Alert, Confirm } = useDialog();
   const queryClient = useQueryClient();
   const params = useParams();
-  const [data, setData] = useState(null);
 
   const { currentUser, place, location } = useSelector(({ user, center }) => ({
     currentUser: user.user,
@@ -29,12 +29,7 @@ export const PostForm = ({ closePost }) => {
     location: center.position
   }));
 
-  useEffect(() => {
-    const test = async () => {
-      setData(await getDetail(params.contentid));
-    };
-    test();
-  }, [params.contentid]);
+  const dispatch = useDispatch();
 
   const [groupName, onChangeGroupName, onSetgroupName] = useInput();
   const [meetingDate, onChangeMeetingDate, onSetmeetingDate] = useInput();
@@ -44,17 +39,29 @@ export const PostForm = ({ closePost }) => {
   const [meetingPlace, setMeetingPlace] = useState(place);
   const [category, setCategory] = useState(null);
   const [attachment, setAttachment] = useState("");
+  const [fileChanged, setFileChanged] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  if (data) {
-    onSetgroupName(data.groupName);
-    onSetmeetingDate(data.meetingDate);
-    onSetgroupContact(data.groupContact);
-    onSetmeetingNumber(data.meetingNumber);
-    onSetgroupIntro(data.groupIntro);
-    setMeetingPlace(data.meetingPlace);
-    setAttachment(data.groupImgUrl);
-  }
+  useMount(() => {
+    const editSet = async () => {
+      if (!params.contentid) {
+        return;
+      }
+      const data = await getDetail(params.contentid);
+      onSetgroupName(data.groupName);
+      onSetmeetingDate(data.meetingDate);
+      onSetgroupContact(data.groupContact);
+      onSetmeetingNumber(data.meetingNumber);
+      onSetgroupIntro(data.groupIntro);
+      setMeetingPlace(data.meetingPlace);
+      setAttachment(data.groupImgUrl);
+      setCategory(data.category);
+      dispatch(setPostion(data.location));
+    };
+
+    editSet();
+  });
+
   useEffect(() => {
     setMeetingPlace(place);
   }, [place]);
@@ -77,10 +84,35 @@ export const PostForm = ({ closePost }) => {
       uid: currentUser.id
     };
     const collectionRef = collection(db, "contents");
-    await addDoc(collectionRef, newContent);
+    addDoc(collectionRef, newContent);
+  };
+
+  const Update = async () => {
+    const attachmentRef = ref(storage, `${currentUser.id}/${Date.now()}`);
+    if (fileChanged) {
+      await uploadString(attachmentRef, attachment, "data_url");
+      setAttachment(await getDownloadURL(ref(storage, attachmentRef)));
+    }
+
+    const newContent = {
+      groupName,
+      meetingDate,
+      meetingPlace,
+      groupContact,
+      meetingNumber,
+      groupIntro,
+      groupImgUrl: attachment,
+      time: Date.now(),
+      category,
+      location,
+      uid: currentUser.id
+    };
+    const collectionRef = doc(db, "contents", params.contentid);
+    updateDoc(collectionRef, newContent);
   };
 
   const onFileChange = e => {
+    setFileChanged(true);
     const {
       target: { files }
     } = e;
@@ -103,11 +135,22 @@ export const PostForm = ({ closePost }) => {
     setAttachment("");
   };
 
-  const { mutate } = useMutation({
+  const { mutate: postMutate } = useMutation({
     mutationFn: Post,
     onSuccess: () => {
       queryClient.invalidateQueries(["contents"]);
+      queryClient.invalidateQueries(["marker"]);
       Alert("게시물이 등록되었습니다.");
+      closePost();
+    }
+  });
+
+  const { mutate: updateMutate } = useMutation({
+    mutationFn: Update,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["contents"]);
+      queryClient.invalidateQueries(["marker"]);
+      Alert("게시물이 수정되었습니다.");
       closePost();
     }
   });
@@ -138,8 +181,12 @@ export const PostForm = ({ closePost }) => {
       setErrorMessage("모집인원은 최소 2명입니다.");
       return;
     }
-    if (!(await Confirm("이대로 등록하시겠습니까?"))) return;
-    mutate();
+    if (!(await Confirm(`이대로 ${params.contentid ? "수정" : "등록"}하시겠습니까?`))) return;
+    if (params.contentid) {
+      updateMutate();
+    } else {
+      postMutate();
+    }
   };
 
   return (
@@ -172,7 +219,12 @@ export const PostForm = ({ closePost }) => {
             onChange={onChangeMeetingDate}
           />
 
-          <Input variant="outline" placeholder="모임 장소" value={meetingPlace} disabled />
+          <Input
+            variant="outline"
+            placeholder="모임 장소를 지도에서 추가해주세요."
+            value={meetingPlace}
+            disabled
+          />
 
           <Input
             variant="outline"
@@ -189,7 +241,6 @@ export const PostForm = ({ closePost }) => {
           />
 
           <Dropdown onChange={value => setCategory(value)}>
-            <Dropdown.DropdownMain />
             <Dropdown.Option value="운동/스포츠">운동/스포츠</Dropdown.Option>
             <Dropdown.Option value="게임">게임</Dropdown.Option>
             <Dropdown.Option value="아웃도어/여행">아웃도어/여행</Dropdown.Option>
@@ -209,7 +260,7 @@ export const PostForm = ({ closePost }) => {
             >
               취소하기
             </Button>
-            <Button>모임 만들기</Button>
+            <Button>{params.contentid ? "수정하기" : "모임 만들기"}</Button>
           </FlexCenter>
         </FlexColumn>
       </Styled.ExtendSidebar>

@@ -6,7 +6,7 @@ const initialState = {
     lng: 126.574942
   },
   position: null,
-  place: null
+  place: ""
 };
 
 const centerSlice = createSlice({

@@ -4,7 +4,6 @@ import {
   createContext,
   isValidElement,
   useContext,
-  useEffect,
   useMemo,
   useRef,
   useState
@@ -41,17 +40,14 @@ export const DropdownMain = ({ children, size, onChange }) => {
     }
   });
 
-  useEffect(() => {
-    if (onChange && data.value) onChange(data.value);
-  }, [data, onChange]);
-
   const values = useMemo(
     () => ({
       size,
       setIsOpen,
-      setData
+      setData,
+      onChange
     }),
-    [setIsOpen, size]
+    [onChange, setIsOpen, size]
   );
 
   return (

@@ -29,6 +29,7 @@ export const MarkerItem = ({ data, onClick, open, selected }) => {
           onMouseOut={() => setIconSize({ width: 48, height: 49 })}
         />
       )}
+
       {selected === title && (
         <CustomOverlayItem
           title={title}

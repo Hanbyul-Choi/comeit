@@ -17,7 +17,6 @@ export const ClickedMarker = ({ position, openPost }) => {
   const dispatch = useDispatch();
 
   const handleCreate = async () => {
-    // dispatch(initialize());
     const data = await getData(position);
     dispatch(setPlace(data));
     dispatch(setPostion(position));

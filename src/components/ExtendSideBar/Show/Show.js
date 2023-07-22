@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 import { createPortal } from "react-dom";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getDetail } from "api/contents";
 import arrowPrev from "assets/svgs/arrowPrev.svg";
 import { Button } from "components/Button";
@@ -32,21 +32,14 @@ export const Show = ({ id, closeDetail, openPost }) => {
   const [isLike, setIsLike] = useState(false);
   const [likeNum, setLikeNum] = useState(0);
   const [docId, setDocId] = useState("");
-  const [data, setData] = useState(null);
+
+  const { data } = useQuery({ queryKey: ["detail", id], queryFn: () => getDetail(id) });
 
   const { currentUser } = useSelector(({ user }) => ({ currentUser: user.user }));
   const navigate = useNavigate();
-  // const { data } = useQuery(["detail"], () => getDetail(id));
-
-  useEffect(() => {
-    const test = async () => {
-      setData(await getDetail(id));
-    };
-    test();
-  }, [id]);
 
   const Delete = () => {
-    deleteDoc(doc(db, "contents", params.contentid));
+    deleteDoc(doc(db, "contents", id));
   };
 
   const { mutate } = useMutation({
@@ -75,6 +68,8 @@ export const Show = ({ id, closeDetail, openPost }) => {
       await setDoc(doc(db, "likes", `${id}-${Date.now()}`), { postId: id, uid: currentUser.id });
       setIsLike(true);
     }
+    queryClient.invalidateQueries(["detail", id]);
+    queryClient.invalidateQueries(["markerIcon", id]);
   };
 
   useEffect(() => {
@@ -138,7 +133,7 @@ export const Show = ({ id, closeDetail, openPost }) => {
             <Styled.ContentBox>{data.groupIntro}</Styled.ContentBox>
             {currentUser.id === data.uid && (
               <Styled.Btns>
-                <Button onClick={() => onUpdate(params.contentid)}>수정</Button>
+                <Button onClick={() => onUpdate(id)}>수정</Button>
                 <Button onClick={onDelete}>삭제</Button>
               </Styled.Btns>
             )}

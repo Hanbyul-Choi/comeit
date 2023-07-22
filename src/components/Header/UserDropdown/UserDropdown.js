@@ -1,35 +1,28 @@
-import { ProfileForm, PROFILE_EDIT_MODAL } from "components/Forms/ProfileForm";
+import { PROFILE_EDIT_MODAL, ProfileForm } from "components/Forms/ProfileForm";
 import { useDialog, useModal } from "components/Overlay";
-import { useEffect, useRef } from "react";
+import { useClickAway } from "hooks";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { initializeUser } from "redux/modules/userSlice";
 import { Option, UserDropdownWrapper } from "./UserDropdown.styles";
 
-export const UserDropdown = ({ setOpenOption }) => {
+export const UserDropdown = ({ setIsOpen }) => {
   const dispatch = useDispatch();
   const { Alert, Confirm } = useDialog();
   const { mount } = useModal();
 
-  const dropdownRef = useRef(null);
-  useEffect(() => {
-    const handler = event => {
-      const { current } = dropdownRef;
-      if (!current) return;
-      if (current.contains(event.target)) return;
-      if (current !== event.target) setOpenOption(() => false);
-    };
+  const navigate = useNavigate();
 
-    document.addEventListener("mousedown", handler);
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
+  const dropdownRef = useRef(null);
+  useClickAway(dropdownRef, setIsOpen.off);
 
   const onLogout = async () => {
     if (!(await Confirm("로그아웃 하시겠습니까?"))) return;
+    navigate("/");
     await Alert("로그아웃 되었습니다.");
     dispatch(initializeUser());
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
   };
 
   const onEditProfile = () => {
