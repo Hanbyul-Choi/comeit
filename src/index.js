@@ -9,28 +9,36 @@ import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { theme } from "styles/theme";
 import App from "./App";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false
+    }
+  }
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
-  <StyleSheetManager
-    enableVendorPrefixes
-    shouldForwardProp={(propName, elementToRendered) => {
-      return typeof elementToRendered === "string" ? isPropValid(propName) : true;
-    }}
-  >
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <Provider store={store}>
-          <BrowserRouter>
-            <OverlayProvider>
-              <App />
-            </OverlayProvider>
-          </BrowserRouter>
-        </Provider>
-      </ThemeProvider>
-    </QueryClientProvider>
-  </StyleSheetManager>
-  // </React.StrictMode>
+  <React.StrictMode>
+    <StyleSheetManager
+      enableVendorPrefixes
+      shouldForwardProp={(propName, elementToRendered) => {
+        return typeof elementToRendered === "string" ? isPropValid(propName) : true;
+      }}
+    >
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
+            <BrowserRouter>
+              <OverlayProvider>
+                <App />
+              </OverlayProvider>
+            </BrowserRouter>
+          </Provider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </StyleSheetManager>
+  </React.StrictMode>
 );
