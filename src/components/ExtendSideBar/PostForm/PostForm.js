@@ -181,7 +181,7 @@ export const PostForm = ({ closePost }) => {
       setErrorMessage("모집인원은 최소 2명입니다.");
       return;
     }
-    if (!(await Confirm("이대로 등록하시겠습니까?"))) return;
+    if (!(await Confirm(`이대로 ${params.contentid ? "수정" : "등록"}하시겠습니까?`))) return;
     if (params.contentid) {
       updateMutate();
     } else {
