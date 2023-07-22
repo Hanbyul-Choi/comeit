@@ -22,12 +22,10 @@ export const ExtendSidebar = styled.div`
   padding: ${sizes.padding.medium}px;
 `;
 export const ContentBox = styled.div`
-
   width: 280px;
   color: ${colors.gray4};
 
   padding-left: ${sizes.padding.small}px;
-
 
   border-radius: 8px;
 
