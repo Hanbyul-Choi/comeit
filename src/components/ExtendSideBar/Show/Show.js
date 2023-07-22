@@ -19,14 +19,13 @@ import { Button } from "components/Button";
 import { useDialog } from "components/Overlay";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { db } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./Show.styles";
 
 export const Show = ({ id, closeDetail, openPost }) => {
-  const { Confirm } = useDialog();
-  const params = useParams();
+  const { Confirm, Alert } = useDialog();
   const queryClient = useQueryClient();
   const [nickname, setNickname] = useState("");
   const [isLike, setIsLike] = useState(false);
@@ -45,8 +44,9 @@ export const Show = ({ id, closeDetail, openPost }) => {
   const { mutate } = useMutation({
     mutationFn: Delete,
     onSuccess: () => {
-      queryClient.invalidateQueries(["contents"]);
       closeDetail();
+      queryClient.invalidateQueries(["contents"]);
+      Alert("게시물이 삭제되었습니다.");
     }
   });
 
