@@ -1,4 +1,11 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getDetail } from "api/contents";
+import arrowPrev from "assets/svgs/arrowPrev.svg";
+import starImage from "assets/svgs/star.svg";
+import starBorderImage from "assets/svgs/star_border.svg";
+import { Button } from "components/Button";
 import { Label } from "components/Label";
+import { useDialog } from "components/Overlay";
 import {
   and,
   collection,
@@ -10,18 +17,12 @@ import {
   setDoc,
   where
 } from "firebase/firestore";
-import { createPortal } from "react-dom";
-
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getDetail } from "api/contents";
-import arrowPrev from "assets/svgs/arrowPrev.svg";
-import { Button } from "components/Button";
-import { useDialog } from "components/Overlay";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { db } from "server/config";
-import { FlexCenter, FlexColumn } from "styles/mixins";
+import { Flex, FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./Show.styles";
 
 export const Show = ({ id, closeDetail, openPost }) => {
@@ -117,6 +118,14 @@ export const Show = ({ id, closeDetail, openPost }) => {
             <FlexCenter>
               <Styled.ContentImg src={data.groupImgUrl} alt={data.groupName} />
             </FlexCenter>
+            <Flex align="end">
+              <Styled.StarIcon
+                onClick={handleLike}
+                src={isLike ? starImage : starBorderImage}
+                alt={data.postId}
+              />
+              <Styled.LikedNum>찜 {likeNum}</Styled.LikedNum>
+            </Flex>
             <Label variant="variant">작성자</Label>
             <Styled.ContentBox>{nickname}</Styled.ContentBox>
             <Label variant="variant">모임 이름</Label>
@@ -137,9 +146,6 @@ export const Show = ({ id, closeDetail, openPost }) => {
                 <Button onClick={onDelete}>삭제</Button>
               </Styled.Btns>
             )}
-            <Button onClick={handleLike}>찜</Button>
-            <p>좋아요수: {likeNum}</p>
-            <p>좋아요: {String(isLike)}</p>
           </FlexColumn>
         )}
       </Styled.ExtendSidebar>

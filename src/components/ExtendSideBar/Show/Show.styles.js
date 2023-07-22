@@ -62,3 +62,14 @@ export const Btns = styled.div`
   ${flex({ align: "center", justify: "center", gap: 12 })}
   padding-top: 20px
 `;
+
+export const StarIcon = styled.img`
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+`;
+
+export const LikedNum = styled.p`
+  font-size: 12px;
+  margin-bottom: 4px;
+`;
