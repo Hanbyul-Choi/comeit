@@ -4,7 +4,7 @@ import { CustomOverlayItem } from "./CustomOverlayItem";
 import { useSelectCategory } from "./useSelectCategory";
 
 export const MarkerItem = ({ data, onClick, open, selected }) => {
-  const { latlng, title, postId } = data;
+  const { latlng, title, category, meetingDate, postId } = data;
   const [iconSize, setIconSize] = useState({
     width: 48,
     height: 49
@@ -31,7 +31,14 @@ export const MarkerItem = ({ data, onClick, open, selected }) => {
       )}
 
       {selected === title && (
-        <CustomOverlayItem title={title} position={latlng} open={open} postId={postId} />
+        <CustomOverlayItem
+          title={title}
+          category={category}
+          meetingDate={meetingDate}
+          position={latlng}
+          open={open}
+          postId={postId}
+        />
       )}
     </>
   );
