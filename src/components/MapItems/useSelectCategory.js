@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import likedIcon from "assets/svgs/check.svg";
 import communityIcon from "assets/svgs/communityIcon.svg";
 import cultureIcon from "assets/svgs/cultureIcon.svg";
 import gameIcon from "assets/svgs/gameIcon.svg";
@@ -7,6 +6,7 @@ import languageIcon from "assets/svgs/languageIcon.svg";
 import myIcon from "assets/svgs/my5.svg";
 import placeImage from "assets/svgs/place.svg";
 import sportIcon from "assets/svgs/sportIcon.svg";
+import likedIcon from "assets/svgs/star.svg";
 import tripIcon from "assets/svgs/tripIcon.svg";
 import { and, collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
