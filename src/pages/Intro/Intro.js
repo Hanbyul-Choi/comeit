@@ -10,12 +10,12 @@ import * as Styled from "./Intro.styles";
 export const Intro = () => {
   const { isLoading, data } = useQuery(["contents"], fetchData);
   const navigate = useNavigate();
-  const { currentUser } = useSelector(user => user.user);
+  const { currentUser } = useSelector(({ user }) => ({ currentUser: user.user }));
   const { Alert } = useDialog();
 
-  const onPostClickHandler = item => {
+  const onPostClickHandler = postId => {
     if (!currentUser) Alert("로그인 후 이용가능합니다.");
-    else navigate(`/home/${item.id}`);
+    else navigate(`/home/${postId}`);
   };
 
   const todayDate = new Date();

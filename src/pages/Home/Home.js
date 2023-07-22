@@ -47,6 +47,9 @@ export const Home = () => {
   };
 
   useMount(() => {
+    if (params.contentid) {
+      openDetail();
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         posi => dispatch(setCenter({ lat: posi.coords.latitude, lng: posi.coords.longitude })),

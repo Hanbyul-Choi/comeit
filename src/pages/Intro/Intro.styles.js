@@ -59,6 +59,7 @@ export const Item = styled.div`
 export const TodayBox = styled.div`
   ${flex.column()}
   width: 80%;
+  margin: 50px;
 `;
 
 export const SliderBox = styled.div`

@@ -5,7 +5,7 @@ import { hexToRgba } from "styles/utils";
 export const SlideItem = styled.div`
   ${props => css`
     width: ${props.contentWidth}px;
-    padding: 0 ${props.space}px;
+    /* padding: 0 ${props.space}px; */
     cursor: pointer;
   `}
 `;
@@ -13,7 +13,7 @@ export const SlideItem = styled.div`
 export const Img = styled.img`
   ${props => css`
     width: ${props.contentWidth}px;
-    padding: 0 ${props.space}px;
+    /* padding: 0 ${props.space}px; */
     border-radius: 15px;
     transition: opacity 0.3s;
 
@@ -25,8 +25,15 @@ export const Img = styled.img`
 
 export const SliderContainer = styled.div`
   display: flex;
-  min-width: ${props => props.sliceWidth}px;
+
+  ${props => css`
+    width: ${props.sliceWidth}px;
+
+    gap: ${props.space}px;
+  `}
   position: relative;
+
+  /* overflow: hidden; */
 `;
 
 export const Container = styled.div`
@@ -43,7 +50,7 @@ export const ContainerBlock = styled.div`
 export const Button = styled.button`
   ${({ theme, position }) => css`
     position: absolute;
-    top: 25px;
+    top: 30%;
     ${position}: 10px;
 
     width: 22px;
@@ -68,25 +75,28 @@ export const Button = styled.button`
 `;
 
 export const CardContents = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 10;
-  padding: 16px;
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border-radius: 0 0 15px 15px;
+  ${props => css`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    padding: 16px;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    margin: 0 ${props.space}px;
+  `}
 `;
 
 export const ImgBox = styled.div`
   ${props => css`
     position: relative;
     width: ${props.contentWidth}px;
-    padding: 0 ${props.space}px;
+    /* padding: 0  */
     cursor: pointer;
     overflow: hidden;
-    height: 200px; // 고정된 높이로 변경하세요.
+    height: 200px;
+    border-radius: 15px;
   `}
 `;
 
