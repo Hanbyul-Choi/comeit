@@ -9,7 +9,7 @@ export const fetchData = async () => {
 
   querySnapshot.forEach(docu => {
     const content = {
-      id: docu.id,
+      postId: docu.id,
       ...docu.data()
     };
     data.push(content);
@@ -22,24 +22,4 @@ export const getDetail = async id => {
   const snapContent = await getDoc(doc(db, "contents", id));
   snapContent.exists();
   return snapContent.data();
-};
-
-export const getMarkers = async () => {
-  const q = query(collection(db, "contents"));
-  const querySnapshot = await getDocs(q);
-
-  const TMP = [];
-
-  querySnapshot.forEach(mark => {
-    const marker = {
-      title: mark.data().groupName,
-      category: mark.data().category,
-      meetingDate: mark.data().meetingDate,
-      latlng: mark.data().location,
-      uid: mark.data().uid,
-      postId: mark.id
-    };
-    TMP.push(marker);
-  });
-  return TMP;
 };

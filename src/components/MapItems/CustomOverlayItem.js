@@ -29,7 +29,7 @@ const getImageByCategory = category => {
   }
 };
 
-export const CustomOverlayItem = ({ title, category, meetingDate, position, postId, open }) => {
+export const CustomOverlayItem = ({ groupName, category, meetingDate, position, postId, open }) => {
   const navigate = useNavigate();
 
   const handleDetail = () => {
@@ -51,7 +51,7 @@ export const CustomOverlayItem = ({ title, category, meetingDate, position, post
           </div>
 
           <div>
-            <Styled.OverlayTitle>{title}</Styled.OverlayTitle>
+            <Styled.OverlayTitle>{groupName}</Styled.OverlayTitle>
             <Styled.OverlayTitle>{meetingDate}</Styled.OverlayTitle>
           </div>
         </Styled.ThumbnailContainer>

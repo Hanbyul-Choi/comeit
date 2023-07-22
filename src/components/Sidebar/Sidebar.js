@@ -45,7 +45,10 @@ export const Sidebar = ({ openDetail }) => {
     return filteredData;
   };
 
-  const filteredData = filterData();
+  const filteredData = filterData().map(el => ({
+    ...el,
+    meetingPlace: el.meetingPlace.split(" ").splice(0, 2).join(" ")
+  }));
 
   const handleCategoryClick = categoryImage => {
     const clickedCategory = CategoryImages.find(category => category.image === categoryImage);
@@ -61,8 +64,7 @@ export const Sidebar = ({ openDetail }) => {
   };
 
   const onClickContent = location => {
-
-    if (!localStorage.getItem("user")) {
+    if (!sessionStorage.getItem("user")) {
       Alert("로그인 후 확인 가능합니다.");
 
       return;
@@ -94,8 +96,8 @@ export const Sidebar = ({ openDetail }) => {
           filteredData.map(content => {
             return (
               <Styled.Link
-                to={`/home/${content.id}`}
-                key={content.id}
+                to={`/home/${content.postId}`}
+                key={content.postId}
                 onClick={() => onClickContent(content.location)}
               >
                 <div>

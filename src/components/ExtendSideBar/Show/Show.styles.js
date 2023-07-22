@@ -3,7 +3,6 @@ import { styled } from "styled-components";
 import { flex, size, typography } from "styles/mixins";
 import { theme } from "styles/theme";
 import { colors } from "styles/theme/colors";
-import { shadows } from "styles/theme/shadows";
 import { sizes } from "styles/theme/sizes";
 
 export const Sidebar = styled.div`
@@ -17,8 +16,6 @@ export const ExtendSidebar = styled.div`
     display: none;
   }
 
-  background-color: white;
-  /* box-shadow: ${shadows.drop3}; */
   border-left: 1px solid ${theme.colors.gray2};
   padding: ${sizes.padding.medium}px;
 `;
@@ -42,20 +39,16 @@ export const ContentImg = styled.img`
 export const Button = styled.button`
   position: absolute;
   top: 50%;
-  left: 635px;
+  left: 634px;
   z-index: 1;
 
   width: 22px;
   height: 22px;
   border: none;
   padding: 20px 0;
-  background-color: ${theme.colors.gray3};
-  border-radius: 5px;
+  background-color: ${theme.palettes.blue.base};
+  border-radius: 0 5px 5px 0;
   transition: all 0.3s ease-in-out;
-
-  &:hover {
-    background-color: ${theme.palettes.blue.base};
-  }
 
   img {
     position: absolute;
