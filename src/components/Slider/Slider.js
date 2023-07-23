@@ -13,10 +13,14 @@ export const Slider = ({
   onClickHandler,
   auto = false
 }) => {
+  let overContents = true;
+  if (contents.length <= showContentNum) {
+    overContents = false;
+  }
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
   const cloneContents = [...contents];
-  if (auto) {
+  if (auto && overContents) {
     for (let i = 0; i < showContentNum; i += 1) {
       cloneContents.push(contents[i]);
     }
@@ -30,6 +34,7 @@ export const Slider = ({
   const sliceWidth = contentWidth * showContentNum + space * (showContentNum - 1);
   const lastSlide = TOTAL_SLIDES + 1 - showContentNum;
   const isLastSlide = currentSlide === TOTAL_SLIDES + 1 - showContentNum;
+
   const nextSlide = () => {
     setCurrentSlide(currentSlide + 1);
   };
@@ -68,7 +73,7 @@ export const Slider = ({
     });
   };
   useMount(() => {
-    if (type === "intro") {
+    if (type === "intro" && overContents) {
       autoplay({ duration: 2000 });
     }
   });
