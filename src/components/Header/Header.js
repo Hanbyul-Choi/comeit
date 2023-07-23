@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import logo from "assets/logo/COMEIT.png";
 import userImg from "assets/userImg/user.png";
-import { SIGN_IN_MODAL, SIGN_UP_MODAL, SignInForm, SignUpForm, useModal } from "components";
+import { SignInForm, SignUpForm, SIGN_IN_MODAL, SIGN_UP_MODAL, useModal } from "components";
 import { Button } from "components/Button";
 import { doc, getDoc } from "firebase/firestore";
 import { useBoolean } from "hooks";
@@ -17,12 +17,10 @@ export const Header = () => {
   const { mount } = useModal();
   const [isOpen, setIsOpen] = useBoolean(false);
   const user = useSelector(state => state.user.user);
-  // const { Alert } = useDialog();
 
   const loadUser = async () => {
     const uid = sessionStorage.getItem("user");
     if (!uid) {
-      // Alert("로그인 하시면 게시물을 작성할 수 있습니다.");
       return;
     }
     const querySnapshot = await getDoc(doc(db, "users", uid));

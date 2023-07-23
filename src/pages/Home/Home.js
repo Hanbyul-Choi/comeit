@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "api/contents";
-import plusbutton from "assets/svgs/post_plus.svg";
+import plusbutton from "assets/pngs/post_plus.png";
 import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar, useDialog } from "components";
 import { useMount } from "hooks";
-
 import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
