@@ -4,7 +4,7 @@ import { all, culture, game, language, social, sports, travel } from "assets/cat
 import { Input, Slider, useDialog } from "components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setCenter } from "redux/modules/centerSlice";
+import { setCenter } from "redux/modules/mapSlice";
 import * as Styled from "./Sidebar.styles";
 
 const CategoryImages = [
