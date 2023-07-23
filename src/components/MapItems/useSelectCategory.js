@@ -1,13 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import communityIcon from "assets/svgs/communityIcon.svg";
-import cultureIcon from "assets/svgs/cultureIcon.svg";
-import gameIcon from "assets/svgs/gameIcon.svg";
-import languageIcon from "assets/svgs/languageIcon.svg";
+import { culture, game, language, social, sports, travel } from "assets/marker";
 import myIcon from "assets/svgs/my5.svg";
 import placeImage from "assets/svgs/place.svg";
-import sportIcon from "assets/svgs/sportIcon.svg";
 import likedIcon from "assets/svgs/star.svg";
-import tripIcon from "assets/svgs/tripIcon.svg";
 import { and, collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -41,22 +36,22 @@ export const useSelectCategory = data => {
     if (isLike) return setIcon(likedIcon);
     switch (data.category) {
       case "운동/스포츠":
-        setIcon(sportIcon);
+        setIcon(sports);
         break;
       case "게임":
-        setIcon(gameIcon);
+        setIcon(game);
         break;
       case "아웃도어/여행":
-        setIcon(tripIcon);
+        setIcon(travel);
         break;
       case "문화/공연":
-        setIcon(cultureIcon);
+        setIcon(culture);
         break;
       case "외국/언어":
-        setIcon(languageIcon);
+        setIcon(language);
         break;
       case "친목":
-        setIcon(communityIcon);
+        setIcon(social);
         break;
       default:
         setIcon(placeImage);

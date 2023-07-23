@@ -118,7 +118,7 @@ export const Show = ({ id, closeDetail, openPost }) => {
             <FlexCenter>
               <Styled.ContentImg src={data.groupImgUrl} alt={data.groupName} />
             </FlexCenter>
-            <Flex align="end">
+            <Flex align="center">
               <Styled.StarIcon
                 onClick={handleLike}
                 src={isLike ? starImage : starBorderImage}
