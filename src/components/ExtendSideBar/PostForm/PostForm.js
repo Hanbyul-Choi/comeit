@@ -210,6 +210,7 @@ export const PostForm = ({ closePost, openshow }) => {
             placeholder="모임 이름"
             value={groupName}
             onChange={onChangeGroupName}
+            maxLength={12}
           />
 
           <Input

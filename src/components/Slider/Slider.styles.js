@@ -5,7 +5,7 @@ import { hexToRgba } from "styles/utils";
 export const SlideItem = styled.div`
   ${props => css`
     width: ${props.contentWidth}px;
-    /* padding: 0 ${props.space}px; */
+
     cursor: pointer;
   `}
 `;
@@ -13,7 +13,7 @@ export const SlideItem = styled.div`
 export const Img = styled.img`
   ${props => css`
     width: ${props.contentWidth}px;
-    /* padding: 0 ${props.space}px; */
+
     border-radius: 15px;
     transition: opacity 0.3s;
 
@@ -32,8 +32,6 @@ export const SliderContainer = styled.div`
     gap: ${props.space}px;
   `}
   position: relative;
-
-  /* overflow: hidden; */
 `;
 
 export const Container = styled.div`
@@ -89,7 +87,7 @@ export const ImgBox = styled.div`
   ${props => css`
     position: relative;
     width: ${props.contentWidth}px;
-    /* padding: 0  */
+
     cursor: pointer;
     overflow: hidden;
     height: 200px;

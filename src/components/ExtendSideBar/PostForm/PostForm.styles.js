@@ -95,12 +95,16 @@ export const Button = styled.button`
   z-index: 1;
 
   width: 22px;
-  height: 22px;
+  height: 70px;
   border: none;
   padding: 20px 0;
-  background-color: ${theme.palettes.blue.base};
+  background-color: ${colors.white};
   border-radius: 0 5px 5px 0;
   transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background: ${theme.palettes.blue.hover};
+  }
 
   img {
     position: absolute;

@@ -5,7 +5,7 @@ const baseStyle = ({ size: _size = "medium", theme: { sizes, colors, shadows } }
   return css`
     border: 1px solid ${colors.gray2};
     box-shadow: ${shadows.drop1};
-    // 글씨 색상
+
     color: ${colors.gray4};
     ${flex.center()}
 
@@ -18,7 +18,7 @@ const baseStyle = ({ size: _size = "medium", theme: { sizes, colors, shadows } }
     resize: none;
 
     ${typography(sizes.heading[_size])}
-    // Textarea 박스 높이
+
     min-height: 150px;
 
     transition: 300ms;

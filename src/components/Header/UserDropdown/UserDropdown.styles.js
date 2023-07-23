@@ -12,7 +12,7 @@ export const UserDropdownWrapper = styled.div`
   overflow: hidden;
   background-color: white;
   z-index: 1;
-  /* padding: 5px; */
+
   box-shadow: ${shadows.drop3};
 `;
 

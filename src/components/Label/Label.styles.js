@@ -15,7 +15,6 @@ const variantStyle = ({ variant }) => {
 
 const baseStyle = ({ size: _size = "small", theme: { colors, sizes } }) => {
   return css`
-    // 글씨 색상
     color: ${colors.gray3};
 
     ${size({ height: sizes.height[_size] })}

@@ -29,6 +29,7 @@ export const Show = ({ id, closeDetail, openPost }) => {
   const { Confirm, Alert } = useDialog();
   const queryClient = useQueryClient();
   const [nickname, setNickname] = useState("");
+
   const [isLike, setIsLike] = useState(false);
   const [likeNum, setLikeNum] = useState(0);
   const [docId, setDocId] = useState("");
@@ -118,16 +119,21 @@ export const Show = ({ id, closeDetail, openPost }) => {
             <FlexCenter>
               <Styled.ContentImg src={data.groupImgUrl} alt={data.groupName} />
             </FlexCenter>
-            <Flex align="end">
-              <Styled.StarIcon
-                onClick={handleLike}
-                src={isLike ? starImage : starBorderImage}
-                alt={data.postId}
-              />
-              <Styled.LikedNum>찜 {likeNum}</Styled.LikedNum>
-            </Flex>
-            <Label variant="variant">작성자</Label>
-            <Styled.ContentBox>{nickname}</Styled.ContentBox>
+            <Styled.UpperContent>
+              <FlexColumn gap={3}>
+                <Label variant="variant">작성자</Label>
+                <Styled.ContentBox>{nickname}</Styled.ContentBox>
+              </FlexColumn>
+              <Flex align="center">
+                <Styled.LikedNum>찜 {likeNum}</Styled.LikedNum>
+                <Styled.StarIcon
+                  onClick={handleLike}
+                  src={isLike ? starImage : starBorderImage}
+                  alt={data.postId}
+                />
+              </Flex>
+            </Styled.UpperContent>
+
             <Label variant="variant">모임 이름</Label>
             <Styled.ContentBox>{data.groupName}</Styled.ContentBox>
             <Label variant="variant">모임 날짜</Label>
