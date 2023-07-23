@@ -10,14 +10,12 @@ export const PostFormBlock = styled.div`
 `;
 export const ExtendSidebar = styled.div`
   ${size({ width: 300, height: `calc(100vh - ${HEADER_HEIGHT}px)` })}
-  ${flex({ justify: "center" })}
   border-left: 1px solid ${theme.colors.gray2};
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
   }
 
-  color: ${theme.colors.black};
   padding: ${sizes.padding.medium}px;
 `;
 
@@ -33,15 +31,10 @@ export const ImgBox = styled.div`
 `;
 
 export const PreView = styled.div`
-  ${flex({ align: "center", justify: "center" })}
   cursor: pointer;
-
-  width: 17.2rem;
-  height: 14rem;
 `;
 
 export const PreViewImg = styled.img`
-  ${flex({ align: "center", justify: "center" })}
   position: absolute;
 
   width: 17.2rem;
@@ -56,26 +49,13 @@ export const PreViewImg = styled.img`
   }
 `;
 
-export const RemoveImg = styled.button`
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: transparent;
-
-  border: none;
-  cursor: pointer;
-  &:hover {
-    scale: 1.1;
-  }
-`;
-
 export const ImgInput = styled.input`
   display: none;
 `;
 
 export const BtnUpload = styled.div`
   ${flex({ align: "center", justify: "center" })}
-  height: 30px;
+
   font-size: 1.3rem;
   text-decoration: underline;
   font-weight: 500;
@@ -108,8 +88,6 @@ export const Button = styled.button`
 
   img {
     position: absolute;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
   }
 `;
