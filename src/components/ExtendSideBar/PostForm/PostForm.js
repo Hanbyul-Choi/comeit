@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { setPostion } from "redux/modules/centerSlice";
+import { setPosition } from "redux/modules/centerSlice";
 import { db, storage } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./PostForm.styles";
@@ -56,7 +56,7 @@ export const PostForm = ({ closePost, openshow }) => {
       setMeetingPlace(data.meetingPlace);
       setAttachment(data.groupImgUrl);
       setCategory(data.category);
-      dispatch(setPostion(data.location));
+      dispatch(setPosition(data.location));
     };
 
     editSet();
@@ -178,6 +178,11 @@ export const PostForm = ({ closePost, openshow }) => {
       return;
     }
 
+    if (meetingPlace === null) {
+      setErrorMessage("만날 장소를 지도에서 추가해주세요");
+      return;
+    }
+
     if (meetingNumber < 2) {
       setErrorMessage("모집인원은 최소 2명입니다.");
       return;
@@ -189,6 +194,7 @@ export const PostForm = ({ closePost, openshow }) => {
       postMutate();
     }
   };
+  console.log(meetingPlace);
 
   return (
     <Styled.PostFormBlock>

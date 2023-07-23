@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   center: {
-    lat: 33.45168,
-    lng: 126.574942
+    lat: 37.56679717075284,
+    lng: 126.97864094748478
   },
   position: null,
   place: ""
@@ -15,10 +15,10 @@ const centerSlice = createSlice({
   reducers: {
     initialize: () => initialState,
     setCenter: (state, { payload }) => ({ ...state, center: payload }),
-    setPostion: (state, { payload }) => ({ ...state, position: payload }),
+    setPosition: (state, { payload }) => ({ ...state, position: payload }),
     setPlace: (state, { payload }) => ({ ...state, place: payload })
   }
 });
 
 export default centerSlice.reducer;
-export const { setCenter, setPlace, setPostion, initialize } = centerSlice.actions;
+export const { setCenter, setPlace, setPosition, initialize } = centerSlice.actions;

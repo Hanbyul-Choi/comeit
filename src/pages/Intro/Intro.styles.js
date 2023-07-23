@@ -68,7 +68,7 @@ export const SliderBox = styled.div`
     background-color: ${theme.colors.white};
     padding: 25px;
   `}
-  border: 2px solid black
+  border: 3px solid black;
 `;
 
 export const TodayEmpty = styled.div`
