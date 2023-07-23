@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "api/contents";
-import plusbutton from "assets/pngs/post_plus.png";
+import { postPlus } from "assets/pngs";
 import { ClickedMarker, Header, MarkerItem, PostForm, Show, Sidebar, useDialog } from "components";
 import { useMount } from "hooks";
 import { useState } from "react";
@@ -102,7 +102,7 @@ export const Home = () => {
           <ClickedMarker closePost={closePost} openPost={openPost} position={position} />
         </Map>
         <Styled.PlusButton onClick={postButtonClick}>
-          <img src={plusbutton} alt="게시물 등록" style={{ width: "80px" }} />
+          <img src={postPlus} alt="게시물 등록" style={{ width: "80px" }} />
         </Styled.PlusButton>
       </Styled.Container>
     </>

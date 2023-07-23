@@ -17,6 +17,7 @@ export const UserImg = styled.img`
 export const FileInput = styled.input`
   display: none;
 `;
+
 export const FileLabel = styled.label`
   ${flex({ justify: "center" })}
 `;
