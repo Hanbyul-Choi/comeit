@@ -189,6 +189,7 @@ export const PostForm = ({ closePost, openshow }) => {
       postMutate();
     }
   };
+  console.log(meetingPlace);
 
   return (
     <Styled.PostFormBlock>
