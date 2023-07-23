@@ -178,6 +178,11 @@ export const PostForm = ({ closePost, openshow }) => {
       return;
     }
 
+    if (meetingPlace === null) {
+      setErrorMessage("만날 장소를 지도에서 추가해주세요");
+      return;
+    }
+
     if (meetingNumber < 2) {
       setErrorMessage("모집인원은 최소 2명입니다.");
       return;

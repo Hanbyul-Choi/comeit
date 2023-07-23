@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { PROFILE_EDIT_MODAL, ProfileForm } from "components/Forms/ProfileForm";
 import { useDialog, useModal } from "components/Overlay";
 import { useClickAway } from "hooks";
@@ -8,6 +9,7 @@ import { initializeUser } from "redux/modules/userSlice";
 import { Option, UserDropdownWrapper } from "./UserDropdown.styles";
 
 export const UserDropdown = ({ setIsOpen }) => {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { Alert, Confirm } = useDialog();
   const { mount } = useModal();
@@ -21,6 +23,7 @@ export const UserDropdown = ({ setIsOpen }) => {
     if (!(await Confirm("로그아웃 하시겠습니까?"))) return;
     navigate("/");
     await Alert("로그아웃 되었습니다.");
+    queryClient.invalidateQueries(["markerIcon"]);
     dispatch(initializeUser());
     sessionStorage.removeItem("user");
   };

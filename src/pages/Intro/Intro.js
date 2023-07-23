@@ -50,6 +50,7 @@ export const Intro = () => {
               contentWidth={300}
               onClickHandler={onPostClickHandler}
               type="intro"
+              auto="true"
             />
           </Styled.SliderBox>
         </Styled.TodayBox>
