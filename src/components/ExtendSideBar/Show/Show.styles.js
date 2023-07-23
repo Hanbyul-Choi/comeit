@@ -20,10 +20,9 @@ export const ExtendSidebar = styled.div`
   padding: ${sizes.padding.medium}px;
 `;
 export const ContentBox = styled.div`
-  width: 280px;
   color: ${colors.gray4};
 
-  padding-left: ${sizes.padding.small}px;
+  padding: 0 ${sizes.padding.small}px;
 
   border-radius: 8px;
 
@@ -43,12 +42,15 @@ export const Button = styled.button`
   z-index: 1;
 
   width: 22px;
-  height: 22px;
+  height: 70px;
   border: none;
   padding: 20px 0;
-  background-color: ${theme.palettes.blue.base};
+  background-color: ${colors.white};
   border-radius: 0 5px 5px 0;
   transition: all 0.3s ease-in-out;
+  &:hover {
+    background: ${theme.palettes.blue.hover};
+  }
 
   img {
     position: absolute;
@@ -60,7 +62,11 @@ export const Button = styled.button`
 
 export const Btns = styled.div`
   ${flex({ align: "center", justify: "center", gap: 12 })}
-  padding-top: 20px
+  padding-top: 20px;
+`;
+
+export const UpperContent = styled.div`
+  ${flex({ justify: "between" })}
 `;
 
 export const StarIcon = styled.img`
