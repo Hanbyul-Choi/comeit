@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# 🌈COME IT (community meeting service)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+우리 동네 소모임 플랫폼
 
-## Available Scripts
+2023.07.04-2023.07.14
 
-In the project directory, you can run:
+### 🧷 팀원
 
-### `yarn start`
+| 임수빈 | 양현서 | 전해강 | 제준영 | 최한별 |
+| ------ | ------ | ------ | ------ | ------ |
+| `팀장` | 팀원   | 팀원   | 팀원   | 팀원   |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 🧷 목차
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- [프로젝트 소개](#프로젝트-소개)
+- [배포 주소](#배포-주소)
+- [와이어 프레임](#와이어-프레임)
+- [기술스택](#기술스택)
+- [Project Structure](#project-structure)
+- [API Table](#api-table)
+- [페이지](#페이지)
+- [Issues](#issues)
 
-### `yarn test`
+### 🧷 프로젝트 소개
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**커밋 COME IT** (community meeting service)
 
-### `yarn build`
+"다양한 취미를 함께 즐기며 새로운 친구들과 만날 수 있는 친목 모임, 함께해요!”
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> 카카오맵 api를 활용하고 있습니다. 여러가지 취미 분야의 동호회를 개설 또는 검색 가능하게 해주며, 참여하고 싶은 새로운 멤버들이 쉽게 가입하고 활동 일정을 확인할 수 있도록 지원합니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> 사용자들은 새로운 취미에 빠져들 수 있을 뿐만 아니라 평소에 관심 있던 활동에 대해 함께 의견 나누고 본인만의 소중한 경험을 쌓아갈 수 있습니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+언제든지 커밋 COME IT과 함께 즐거운 동네 소모임을 경험해보세요!
 
-### `yarn eject`
+### 🧷 배포 주소
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+추가예정
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 🧷 와이어 프레임
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+![image](https://github.com/HyunseoY/bamboo-community/assets/130683029/ac6cd8d0-3699-44f7-9685-c77497f4975a)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 🧷 기술스택
 
-## Learn More
+<img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white"><img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"><img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white"><img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"><img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white"><img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"><img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white"><img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"><img src="https://img.shields.io/badge/kakaomap-FFCD00?style=for-the-badge&logo=kakao&logoColor=white">
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 🧷 Project Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 🧷 API Table
 
-### Code Splitting
+| API 이름 | URL | Method | Request | Response |
+| -------- | --- | ------ | ------- | -------- |
+| 로그인   |     | `POST` |         |          |
+| 회원가입 |     | `POST` |         |          |
+|          |     | ``     |         |          |
+|          |     | ``     |         |          |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 🧷 페이지
 
-### Analyzing the Bundle Size
+**소개 페이지**
+![스크린샷 2023-07-23 213440](https://github.com/setItUpLater/comeit/assets/130683029/93d2661b-a6b5-474a-a63e-e96b717a9472)
+오늘의 모임이 없는 경우
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**메인 페이지**
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 🧷 Issues

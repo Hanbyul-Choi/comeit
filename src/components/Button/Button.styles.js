@@ -9,6 +9,7 @@ const variantStyle = ({ variant, theme: { colors, palettes, shadows } }) => {
     case "outline":
       return css`
         border: 1px solid ${base};
+
         ${selector("borderColor", { hover, active })}
 
         box-shadow: ${shadows.drop1};
@@ -23,6 +24,29 @@ const variantStyle = ({ variant, theme: { colors, palettes, shadows } }) => {
 
         color: ${colors.gray3};
         ${selector("color", { hover })};
+      `;
+
+    case "cancel":
+      return css`
+        ${size({ height: 30 })}
+        border: 1px solid ${base};
+
+        ${selector("borderColor", { hover, active })}
+
+        box-shadow: ${shadows.drop1};
+
+        color: ${base};
+        ${selector("color", { hover, active })}
+      `;
+    case "confirm":
+      return css`
+        ${size({ height: 30 })}
+        background-color: ${base};
+        ${selector("backgroundColor", { hover, active })}
+
+        box-shadow: ${shadows.drop2};
+
+        color: ${colors.white};
       `;
 
     default:
