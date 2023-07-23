@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { setCenter, setPlace, setPostion } from "redux/modules/centerSlice";
+import { setCenter, setPlace, setPostPosition } from "redux/modules/centerSlice";
 import * as Styled from "./Home.styles";
 
 export const Home = () => {
@@ -36,7 +36,7 @@ export const Home = () => {
     if (showPost) {
       const address = await getData({ lat: e.latLng.getLat(), lng: e.latLng.getLng() });
       dispatch(setPlace(address));
-      dispatch(setPostion({ lat: e.latLng.getLat(), lng: e.latLng.getLng() }));
+      dispatch(setPostPosition({ lat: e.latLng.getLat(), lng: e.latLng.getLng() }));
     }
   };
 
