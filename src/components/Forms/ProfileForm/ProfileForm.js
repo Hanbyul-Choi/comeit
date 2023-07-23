@@ -1,9 +1,10 @@
 import { doc, updateDoc } from "@firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 import { useMutation } from "@tanstack/react-query";
-import userImg from "assets/userImg/user.png";
+import { userImg } from "assets/pngs";
 import { Button, Input, Label, useDialog, useModal } from "components";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useInput } from "hooks";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNickname, updateProfileImg } from "redux/modules/userSlice";
@@ -18,11 +19,13 @@ export const ProfileForm = () => {
   const { Alert } = useDialog();
 
   const { user } = useSelector(state => state.user);
-  const { email, nickname, userImgUrl, id } = user;
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [editNickname, setEditNickname] = useState(nickname);
+  const { email, userImgUrl, id } = user;
+
+  const [password, onPasswordChangeHandler] = useInput("", () => setErrorMessage(""));
+  const [confirmPassword, onConfirmPasswordChangeHandler] = useInput("", () => setErrorMessage(""));
+  const [editNickname, onNicknameChangeHandler] = useInput("", () => setErrorMessage(""));
   const [errorMessage, setErrorMessage] = useState("");
+
   const [imgFile, setImgFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -37,16 +40,13 @@ export const ProfileForm = () => {
     }
   };
 
-  const { mutate } = useMutation({
+  const { mutate, reset } = useMutation({
     mutationFn: updateProfile,
     onSuccess: async () => {
       await Alert("프로필이 수정되었습니다.");
       dispatch(updateNickname(editNickname));
-      setPassword("");
-      setConfirmPassword("");
-      setEditNickname("");
-
       unmount(PROFILE_EDIT_MODAL);
+      reset();
     },
     onError: error => {
       if (error.code === "auth/wrong-password") {
@@ -56,19 +56,6 @@ export const ProfileForm = () => {
       }
     }
   });
-
-  const onPasswordChangeHandler = event => {
-    setPassword(event.target.value);
-    setErrorMessage("");
-  };
-  const onConfirmPasswordChangeHandler = event => {
-    setConfirmPassword(event.target.value);
-    setErrorMessage("");
-  };
-  const onNicknameChangeHandler = event => {
-    setEditNickname(event.target.value);
-    setErrorMessage("");
-  };
 
   const onFileChange = e => {
     const {
@@ -85,12 +72,18 @@ export const ProfileForm = () => {
 
   const submitHandler = async event => {
     event.preventDefault();
-    if (password !== confirmPassword) {
-      setErrorMessage("비밀번호가 일치하지 않습니다.");
+
+    if (editNickname.trim() === "") {
+      setErrorMessage("닉네임을 입력해 주세요.");
       return;
     }
+
     if (password.trim() === "" || confirmPassword.trim() === "") {
-      setErrorMessage("비밀번호를 입력해주세요.");
+      setErrorMessage("비밀번호를 입력해 주세요.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setErrorMessage("비밀번호가 일치하지 않습니다.");
       return;
     }
     if (!imgFile) {
@@ -112,6 +105,7 @@ export const ProfileForm = () => {
         <UserImg src={preview ?? userImgUrl ?? userImg} />
       </FileLabel>
       <FileInput type="file" id="fileInput" accept="image/*" onChange={onFileChange} />
+
       <Label variant="text">아이디</Label>
       <Input variant="outline" placeholder="example@naver.com" value={email} disabled />
 

@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import logo from "assets/logo/COMEIT.png";
-import userImg from "assets/userImg/user.png";
-import { SignInForm, SignUpForm, SIGN_IN_MODAL, SIGN_UP_MODAL, useModal } from "components";
+import { logo, userImg } from "assets/pngs";
+import { SIGN_IN_MODAL, SIGN_UP_MODAL, SignInForm, SignUpForm, useModal } from "components";
 import { Button } from "components/Button";
 import { doc, getDoc } from "firebase/firestore";
 import { useBoolean } from "hooks";

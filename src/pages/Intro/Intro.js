@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "api/contents";
-import mainImage from "assets/Intro/main1.png";
+import { main1 } from "assets/pngs";
 import badEmotion from "assets/svgs/bad_emotion.svg";
 import { Header, Label, Slider, useDialog } from "components";
 import { useSelector } from "react-redux";
@@ -32,7 +32,7 @@ export const Intro = () => {
     <Styled.Layout>
       <Header />
       <Styled.Container>
-        <Styled.Img src={mainImage} alt="Intro 이미지" />
+        <Styled.Img src={main1} alt="Intro 이미지" />
         <Styled.Box>
           <Styled.NavigateButton to="/home">동네 모임 둘러보기</Styled.NavigateButton>
         </Styled.Box>

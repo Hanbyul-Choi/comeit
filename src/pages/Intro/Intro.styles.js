@@ -49,9 +49,15 @@ export const NavigateButton = styled(Link)`
   `}
 `;
 
+export const Item = styled.div`
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  margin-right: 5px;
+`;
+
 export const TodayBox = styled.div`
   ${flex.column()}
-
   margin: 50;
 `;
 
@@ -68,6 +74,6 @@ export const SliderBox = styled.div`
 export const TodayEmpty = styled.div`
   ${flex.column()}
   ${({ theme }) => css`
-    color: ${theme.colors.white};
+    color: ${theme.colors.black};
   `}
 `;
