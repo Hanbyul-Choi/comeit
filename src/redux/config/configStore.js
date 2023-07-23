@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import center from "redux/modules/centerSlice";
+import center from "redux/modules/mapSlice";
 import user from "redux/modules/userSlice";
 
 const store = configureStore({

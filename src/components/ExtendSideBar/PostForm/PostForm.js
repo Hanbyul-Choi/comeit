@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { setPosition } from "redux/modules/centerSlice";
+import { setPostPosition } from "redux/modules/mapSlice";
 import { db, storage } from "server/config";
 import { FlexCenter, FlexColumn } from "styles/mixins";
 import * as Styled from "./PostForm.styles";
@@ -56,7 +56,7 @@ export const PostForm = ({ closePost, openshow }) => {
       setMeetingPlace(data.meetingPlace);
       setAttachment(data.groupImgUrl);
       setCategory(data.category);
-      dispatch(setPosition(data.location));
+      dispatch(setPostPosition(data.location));
     };
 
     editSet();
@@ -194,8 +194,6 @@ export const PostForm = ({ closePost, openshow }) => {
       postMutate();
     }
   };
-  console.log(meetingPlace);
-
   return (
     <Styled.PostFormBlock>
       <Styled.ExtendSidebar>
