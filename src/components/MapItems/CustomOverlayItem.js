@@ -25,7 +25,7 @@ const getImageByCategory = category => {
       return CommunityImage;
 
     default:
-      return null; // 디폴트 이미지 URL을 반환하거나 null을 반환합니다.
+      return null;
   }
 };
 
@@ -42,7 +42,6 @@ export const CustomOverlayItem = ({ groupName, category, meetingDate, position, 
     <CustomOverlayMap position={position} clickable>
       <Styled.OverlayContainer>
         <Styled.ThumbnailContainer>
-          {/* {svgUrl && <img src={svgUrl} alt={category} style={{ width: "50px" }} />} */}
           <div style={{ display: "flex" }}>
             <Styled.CategoryImg src={svgUrl} alt={category} />
             <Styled.BtnBoxTwo>

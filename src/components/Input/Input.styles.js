@@ -22,7 +22,7 @@ const baseStyle = ({ size: _size = "medium", theme: { sizes, colors, shadows } }
     border: 1px solid ${colors.gray2};
 
     box-shadow: ${shadows.drop1};
-    // 글씨 색상
+
     color: ${colors.gray4};
 
     ${flex.center()}

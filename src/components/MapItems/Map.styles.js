@@ -20,11 +20,11 @@ export const OverlayContainer = styled.div`
     `}
   position: absolute;
   top: -185px;
-  left: -73px;
+  left: -81px;
 `;
 
 export const ThumbnailContainer = styled.div`
-  width: 120px;
+  width: 140px;
   height: 80px;
   margin-bottom: 10px;
 `;
@@ -53,11 +53,8 @@ export const BtnBoxTwo = styled.div`
 `;
 export const DetailButton = styled.button`
   ${({ theme }) => css`
-    /* padding: 5px; */
     color: ${theme.colors.gray3};
 
-    /* border: 1.5px solid ${theme.colors.black};
-    border-radius: 8px; */
     &:hover {
       color: ${theme.colors.black};
     }
