@@ -61,6 +61,5 @@ export const UserImg = styled.img`
     }
   `}
 
-  ${flex({ align: "center", justify: "center" })}
   cursor: pointer;
 `;

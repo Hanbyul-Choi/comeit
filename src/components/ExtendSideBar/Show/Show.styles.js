@@ -5,12 +5,9 @@ import { theme } from "styles/theme";
 import { colors } from "styles/theme/colors";
 import { sizes } from "styles/theme/sizes";
 
-export const Sidebar = styled.div`
-  width: 300px;
-`;
 export const ExtendSidebar = styled.div`
   ${size({ width: 300, height: `calc(100vh - ${HEADER_HEIGHT}px)` })}
-  position: relative;
+
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -33,7 +30,6 @@ export const ContentBox = styled.div`
 export const ContentImg = styled.img`
   width: 280px;
   height: 240px;
-  overflow: hidden;
 `;
 export const Button = styled.button`
   position: absolute;
@@ -54,8 +50,6 @@ export const Button = styled.button`
 
   img {
     position: absolute;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
   }
 `;

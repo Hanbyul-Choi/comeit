@@ -5,16 +5,11 @@ import { theme } from "styles/theme";
 import { colors } from "styles/theme/colors";
 import { sizes } from "styles/theme/sizes";
 
-export const Sidebar = styled.div`
-  /* width: 300px; */
-`;
 export const PostFormBlock = styled.div`
   ${flex({ align: "center", justify: "center" })}
 `;
 export const ExtendSidebar = styled.div`
   ${size({ width: 300, height: `calc(100vh - ${HEADER_HEIGHT}px)` })}
-  ${flex({ justify: "center" })}
-  color: ${theme.colors.black};
   padding: ${sizes.padding.medium}px;
   position: relative;
   border-left: 1px solid ${theme.colors.gray2};
@@ -30,7 +25,6 @@ export const ImgBox = styled.div`
 `;
 
 export const PreView = styled.div`
-  ${flex({ align: "center", justify: "center" })}
   cursor: pointer;
 `;
 
@@ -48,26 +42,11 @@ export const PreViewImg = styled.img`
   }
 `;
 
-export const RemoveImg = styled.button`
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: transparent;
-
-  border: none;
-  cursor: pointer;
-  &:hover {
-    scale: 1.1;
-  }
-`;
-
 export const ImgInput = styled.input`
   display: none;
 `;
 
 export const BtnUpload = styled.div`
-  ${flex({ align: "center", justify: "center" })}
-  height: 30px;
   font-size: 1.3rem;
   text-decoration: underline;
   font-weight: 500;
@@ -96,8 +75,6 @@ export const Button = styled.button`
 
   img {
     position: absolute;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
   }
 `;
