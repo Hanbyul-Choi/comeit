@@ -45,7 +45,7 @@ export const Intro = () => {
             <Slider
               key={`intro-${data && data.uid}`}
               showContentNum={5}
-              space={10}
+              space={25}
               contents={filteredData}
               contentWidth={300}
               onClickHandler={onPostClickHandler}

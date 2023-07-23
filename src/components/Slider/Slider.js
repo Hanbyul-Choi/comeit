@@ -59,9 +59,9 @@ export const Slider = ({
           <Styled.ImgBox space={space} contentWidth={contentWidth}>
             <Styled.IntroImg src={item.groupImgUrl} />
             <Styled.CardContents>
-              <p>{item.groupName}</p>
-              <p>{item.meetingPlace}</p>
-              <p>{item.category}</p>
+              <Styled.NameText>{item.groupName}</Styled.NameText>
+              <Styled.AdressText>{item.meetingPlace}</Styled.AdressText>
+              <Styled.ThemeText>#{item.category}</Styled.ThemeText>
             </Styled.CardContents>
           </Styled.ImgBox>
         </Styled.SlideItem>
