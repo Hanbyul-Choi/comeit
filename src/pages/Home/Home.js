@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { setCenter, setPlace, setPostPosition } from "redux/modules/centerSlice";
+import { setCenter, setPlace, setPostPosition } from "redux/modules/mapSlice";
 import * as Styled from "./Home.styles";
 
 export const Home = () => {
