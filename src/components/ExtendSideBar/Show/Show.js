@@ -49,6 +49,7 @@ export const Show = ({ id, closeDetail, openPost }) => {
       await Alert("게시물이 삭제되었습니다.");
       closeDetail();
       queryClient.invalidateQueries(["contents"]);
+      queryClient.invalidateQueries(["marker"]);
     }
   });
 
@@ -90,8 +91,10 @@ export const Show = ({ id, closeDetail, openPost }) => {
         setIsLike(false);
       }
     };
-    loadIsLiked(id);
-  }, [currentUser.id, id]);
+    if (currentUser) {
+      loadIsLiked(id);
+    }
+  }, [currentUser, id]);
 
   useEffect(() => {
     const loadLikes = async postId => {
@@ -100,7 +103,7 @@ export const Show = ({ id, closeDetail, openPost }) => {
       setLikeNum(snapShot.size);
     };
     loadLikes(id);
-  }, [currentUser.id, id, isLike]);
+  }, [currentUser?.id, id, isLike]);
 
   useEffect(() => {
     const loadUser = async postId => {
