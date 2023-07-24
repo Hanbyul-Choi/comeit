@@ -65,8 +65,6 @@ export const Slider = ({
         clearInterval(interval);
         slideRef.current.style.transition = "";
         slideRef.current.style.transform = `translateX(-0px)`;
-        // slideRef.current.style.transition = "all 0.5s ease-in-out";
-        // slideRef.current.style.transform = `translateX(-${1 * (contentWidth + space)}px)`;
         setCurrentSlide(0);
         autoplay({ duration: 2000 });
       }
