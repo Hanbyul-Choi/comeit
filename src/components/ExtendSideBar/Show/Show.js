@@ -34,7 +34,11 @@ export const Show = ({ id, closeDetail, openPost }) => {
   const [likeNum, setLikeNum] = useState(0);
   const [docId, setDocId] = useState("");
 
-  const { data } = useQuery({ queryKey: ["detail", id], queryFn: () => getDetail(id) });
+  const { data } = useQuery({
+    queryKey: ["detail", id],
+    queryFn: () => getDetail(id),
+    enabled: !!id
+  });
 
   const { currentUser } = useSelector(({ user }) => ({ currentUser: user.user }));
   const navigate = useNavigate();
@@ -77,6 +81,7 @@ export const Show = ({ id, closeDetail, openPost }) => {
 
   useEffect(() => {
     const loadIsLiked = async postId => {
+      if (id === undefined) return;
       const q = query(
         collection(db, "likes"),
         and(where("postId", "==", postId), where("uid", "==", currentUser.id))
@@ -98,6 +103,7 @@ export const Show = ({ id, closeDetail, openPost }) => {
 
   useEffect(() => {
     const loadLikes = async postId => {
+      if (id === undefined) return;
       const q = query(collection(db, "likes"), where("postId", "==", postId));
       const snapShot = await getDocs(q);
       setLikeNum(snapShot.size);
@@ -107,12 +113,16 @@ export const Show = ({ id, closeDetail, openPost }) => {
 
   useEffect(() => {
     const loadUser = async postId => {
+      if (id === undefined) return;
       const document = await getDoc(doc(db, "contents", postId));
       const querySnapshot = await getDoc(doc(db, "users", document.data().uid));
       setNickname(querySnapshot.data().nickname);
     };
     loadUser(id);
   }, [id]);
+  if (id === undefined) {
+    closeDetail();
+  }
 
   return (
     <div>
